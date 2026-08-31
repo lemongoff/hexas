@@ -3,7 +3,7 @@ package mapping
 import (
 	"io"
 
-	"github.com/zeromicro/go-zero/internal/encoding"
+	"github.com/JellyGoFF/FF-Hexas/internal/encoding"
 )
 
 // UnmarshalYamlBytes unmarshals content into v.

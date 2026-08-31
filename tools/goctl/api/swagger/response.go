@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
+	apiSpec "github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
 	"github.com/go-openapi/spec"
-	apiSpec "github.com/zeromicro/go-zero/tools/goctl/api/spec"
 )
 
 func jsonResponseFromType(ctx Context, atDoc apiSpec.AtDoc, tp apiSpec.Type) *spec.Responses {

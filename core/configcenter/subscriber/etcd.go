@@ -4,8 +4,8 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/zeromicro/go-zero/core/discov"
-	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/core/discov"
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
 )
 
 type (

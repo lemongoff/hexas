@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/codec"
-	"github.com/zeromicro/go-zero/core/logc"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zeromicro/go-zero/rest/internal/security"
+	"github.com/JellyGoFF/FF-Hexas/core/codec"
+	"github.com/JellyGoFF/FF-Hexas/core/logc"
+	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
+	"github.com/JellyGoFF/FF-Hexas/rest/internal/security"
 )
 
 const contentSecurity = "X-Content-Security"

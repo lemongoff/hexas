@@ -1,14 +1,14 @@
 package service
 
 import (
-	"github.com/zeromicro/go-zero/core/load"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/proc"
-	"github.com/zeromicro/go-zero/core/prometheus"
-	"github.com/zeromicro/go-zero/core/stat"
-	"github.com/zeromicro/go-zero/core/trace"
-	"github.com/zeromicro/go-zero/internal/devserver"
-	"github.com/zeromicro/go-zero/internal/profiling"
+	"github.com/JellyGoFF/FF-Hexas/core/load"
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/core/proc"
+	"github.com/JellyGoFF/FF-Hexas/core/prometheus"
+	"github.com/JellyGoFF/FF-Hexas/core/stat"
+	"github.com/JellyGoFF/FF-Hexas/core/trace"
+	"github.com/JellyGoFF/FF-Hexas/internal/devserver"
+	"github.com/JellyGoFF/FF-Hexas/internal/profiling"
 )
 
 const (

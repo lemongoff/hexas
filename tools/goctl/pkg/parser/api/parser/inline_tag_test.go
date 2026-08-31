@@ -3,8 +3,8 @@ package parser
 import (
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
 	"github.com/stretchr/testify/require"
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
 )
 
 const inlineTagAPI = `

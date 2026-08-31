@@ -4,9 +4,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/core/proc"
 	"github.com/prometheus/client_golang/prometheus/testutil"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/proc"
 )
 
 func TestNewSummaryVec(t *testing.T) {

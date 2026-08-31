@@ -12,15 +12,15 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/color"
-	"github.com/zeromicro/go-zero/core/iox"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/syncx"
-	"github.com/zeromicro/go-zero/core/timex"
-	"github.com/zeromicro/go-zero/core/utils"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zeromicro/go-zero/rest/internal"
-	"github.com/zeromicro/go-zero/rest/internal/response"
+	"github.com/JellyGoFF/FF-Hexas/core/color"
+	"github.com/JellyGoFF/FF-Hexas/core/iox"
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/JellyGoFF/FF-Hexas/core/utils"
+	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
+	"github.com/JellyGoFF/FF-Hexas/rest/internal"
+	"github.com/JellyGoFF/FF-Hexas/rest/internal/response"
 )
 
 const (
@@ -98,7 +98,7 @@ func DetailedLogHandler(next http.Handler) http.Handler {
 		lrw := newDetailLoggedResponseWriter(rw, &buf)
 
 		var dup io.ReadCloser
-		// https://github.com/zeromicro/go-zero/issues/3564
+		// https://github.com/JellyGoFF/FF-Hexas/issues/3564
 		r.Body, dup = iox.LimitDupReadCloser(r.Body, limitDetailedBodyBytes)
 		logs := new(internal.LogCollector)
 		next.ServeHTTP(lrw, r.WithContext(internal.WithLogCollector(r.Context(), logs)))

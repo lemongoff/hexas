@@ -7,16 +7,16 @@ import (
 	"slices"
 	"time"
 
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/execx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/console"
-	"github.com/zeromicro/go-zero/tools/goctl/util/ctx"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/execx"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/ctx"
 )
 
 const (
 	deprecatedGoZeroMod = "github.com/tal-tech/go-zero"
 	deprecatedBuilderx  = "github.com/tal-tech/go-zero/tools/goctl/model/sql/builderx"
-	replacementBuilderx = "github.com/zeromicro/go-zero/core/stores/builder"
-	goZeroMod           = "github.com/zeromicro/go-zero"
+	replacementBuilderx = "github.com/JellyGoFF/FF-Hexas/core/stores/builder"
+	goZeroMod           = "github.com/JellyGoFF/FF-Hexas"
 )
 
 var errInvalidGoMod = errors.New("it's only working for go module")

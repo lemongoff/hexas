@@ -53,7 +53,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/zeromicro/go-zero/core/mr"
+    "github.com/JellyGoFF/FF-Hexas/core/mr"
 )
 
 func main() {

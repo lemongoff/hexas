@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"sync"
 
+	"github.com/JellyGoFF/FF-Hexas/core/metric"
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/zeromicro/go-zero/core/metric"
 )
 
 const namespace = "sql_client"

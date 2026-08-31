@@ -7,10 +7,10 @@ import (
 	"log"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/errorx"
-	"github.com/zeromicro/go-zero/core/hash"
-	"github.com/zeromicro/go-zero/core/stores/redis"
-	"github.com/zeromicro/go-zero/core/syncx"
+	"github.com/JellyGoFF/FF-Hexas/core/errorx"
+	"github.com/JellyGoFF/FF-Hexas/core/hash"
+	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
+	"github.com/JellyGoFF/FF-Hexas/core/syncx"
 )
 
 type (

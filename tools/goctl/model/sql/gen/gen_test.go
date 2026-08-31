@@ -10,14 +10,14 @@ import (
 	"testing"
 	"time"
 
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/core/stores/builder"
+	"github.com/JellyGoFF/FF-Hexas/core/stringx"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/parser"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/stores/builder"
-	"github.com/zeromicro/go-zero/core/stringx"
-	"github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/model/sql/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 //go:embed testdata/user.sql

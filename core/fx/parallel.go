@@ -1,8 +1,8 @@
 package fx
 
 import (
-	"github.com/zeromicro/go-zero/core/errorx"
-	"github.com/zeromicro/go-zero/core/threading"
+	"github.com/JellyGoFF/FF-Hexas/core/errorx"
+	"github.com/JellyGoFF/FF-Hexas/core/threading"
 )
 
 // Parallel runs fns parallelly and waits for done.

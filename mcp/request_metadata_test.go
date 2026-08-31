@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/rest/pathvar"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/rest/pathvar"
 )
 
 func TestDefaultRequestMetadataExtractor(t *testing.T) {

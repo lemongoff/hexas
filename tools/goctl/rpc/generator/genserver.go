@@ -6,13 +6,13 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/zeromicro/go-zero/core/collection"
-	conf "github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/stringx"
+	"github.com/JellyGoFF/FF-Hexas/core/collection"
+	conf "github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/parser"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/format"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/stringx"
 )
 
 const functionTemplate = `

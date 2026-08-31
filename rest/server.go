@@ -7,14 +7,14 @@ import (
 	"path"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/rest/chain"
-	"github.com/zeromicro/go-zero/rest/handler"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zeromicro/go-zero/rest/internal"
-	"github.com/zeromicro/go-zero/rest/internal/cors"
-	"github.com/zeromicro/go-zero/rest/internal/fileserver"
-	"github.com/zeromicro/go-zero/rest/router"
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/rest/chain"
+	"github.com/JellyGoFF/FF-Hexas/rest/handler"
+	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
+	"github.com/JellyGoFF/FF-Hexas/rest/internal"
+	"github.com/JellyGoFF/FF-Hexas/rest/internal/cors"
+	"github.com/JellyGoFF/FF-Hexas/rest/internal/fileserver"
+	"github.com/JellyGoFF/FF-Hexas/rest/router"
 )
 
 type (

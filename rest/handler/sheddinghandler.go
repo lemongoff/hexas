@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/zeromicro/go-zero/core/load"
-	"github.com/zeromicro/go-zero/core/logc"
-	"github.com/zeromicro/go-zero/core/stat"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zeromicro/go-zero/rest/internal/response"
+	"github.com/JellyGoFF/FF-Hexas/core/load"
+	"github.com/JellyGoFF/FF-Hexas/core/logc"
+	"github.com/JellyGoFF/FF-Hexas/core/stat"
+	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
+	"github.com/JellyGoFF/FF-Hexas/rest/internal/response"
 )
 
 const serviceType = "api"

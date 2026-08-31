@@ -12,10 +12,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/codec"
-	"github.com/zeromicro/go-zero/core/iox"
-	"github.com/zeromicro/go-zero/core/logc"
-	"github.com/zeromicro/go-zero/rest/httpx"
+	"github.com/JellyGoFF/FF-Hexas/core/codec"
+	"github.com/JellyGoFF/FF-Hexas/core/iox"
+	"github.com/JellyGoFF/FF-Hexas/core/logc"
+	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
 )
 
 const (

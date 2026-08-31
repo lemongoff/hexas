@@ -43,7 +43,7 @@
 | A-06 | 高 | REST 权限 | 已关闭：Route helper 复制完整结构并保留 `Permissions` |
 | A-07 | 中 | REST protobuf | 已关闭：补齐 protobuf error/write API、8 MiB 限制、content-type 和错误链 |
 | A-08 | 中 | logx | 已关闭：BI 改为可选 writer 能力并进入标准日志字段、脱敏和截断路径 |
-| A-09 | 中 | goctl | 已关闭：根 `go.work` 绑定本地 module，版本更新为 `1.10.3-ffhexas` |
+| A-09 | 中 | goctl | 已关闭：根 `go.work` 绑定本地 module，版本更新为 `1.10.3-ffhexas`，module path 随项目迁移 |
 | A-10 | 中 | 默认行为 | 已关闭：新增 FF-Hexas 默认行为契约文档并保留对应测试 |
 | A-11 | 中 | 测试覆盖 | 已关闭：新增关键失败、元数据、前缀、Cluster、并发与 BI 回归测试 |
 | A-12 | 高 | GitHub workflow | 已关闭：CI 对齐 `main` 和双 module，删除上游 goctl 发布/版本任务及 gomod 自动升级 |
@@ -57,7 +57,8 @@
 - etcd 服务发现坚持 JSON-only 硬切换，不恢复旧纯地址格式兼容；单条损坏或空地址记录只被隔离，不再截断合法节点列表。
 - REST Route 的元数据在 helper 组合中完整保留。Protobuf HTTP 使用 `application/pb`、8 MiB 请求上限和独立 success/error 写入入口。
 - `logx.Writer` 不再强制实现 BI；实现 `BIWriter` 可选择独立路由，否则落到 Info。两条路径都使用 caller、全局字段、`channel=bi`、敏感值遮罩和内容截断。
-- goctl 通过根 `go.work` 使用当前框架源码，显示版本为 `1.10.3-ffhexas`。本仓库不发布上游 goctl tag，也不自动跟随 go-zero 后续版本。
+- 根 module 已迁移为 `github.com/JellyGoFF/FF-Hexas`，goctl module 已迁移为 `github.com/JellyGoFF/FF-Hexas/tools/goctl`；旧路径只保留在官方基线、历史发现和第三方来源记录中，不提供 import 兼容层。
+- goctl 通过根 `go.work` 和自身的相对 `replace` 使用当前框架源码，显示版本为 `1.10.3-ffhexas`。其根 module 依赖在正式版本发布前使用 `v0.0.0` 本地占位；发布前必须替换为真实版本并删除相对 `replace`。本仓库不发布上游 goctl tag，也不自动跟随 go-zero 后续版本。
 - RPC、缓存和成功日志的默认值见 [`../framework-defaults.md`](../framework-defaults.md)。
 
 回滚时应按条目独立回退代码和测试；不要恢复已删除的异步脏写链路。若必须重新引入异步持久化，应作为新设计完成 outbox/ack、幂等、崩溃恢复和真实故障注入验证。

@@ -11,10 +11,10 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/rest/internal/header"
+	"github.com/JellyGoFF/FF-Hexas/rest/pathvar"
 	"github.com/gogo/protobuf/types"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/rest/internal/header"
-	"github.com/zeromicro/go-zero/rest/pathvar"
 )
 
 func TestParsePbBody(t *testing.T) {

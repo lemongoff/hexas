@@ -3,7 +3,7 @@ package mcp
 import (
 	"time"
 
-	"github.com/zeromicro/go-zero/rest"
+	"github.com/JellyGoFF/FF-Hexas/rest"
 )
 
 // McpConf defines the configuration for an MCP server.

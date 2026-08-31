@@ -6,11 +6,11 @@ import (
 	"os"
 	"path"
 
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/core/hash"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/tools/goctl/update/config"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
+	"github.com/JellyGoFF/FF-Hexas/core/conf"
+	"github.com/JellyGoFF/FF-Hexas/core/hash"
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/update/config"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
 )
 
 const (

@@ -4,10 +4,10 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/util/console"
-	"github.com/zeromicro/go-zero/tools/goctl/util/ctx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/parser"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/ctx"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
 )
 
 type ZRpcContext struct {

@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
+	"github.com/JellyGoFF/FF-Hexas/core/conf"
+	"github.com/JellyGoFF/FF-Hexas/core/syncx"
 	"github.com/grafana/pyroscope-go"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/core/syncx"
 )
 
 func TestStart(t *testing.T) {

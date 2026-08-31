@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/proc"
-	"github.com/zeromicro/go-zero/core/stat"
-	"github.com/zeromicro/go-zero/core/stringx"
+	"github.com/JellyGoFF/FF-Hexas/core/proc"
+	"github.com/JellyGoFF/FF-Hexas/core/stat"
+	"github.com/JellyGoFF/FF-Hexas/core/stringx"
 )
 
 const numHistoryReasons = 5

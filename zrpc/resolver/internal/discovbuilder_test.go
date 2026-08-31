@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/core/discov"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/discov"
 	"go.etcd.io/etcd/client/v3/mock/mockserver"
 	"google.golang.org/grpc/resolver"
 	"google.golang.org/grpc/serviceconfig"

@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/zeromicro/go-zero/core/stringx"
+	"github.com/JellyGoFF/FF-Hexas/core/stringx"
 )
 
 var replacer = stringx.NewReplacer(map[string]string{

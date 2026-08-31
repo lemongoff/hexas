@@ -7,10 +7,10 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/core/stringx"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/execx"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/stringx"
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/execx"
 )
 
 func TestRpcGenerate(t *testing.T) {

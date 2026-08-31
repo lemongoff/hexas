@@ -7,11 +7,11 @@ import (
 	"net/http/pprof"
 	"sync"
 
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/core/prometheus"
+	"github.com/JellyGoFF/FF-Hexas/core/threading"
+	"github.com/JellyGoFF/FF-Hexas/internal/health"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/prometheus"
-	"github.com/zeromicro/go-zero/core/threading"
-	"github.com/zeromicro/go-zero/internal/health"
 )
 
 var once sync.Once

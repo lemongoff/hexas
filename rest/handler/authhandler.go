@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"net/http/httputil"
 
+	"github.com/JellyGoFF/FF-Hexas/core/logc"
+	"github.com/JellyGoFF/FF-Hexas/rest/internal/response"
+	"github.com/JellyGoFF/FF-Hexas/rest/token"
 	"github.com/golang-jwt/jwt/v4"
-	"github.com/zeromicro/go-zero/core/logc"
-	"github.com/zeromicro/go-zero/rest/internal/response"
-	"github.com/zeromicro/go-zero/rest/token"
 )
 
 const (

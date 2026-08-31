@@ -7,8 +7,8 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/zeromicro/go-zero/tools/goctl/pkg/parser/api/token"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/token"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
 )
 
 const (

@@ -18,7 +18,7 @@ Key boundaries:
 
 - The code baseline is `zeromicro/go-zero v1.10.3@925f8a2bcc159eaf3b1da0f5fc695beac26e15ff`.
 - The history contains upstream `zeromicro/go-zero v1.10.3@925f8a2bcc159eaf3b1da0f5fc695beac26e15ff` plus internal customizations.
-- The module path remains `github.com/zeromicro/go-zero` only to preserve existing imports.
+- The project module path is `github.com/JellyGoFF/FF-Hexas`; the old upstream path is provenance only and has no compatibility guarantee.
 - Do not add forward-compatibility code, automatic fallbacks, or upstream synchronization unless a task explicitly requires it.
 - Use the repository's `tools/goctl` source when generator behavior matters; never install or select `goctl@latest` automatically.
 - Treat `ai/skills/zero-skills/upstream/` as pinned consumer-service reference material, not repository authority.

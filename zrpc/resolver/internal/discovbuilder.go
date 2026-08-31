@@ -3,9 +3,9 @@ package internal
 import (
 	"strings"
 
-	"github.com/zeromicro/go-zero/core/discov"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/zrpc/resolver/internal/targets"
+	"github.com/JellyGoFF/FF-Hexas/core/discov"
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/zrpc/resolver/internal/targets"
 	"google.golang.org/grpc/resolver"
 )
 

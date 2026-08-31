@@ -19,20 +19,20 @@ FF-Hexas 保留自己的 Git 仓库和远端，不复制其他仓库的 `.git` �
 
 ## 3. module path 说明
 
-根 `go.mod` 仍声明：
+根 `go.mod` 声明：
 
 ```go
-module github.com/zeromicro/go-zero
+module github.com/JellyGoFF/FF-Hexas
 ```
 
-这是有意保留的引用路径，避免在导入阶段重写全部 Go import。它不代表：
+这是 FF-Hexas 自身的 module/import path。`github.com/zeromicro/go-zero` 仅用于标识第 1 节的官方代码基线，不再作为本项目的引用路径。新路径不代表：
 
 - FF-Hexas 由 zeromicro 官方发布或维护；
 - FF-Hexas 与官方同版本号具有相同行为；
 - 官方 issue、文档或升级指南可直接套用；
 - 本仓库需要持续兼容官方新版本。
 
-消费方应通过明确的 `replace`、工作区或内部发布版本引用 FF-Hexas，并把替换关系视为应用构建配置的一部分。
+消费方必须把 import path 和 `go.mod` 依赖迁移到 `github.com/JellyGoFF/FF-Hexas`。正式版本发布前，可通过明确的 `replace` 或工作区引用本地源码，并把替换关系视为应用构建配置的一部分；本仓库不提供旧路径兼容层。
 
 ## 4. 不兼容策略
 
@@ -50,11 +50,11 @@ FF-Hexas 从本次导入起独立演进：
 
 `tools/goctl` 有独立 `go.mod`：
 
-- module：`github.com/zeromicro/go-zero/tools/goctl`
-- 直接依赖：官方 `github.com/zeromicro/go-zero v1.10.3`
-- 当前 `BuildVersion`：`1.10.2`
+- module：`github.com/JellyGoFF/FF-Hexas/tools/goctl`
+- 直接依赖：`github.com/JellyGoFF/FF-Hexas v0.0.0`，并以 `replace => ../..` 绑定本地根 module
+- 当前 `BuildVersion`：`1.10.3-ffhexas`
 
-因此根目录测试不会覆盖 goctl，goctl 构建默认也不会使用本地 FF-Hexas 根 module。若未来希望生成器与本地框架定制联动，需要单独设计 workspace/replace、版本命名和发布流程；当前不做调整。
+根目录测试不会覆盖 goctl；根 `go.work` 同时纳入根 module 与 `tools/goctl`，goctl 自身的相对 `replace` 则保证从其目录独立执行时仍使用本地 FF-Hexas 源码。`v0.0.0` 和相对 `replace` 都不是发布配置，独立分发 goctl 前必须先建立 FF-Hexas 版本/tag、更新依赖版本、删除本地 `replace`，并验证脱离 `go.work` 的构建。
 
 ## 6. 维护本文件
 

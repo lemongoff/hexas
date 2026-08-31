@@ -1,6 +1,6 @@
 package stringx
 
-import "github.com/zeromicro/go-zero/core/lang"
+import "github.com/JellyGoFF/FF-Hexas/core/lang"
 
 const defaultMask = '*'
 

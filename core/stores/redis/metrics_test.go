@@ -7,12 +7,12 @@ import (
 	"testing"
 	"time"
 
+	"github.com/JellyGoFF/FF-Hexas/core/conf"
+	"github.com/JellyGoFF/FF-Hexas/internal/devserver"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/testutil"
 	red "github.com/redis/go-redis/v9"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/internal/devserver"
 )
 
 func TestRedisMetric(t *testing.T) {

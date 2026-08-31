@@ -3,7 +3,7 @@ package fs
 import (
 	"os"
 
-	"github.com/zeromicro/go-zero/core/hash"
+	"github.com/JellyGoFF/FF-Hexas/core/hash"
 )
 
 // TempFileWithText creates the temporary file with the given content,

@@ -1,6 +1,6 @@
 package config
 
-import "github.com/zeromicro/go-zero/zrpc"
+import "github.com/JellyGoFF/FF-Hexas/zrpc"
 
 type Config struct {
 	zrpc.RpcServerConf

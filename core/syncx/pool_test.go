@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/JellyGoFF/FF-Hexas/core/lang"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/lang"
 )
 
 const limit = 10

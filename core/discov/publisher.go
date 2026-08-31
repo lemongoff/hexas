@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/discov/internal"
-	"github.com/zeromicro/go-zero/core/lang"
-	"github.com/zeromicro/go-zero/core/logc"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/proc"
-	"github.com/zeromicro/go-zero/core/syncx"
-	"github.com/zeromicro/go-zero/core/threading"
+	"github.com/JellyGoFF/FF-Hexas/core/discov/internal"
+	"github.com/JellyGoFF/FF-Hexas/core/lang"
+	"github.com/JellyGoFF/FF-Hexas/core/logc"
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/core/proc"
+	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/JellyGoFF/FF-Hexas/core/threading"
 	clientv3 "go.etcd.io/etcd/client/v3"
 )
 

@@ -6,11 +6,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/lang"
-	"github.com/zeromicro/go-zero/core/proc"
-	"github.com/zeromicro/go-zero/core/syncx"
-	"github.com/zeromicro/go-zero/core/threading"
-	"github.com/zeromicro/go-zero/core/timex"
+	"github.com/JellyGoFF/FF-Hexas/core/lang"
+	"github.com/JellyGoFF/FF-Hexas/core/proc"
+	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/JellyGoFF/FF-Hexas/core/threading"
+	"github.com/JellyGoFF/FF-Hexas/core/timex"
 )
 
 const idleRound = 10

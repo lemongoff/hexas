@@ -1,4 +1,4 @@
-module github.com/zeromicro/go-zero
+module github.com/JellyGoFF/FF-Hexas
 
 go 1.24.0
 

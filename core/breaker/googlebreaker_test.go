@@ -6,11 +6,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/JellyGoFF/FF-Hexas/core/collection"
+	"github.com/JellyGoFF/FF-Hexas/core/mathx"
+	"github.com/JellyGoFF/FF-Hexas/core/stat"
+	"github.com/JellyGoFF/FF-Hexas/core/syncx"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/collection"
-	"github.com/zeromicro/go-zero/core/mathx"
-	"github.com/zeromicro/go-zero/core/stat"
-	"github.com/zeromicro/go-zero/core/syncx"
 )
 
 const (

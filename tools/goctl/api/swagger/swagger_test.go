@@ -3,8 +3,8 @@ package swagger
 import (
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
 )
 
 func Test_pathVariable2SwaggerVariable(t *testing.T) {

@@ -10,11 +10,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/lang"
-	"github.com/zeromicro/go-zero/core/logc"
-	"github.com/zeromicro/go-zero/core/mathx"
-	"github.com/zeromicro/go-zero/core/syncx"
-	"github.com/zeromicro/go-zero/core/threading"
+	"github.com/JellyGoFF/FF-Hexas/core/lang"
+	"github.com/JellyGoFF/FF-Hexas/core/logc"
+	"github.com/JellyGoFF/FF-Hexas/core/mathx"
+	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/JellyGoFF/FF-Hexas/core/threading"
 	"go.etcd.io/etcd/api/v3/v3rpc/rpctypes"
 	clientv3 "go.etcd.io/etcd/client/v3"
 )

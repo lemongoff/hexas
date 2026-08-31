@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"text/template"
 
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
 	"github.com/gookit/color"
 	"github.com/spf13/cobra"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 const (

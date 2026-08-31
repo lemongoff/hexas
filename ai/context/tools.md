@@ -23,7 +23,7 @@ go vet ./...
 需要在临时示例中调用可执行文件时，先把当前源码构建到任务专用临时目录。不要执行：
 
 ```bash
-go install github.com/zeromicro/go-zero/tools/goctl@latest
+go install github.com/JellyGoFF/FF-Hexas/tools/goctl@latest
 ```
 
 `@latest` 可能引入与 FF-Hexas 基线不同的模板、命令和运行时假设。

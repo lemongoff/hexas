@@ -13,10 +13,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/ctx"
 	"github.com/gookit/color"
 	"github.com/spf13/cobra"
-	"github.com/zeromicro/go-zero/tools/goctl/util/console"
-	"github.com/zeromicro/go-zero/tools/goctl/util/ctx"
 )
 
 const defaultMigrateVersion = "v1.3.0"

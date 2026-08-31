@@ -14,14 +14,14 @@ import (
 	"testing"
 	"time"
 
+	"github.com/JellyGoFF/FF-Hexas/core/conf"
+	"github.com/JellyGoFF/FF-Hexas/core/logx/logtest"
+	"github.com/JellyGoFF/FF-Hexas/rest/chain"
+	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
+	"github.com/JellyGoFF/FF-Hexas/rest/internal/cors"
+	"github.com/JellyGoFF/FF-Hexas/rest/internal/header"
+	"github.com/JellyGoFF/FF-Hexas/rest/router"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/core/logx/logtest"
-	"github.com/zeromicro/go-zero/rest/chain"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zeromicro/go-zero/rest/internal/cors"
-	"github.com/zeromicro/go-zero/rest/internal/header"
-	"github.com/zeromicro/go-zero/rest/router"
 )
 
 const (

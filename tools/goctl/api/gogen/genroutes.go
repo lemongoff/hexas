@@ -10,13 +10,13 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/collection"
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
-	"github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/internal/version"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/tools/goctl/vars"
+	"github.com/JellyGoFF/FF-Hexas/core/collection"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/version"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/format"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/vars"
 )
 
 const (

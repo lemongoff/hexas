@@ -12,9 +12,9 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/JellyGoFF/FF-Hexas/core/color"
+	"github.com/JellyGoFF/FF-Hexas/core/errorx"
 	fatihcolor "github.com/fatih/color"
-	"github.com/zeromicro/go-zero/core/color"
-	"github.com/zeromicro/go-zero/core/errorx"
 )
 
 type (

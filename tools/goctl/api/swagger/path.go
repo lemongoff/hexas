@@ -5,9 +5,9 @@ import (
 	"path"
 	"strings"
 
+	apiSpec "github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/stringx"
 	"github.com/go-openapi/spec"
-	apiSpec "github.com/zeromicro/go-zero/tools/goctl/api/spec"
-	"github.com/zeromicro/go-zero/tools/goctl/util/stringx"
 )
 
 func spec2Paths(ctx Context, srv apiSpec.Service) *spec.Paths {

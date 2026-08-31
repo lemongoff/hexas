@@ -3,10 +3,10 @@ package gogen
 import (
 	_ "embed"
 
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
-	"github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/internal/version"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/version"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/format"
 )
 
 //go:embed svc_test.tpl

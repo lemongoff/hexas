@@ -7,12 +7,12 @@ FF-Hexas 是以 go-zero `v1.10.3` 为代码基线的游戏服务框架。当前�
 根 module：
 
 ```text
-github.com/zeromicro/go-zero
+github.com/JellyGoFF/FF-Hexas
 ```
 
 Go 版本：`1.24.0`。
 
-module path 只是现有 import path，不表示本仓库继续作为官方 go-zero 的兼容实现。来源和版本边界见 `framework-lineage.md`。
+该 module path 是 FF-Hexas 自身的公开 import path，不表示本仓库继续作为官方 go-zero 的兼容实现。来源和版本边界见 `framework-lineage.md`。
 
 ## 2. 代码结构
 

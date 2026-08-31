@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/JellyGoFF/FF-Hexas/core/iox"
+	"github.com/JellyGoFF/FF-Hexas/core/lang"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/iox"
-	"github.com/zeromicro/go-zero/core/lang"
 )
 
 func TestEnterToContinue(t *testing.T) {

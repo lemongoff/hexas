@@ -3,8 +3,8 @@ package subscriber
 import (
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/core/discov"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/discov"
 )
 
 const (

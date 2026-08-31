@@ -6,8 +6,8 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/zeromicro/go-zero/core/hash"
-	"github.com/zeromicro/go-zero/core/stores/redis"
+	"github.com/JellyGoFF/FF-Hexas/core/hash"
+	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
 )
 
 // for detailed error rate table, see http://pages.cs.wisc.edu/~cao/papers/summary-cache/node8.html

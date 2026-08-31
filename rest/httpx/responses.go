@@ -8,12 +8,12 @@ import (
 	"net/http"
 	"sync"
 
+	"github.com/JellyGoFF/FF-Hexas/core/jsonx"
+	"github.com/JellyGoFF/FF-Hexas/core/logc"
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/rest/internal/errcode"
+	"github.com/JellyGoFF/FF-Hexas/rest/internal/header"
 	ggProto "github.com/gogo/protobuf/proto"
-	"github.com/zeromicro/go-zero/core/jsonx"
-	"github.com/zeromicro/go-zero/core/logc"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/rest/internal/errcode"
-	"github.com/zeromicro/go-zero/rest/internal/header"
 )
 
 var (

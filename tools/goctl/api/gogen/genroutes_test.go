@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
 )
 
 func Test_formatDuration(t *testing.T) {

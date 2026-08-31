@@ -9,13 +9,13 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/zeromicro/go-zero/core/collection"
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
-	apiutil "github.com/zeromicro/go-zero/tools/goctl/api/util"
-	"github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/internal/version"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
+	"github.com/JellyGoFF/FF-Hexas/core/collection"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
+	apiutil "github.com/JellyGoFF/FF-Hexas/tools/goctl/api/util"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/version"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/format"
 )
 
 const typesFile = "types"

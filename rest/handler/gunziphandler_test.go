@@ -9,9 +9,9 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/core/codec"
+	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/codec"
-	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 func TestGunzipHandler(t *testing.T) {

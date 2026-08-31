@@ -13,8 +13,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/fs"
-	"github.com/zeromicro/go-zero/core/lang"
+	"github.com/JellyGoFF/FF-Hexas/core/fs"
+	"github.com/JellyGoFF/FF-Hexas/core/lang"
 )
 
 const (

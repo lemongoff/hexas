@@ -6,7 +6,7 @@ import (
 	"io"
 	"testing"
 
-	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
 )
 
 type Buffer struct {

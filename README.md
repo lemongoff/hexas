@@ -12,10 +12,10 @@ FF-Hexas 是面向游戏服务场景维护的 go-zero 内部分支。仓库以
 | --- | --- |
 | 代码基线 | `github.com/zeromicro/go-zero v1.10.3` |
 | 基线提交 | `925f8a2bcc159eaf3b1da0f5fc695beac26e15ff` |
-| Go module | `github.com/zeromicro/go-zero` |
+| Go module | `github.com/JellyGoFF/FF-Hexas` |
 | Go 版本 | `1.24.0` |
 
-`github.com/zeromicro/go-zero` 继续作为 module 和 import path，仅用于保持现有调用路径稳定；它不表示本仓库仍是官方发行版。FF-Hexas 从当前基线起按独立硬分支维护，不承诺继续兼容官方后续版本、API、配置语义或运行时行为，也不默认继续合并上游。
+项目 module 和 import path 已切换为 `github.com/JellyGoFF/FF-Hexas`。`github.com/zeromicro/go-zero` 仅表示固定的官方代码基线；FF-Hexas 从当前基线起按独立硬分支维护，不承诺继续兼容官方后续版本、API、配置语义或运行时行为，也不默认继续合并上游。已有调用方需要同步更新 import path 和 `go.mod` 依赖，不能依赖自动兼容或 fallback。
 
 完整来源关系和版本策略见 [ai/framework-lineage.md](ai/framework-lineage.md)。
 

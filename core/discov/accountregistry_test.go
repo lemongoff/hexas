@@ -3,9 +3,9 @@ package discov
 import (
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/core/discov/internal"
+	"github.com/JellyGoFF/FF-Hexas/core/stringx"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/discov/internal"
-	"github.com/zeromicro/go-zero/core/stringx"
 )
 
 func TestRegisterAccount(t *testing.T) {

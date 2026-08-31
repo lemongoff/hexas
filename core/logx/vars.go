@@ -3,7 +3,7 @@ package logx
 import (
 	"errors"
 
-	"github.com/zeromicro/go-zero/core/syncx"
+	"github.com/JellyGoFF/FF-Hexas/core/syncx"
 )
 
 const (

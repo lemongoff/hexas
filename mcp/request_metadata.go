@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/pathvar"
+	"github.com/JellyGoFF/FF-Hexas/rest/pathvar"
 )
 
 // RequestMetadata carries selected request-scoped values into MCP handlers.

@@ -6,9 +6,9 @@ import (
 	"path"
 	"strings"
 
-	"github.com/zeromicro/go-zero/core/search"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zeromicro/go-zero/rest/pathvar"
+	"github.com/JellyGoFF/FF-Hexas/core/search"
+	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
+	"github.com/JellyGoFF/FF-Hexas/rest/pathvar"
 )
 
 const (

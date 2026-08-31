@@ -6,9 +6,9 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/core/fs"
+	"github.com/JellyGoFF/FF-Hexas/core/hash"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/fs"
-	"github.com/zeromicro/go-zero/core/hash"
 )
 
 var dupErr conflictKeyError

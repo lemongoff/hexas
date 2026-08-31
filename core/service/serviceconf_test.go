@@ -3,9 +3,9 @@ package service
 import (
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/internal/devserver"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/internal/devserver"
 )
 
 func TestServiceConf(t *testing.T) {

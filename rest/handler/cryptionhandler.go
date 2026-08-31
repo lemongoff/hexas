@@ -10,8 +10,8 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/zeromicro/go-zero/core/codec"
-	"github.com/zeromicro/go-zero/core/logc"
+	"github.com/JellyGoFF/FF-Hexas/core/codec"
+	"github.com/JellyGoFF/FF-Hexas/core/logc"
 )
 
 const maxBytes = 1 << 20 // 1 MiB

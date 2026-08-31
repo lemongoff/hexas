@@ -1,9 +1,12 @@
-module github.com/zeromicro/go-zero/tools/goctl
+module github.com/JellyGoFF/FF-Hexas/tools/goctl
 
 go 1.24.0
 
+replace github.com/JellyGoFF/FF-Hexas => ../..
+
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.2
+	github.com/JellyGoFF/FF-Hexas v0.0.0
 	github.com/emicklei/proto v1.14.3
 	github.com/fatih/structtag v1.2.0
 	github.com/go-openapi/spec v0.21.1-0.20250328170532-a3928469592e
@@ -16,7 +19,6 @@ require (
 	github.com/withfig/autocomplete-tools/integrations/cobra v1.2.1
 	github.com/zeromicro/antlr v0.0.1
 	github.com/zeromicro/ddl-parser v1.0.5
-	github.com/zeromicro/go-zero v1.10.3
 	golang.org/x/text v0.34.0
 	google.golang.org/grpc v1.80.0
 	google.golang.org/protobuf v1.36.11

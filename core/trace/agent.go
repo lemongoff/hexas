@@ -6,7 +6,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"

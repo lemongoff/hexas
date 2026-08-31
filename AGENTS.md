@@ -35,10 +35,10 @@
 
 - 代码基线：`github.com/zeromicro/go-zero v1.10.3`，提交为 `925f8a2bcc159eaf3b1da0f5fc695beac26e15ff`。
 - 当前工作树已经包含面向游戏服务场景的定制；这些定制属于 FF-Hexas 初始基线，不按官方同版本行为推断。
-- 根 module 仍为 `github.com/zeromicro/go-zero`，Go 版本为 `1.24.0`。
-- `tools/goctl` 是独立 module；它在导入基线中直接依赖官方 `github.com/zeromicro/go-zero v1.10.3`。
+- 根 module 为 `github.com/JellyGoFF/FF-Hexas`，Go 版本为 `1.24.0`。
+- `tools/goctl` 是独立 module，module path 为 `github.com/JellyGoFF/FF-Hexas/tools/goctl`；根 `go.work` 与其本地 `replace` 负责在本仓库内绑定框架源码。
 
-保留 `github.com/zeromicro/go-zero` module/import path 是既有引用策略，不代表继续跟随官方发行。FF-Hexas 不承诺兼容官方后续分支、版本、API、配置或行为；不得为了“上游兼容”主动加入兼容层、双实现、自动 fallback 或同步逻辑。
+`github.com/zeromicro/go-zero` 只用于标识固定的官方代码基线和历史来源，不再是 FF-Hexas 的 module/import path。FF-Hexas 不承诺兼容官方后续分支、版本、API、配置或行为；不得为了“上游兼容”主动加入兼容层、双实现、自动 fallback 或同步逻辑。
 
 后续若要合并、挑选或对照官方改动，必须作为独立任务明确目标提交、冲突处理、行为差异和验证范围。
 

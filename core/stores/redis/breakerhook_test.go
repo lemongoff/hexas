@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
+	"github.com/JellyGoFF/FF-Hexas/core/breaker"
 	"github.com/alicebob/miniredis/v2"
 	red "github.com/redis/go-redis/v9"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/breaker"
 )
 
 func TestBreakerHook_ProcessHook(t *testing.T) {

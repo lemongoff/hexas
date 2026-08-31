@@ -5,8 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/JellyGoFF/FF-Hexas/core/stat"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/stat"
 )
 
 func TestMetricHandler(t *testing.T) {

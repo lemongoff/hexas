@@ -3,10 +3,10 @@ package gen
 import (
 	"strings"
 
-	"github.com/zeromicro/go-zero/tools/goctl/model/sql/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/model/sql/template"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/parser"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/template"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
+	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
 )
 
 func genFields(table Table, fields []*parser.Field) (string, error) {

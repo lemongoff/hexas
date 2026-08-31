@@ -4,9 +4,9 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/JellyGoFF/FF-Hexas/rest"
 	sdkmcp "github.com/modelcontextprotocol/go-sdk/mcp"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/rest"
 )
 
 // McpServer defines the interface for Model Context Protocol servers using the official SDK
