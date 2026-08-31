@@ -23,7 +23,9 @@
 2. `ai/README.md`：AI 文档索引与任务路由。
 3. `ai/project-overview.md`：目录职责、定制区域、编辑边界和验证入口。
 4. `ai/framework-lineage.md`：基线提交、module path 和不兼容策略。
-5. `docs/audits/2026-08-31-initial-framework-audit.md`：当前已知遗留问题。
+5. `ai/context/00-instructions.md`：适配本仓库的 AI 工作流与决策树。
+6. `ai/skills/zero-skills/SKILL.md`：go-zero 知识路由；只按任务读取需要的参考。
+7. `docs/audits/2026-08-31-initial-framework-audit.md`：当前已知遗留问题。
 
 修改审计中列出的高风险区域前，必须先阅读对应条目。审计条目不是自动授权的修复清单；用户只要求审计或范围未包含修复时，不得修改运行时行为。
 
@@ -49,7 +51,9 @@
 - `mcp/`：MCP 服务。
 - `internal/`：仅供本 module 内部使用的实现。
 - `tools/goctl/`：独立 Go module 的生成工具和模板。
-- `ai/`：AI 协作上下文和项目事实。
+- `ai/context/`：基于 `zeromicro/ai-context` 固定快照重写的项目工作流层。
+- `ai/skills/zero-skills/`：基于 `zeromicro/zero-skills` 固定快照适配的按需知识层。
+- `ai/` 其他文件：AI 协作入口、项目事实和版本边界。
 - `docs/audits/`：基线审计、遗留风险和验证记录。
 - `.github/`：工作流、Issue 模板和 GitHub Copilot 入口。
 
@@ -81,6 +85,8 @@
 - 修改服务发现值格式时必须说明部署顺序、混合版本行为和异常节点处理。
 - 修改 REST `Route` 时检查所有复制/重建 Route 的 helper，确保元数据不丢失。
 - 修改 `tools/goctl` 时在其目录内按独立 module 验证；根目录的 `go test ./...` 不覆盖该 module。
+- 不自动安装或使用 `goctl@latest`。生成器行为必须以当前 `tools/goctl` 源码、模板和测试为准，并优先在临时目录验证。
+- `ai/skills/zero-skills/upstream/` 是固定的通用参考，不是本仓库规范。其业务服务三层结构、默认值、安装和升级建议不得覆盖项目代码、审计或本文件。
 - 生成文件优先由现有生成命令重建，不直接手改，除非项目现状明确要求补丁。
 - 不写死密钥、账号、私有地址、绝对路径、端口或环境差异逻辑。
 
@@ -98,6 +104,7 @@
 
 - `README.md` 只放项目定位、基线、重要入口和快速验证。
 - 仓库事实、目录和工作流放在 `ai/`；历史来源放在 `ai/framework-lineage.md`。
+- 外部 AI 资产的来源 commit、许可证声明、选取范围和适配差异记录在对应 `UPSTREAM.md`；不得静默更新快照。
 - 已发现但本轮不处理的问题放在 `docs/audits/`，注明证据、影响、验证状态、重设计方向和建议顺序。
 - 用户可见 API、配置、部署、生成方式或兼容边界变化时同步更新文档。
 - 上游 `readme-cn.md`、`readme-ko.md` 和 `docs/upstream-readme.md` 只是导入快照，不作为本仓库开发规则。

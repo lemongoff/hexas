@@ -23,6 +23,8 @@ FF-Hexas 是面向游戏服务场景维护的 go-zero 内部分支。仓库以
 
 - [AGENTS.md](AGENTS.md)：AI 与开发协作的强制规则。
 - [ai/README.md](ai/README.md)：AI 文档索引和任务路由。
+- [ai/context/00-instructions.md](ai/context/00-instructions.md)：适配 FF-Hexas 的日常工作流层。
+- [ai/skills/zero-skills/SKILL.md](ai/skills/zero-skills/SKILL.md)：按需加载的 go-zero 知识层。
 - [ai/project-overview.md](ai/project-overview.md)：目录职责、定制区域和验证命令。
 - [初始基线审计](docs/audits/2026-08-31-initial-framework-audit.md)：已知遗留问题、重设计输入和处理优先级；基线导入阶段仅记录，未修改运行时代码。
 - [上游英文说明快照](docs/upstream-readme.md)、[上游中文说明](readme-cn.md) 和 [上游韩文说明](readme-ko.md)：仅作原始框架参考。
@@ -35,7 +37,8 @@ FF-Hexas 是面向游戏服务场景维护的 go-zero 内部分支。仓库以
 - `gateway/`：HTTP/gRPC 网关。
 - `mcp/`：MCP 服务实现。
 - `tools/goctl/`：独立 Go module 的代码生成工具。
-- `ai/`：本仓库的 AI 协作上下文。
+- `ai/context/`：基于 `zeromicro/ai-context` 固定快照重写的 FF-Hexas 工作流层。
+- `ai/skills/zero-skills/`：基于 `zeromicro/zero-skills` 固定快照适配的按需知识层。
 - `docs/audits/`：现状审计、遗留风险、重设计输入和处理状态。
 
 ## 验证

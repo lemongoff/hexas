@@ -25,6 +25,14 @@ module path 只是现有 import path，不表示本仓库继续作为官方 go-z
 | `mcp/` | MCP 服务 | HTTP 生命周期和协议行为 |
 | `internal/` | 根 module 内部实现 | 只允许 module 内引用 |
 | `tools/goctl/` | 独立 module 的代码生成工具 | 模板、生成结果、外部 protoc 工具链 |
+| `ai/context/` | FF-Hexas AI 工作流、命令和框架模式 | 与代码事实漂移、误套业务服务规则 |
+| `ai/skills/zero-skills/` | 项目 Skill 与固定的通用 go-zero 参考 | 上游默认值覆盖项目契约、无审计更新 |
+
+### 2.1 AI 上下文分层
+
+`ai/context/` 基于 `zeromicro/ai-context` 的工作流层思想重写，直接服务框架维护；`ai/skills/zero-skills/` 提供按需知识层。项目规则优先于 Skill，Skill 入口优先于其 `upstream/` 通用参考。
+
+两个来源均固定精确提交并复制为普通文件，不使用 submodule，也不自动更新。来源与删选范围分别记录在各自的 `UPSTREAM.md`。
 
 ## 3. 导入基线中的定制
 
@@ -50,6 +58,8 @@ module path 只是现有 import path，不表示本仓库继续作为官方 go-z
 - 数据写入、缓存、Redis Lua、服务发现编码、权限和配置默认值属于高风险区域。
 - `Route`、配置 struct、Writer 等公共类型发生字段或方法变化时，检查所有构造、复制、mock 和外部实现。
 - `tools/goctl` 不在根 module 的 `./...` 范围内，必须独立验证。
+- 不自动安装或使用 `goctl@latest`；生成器相关任务使用当前 `tools/goctl` 源码，并优先在临时目录验证产物。
+- 上游 zero-skills 的三层业务服务、生成和配置建议只适用于明确的消费方示例，不约束框架内部目录与实现。
 
 ## 5. 验证入口
 
