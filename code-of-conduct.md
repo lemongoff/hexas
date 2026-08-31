@@ -1,127 +1,115 @@
+# FF-Hexas 社区行为准则
 
-# Contributor Covenant Code of Conduct
+## 我们的承诺
 
-## Our Pledge
+FF-Hexas 的维护者、贡献者和参与者共同承诺：无论年龄、身体状况、残障、族群、性别特征、性别认同与表达、经验、教育程度、社会经济状况、国籍、外貌、种族、阶层、肤色、宗教、性取向或其他个人身份如何，每个人都应能在无骚扰的环境中参与项目。
 
-We as members, contributors, and leaders pledge to make participation in our
-community a harassment-free experience for everyone, regardless of age, body
-size, visible or invisible disability, ethnicity, sex characteristics, gender
-identity and expression, level of experience, education, socio-economic status,
-nationality, personal appearance, race, caste, color, religion, or sexual
-identity and orientation.
+我们将以开放、友善、尊重、包容和专业的方式协作，共同维护健康的技术社区。
 
-We pledge to act and interact in ways that contribute to an open, welcoming,
-diverse, inclusive, and healthy community.
+## 行为标准
 
-## Our Standards
+我们鼓励：
 
-Examples of behavior that contributes to a positive environment for our
-community include:
+- 尊重不同观点、经验和技术选择。
+- 以事实和问题本身为中心进行讨论。
+- 提供具体、建设性且可执行的反馈。
+- 善意理解他人的表达，并耐心帮助新参与者。
+- 承认错误、承担影响、及时道歉并改进。
+- 优先考虑项目和社区的长期利益。
 
-* Demonstrating empathy and kindness toward other people
-* Being respectful of differing opinions, viewpoints, and experiences
-* Giving and gracefully accepting constructive feedback
-* Accepting responsibility and apologizing to those affected by our mistakes,
-  and learning from the experience
-* Focusing on what is best not just for us as individuals, but for the overall
-  community
+不可接受的行为包括但不限于：
 
-Examples of unacceptable behavior include:
+- 使用带有性暗示、歧视、侮辱或贬损性质的语言和图像。
+- 人身攻击、恶意挑衅、持续打断、威胁或政治攻击。
+- 公开或私下实施骚扰、跟踪、恐吓或不受欢迎的接触。
+- 未经明确许可披露他人的住址、邮箱、账号、聊天记录或其他私人信息。
+- 对举报人、证人、维护者或参与调查者进行报复。
+- 滥用 Issue、Pull Request、Review、提交或自动化工具干扰协作。
+- 其他在专业协作环境中可合理认定为不当、威胁性或有害的行为。
 
-* The use of sexualized language or imagery, and sexual attention or advances of
-  any kind
-* Trolling, insulting or derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or email address,
-  without their explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
-  professional setting
+对代码、设计和决策的严格审查本身不构成违规，但必须针对事实和产出，不能转化为对个人或群体的攻击。
 
-## Enforcement Responsibilities
+## 适用范围
 
-Community leaders are responsible for clarifying and enforcing our standards of
-acceptable behavior and will take appropriate and fair corrective action in
-response to any behavior that they deem inappropriate, threatening, offensive,
-or harmful.
+本准则适用于：
 
-Community leaders have the right and responsibility to remove, edit, or reject
-comments, commits, code, wiki edits, issues, and other contributions that are
-not aligned to this Code of Conduct, and will communicate reasons for moderation
-decisions when appropriate.
+- 仓库中的 Issue、Pull Request、Review、提交、讨论、Wiki 和其他协作空间。
+- 与 FF-Hexas 相关的即时通信、会议、邮件及线上或线下活动。
+- 使用项目官方身份、账号或邮箱，或被指定代表项目公开发言的场景。
 
-## Scope
+发生在项目空间之外、但会实质影响参与者安全或项目协作的行为，也可以纳入处理范围。
 
-This Code of Conduct applies within all community spaces, and also applies when
-an individual is officially representing the community in public spaces.
-Examples of representing our community include using an official e-mail address,
-posting via an official social media account, or acting as an appointed
-representative at an online or offline event.
+## 举报方式
 
-## Enforcement
+如遇骚扰、威胁或其他违反本准则的行为，请通过 [FF-Hexas Security Advisory 私密报告入口](https://github.com/JellyGoFF/FF-Hexas/security/advisories/new) 联系仓库维护者。
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement at
-[INSERT CONTACT METHOD].
-All complaints will be reviewed and investigated promptly and fairly.
+报告建议包含：
 
-All community leaders are obligated to respect the privacy and security of the
-reporter of any incident.
+- 事件发生的时间、位置和涉及的项目空间。
+- 行为描述及其持续时间和影响。
+- 可验证的链接、截图、日志或其他证据。
+- 已采取的安全措施，以及希望维护者提供的帮助。
+- 是否存在利益冲突或需要特定维护者回避。
 
-## Enforcement Guidelines
+不要在公开 Issue、Pull Request 或讨论中披露举报人、被举报人、证人或其他相关人员的私人信息。技术漏洞仍按 [SECURITY.md](SECURITY.md) 报告；普通缺陷和功能建议按 [CONTRIBUTING.md](CONTRIBUTING.md) 提交。
 
-Community leaders will follow these Community Impact Guidelines in determining
-the consequences for any action they deem in violation of this Code of Conduct:
+如私密报告入口不可用，请通过 GitHub 私下联系一名具有仓库维护权限的维护者，并明确标注“行为准则事件”。在建立替代私密渠道前，不要公开事件细节。
 
-### 1. Correction
+## 维护与执行责任
 
-**Community Impact**: Use of inappropriate language or other behavior deemed
-unprofessional or unwelcome in the community.
+仓库维护者负责解释和执行本准则，并对不当、威胁性、冒犯性或有害行为采取及时、公平且与影响相称的措施。
 
-**Consequence**: A private, written warning from community leaders, providing
-clarity around the nature of the violation and an explanation of why the
-behavior was inappropriate. A public apology may be requested.
+处理报告时，维护者应：
 
-### 2. Warning
+- 尽快确认收到报告，并在合理时间内说明后续步骤。
+- 仅向调查和处置所必需的人员披露信息。
+- 保护举报人和证人的隐私、安全及免受报复的权利。
+- 对涉及自身或存在利益冲突的事件主动回避。
+- 分别听取相关方陈述，并基于可验证事实作出判断。
+- 记录处置理由；在不损害隐私和安全的前提下说明管理决定。
 
-**Community Impact**: A violation through a single incident or series of
-actions.
+维护者可以编辑、隐藏、删除或拒绝违反本准则的评论、提交、代码、Issue、Pull Request 和其他贡献，也可以限制相关人员参与项目。
 
-**Consequence**: A warning with consequences for continued behavior. No
-interaction with the people involved, including unsolicited interaction with
-those enforcing the Code of Conduct, for a specified period of time. This
-includes avoiding interactions in community spaces as well as external channels
-like social media. Violating these terms may lead to a temporary or permanent
-ban.
+故意捏造事实、伪造证据或利用举报机制实施骚扰同样违反本准则。无法证实的善意报告不会因此受到处罚。
 
-### 3. Temporary Ban
+## 处置指引
 
-**Community Impact**: A serious violation of community standards, including
-sustained inappropriate behavior.
+维护者根据行为的性质、持续时间、影响、既往记录、是否主动纠正以及对参与者安全的风险决定处置级别。
 
-**Consequence**: A temporary ban from any sort of interaction or public
-communication with the community for a specified period of time. No public or
-private interaction with the people involved, including unsolicited interaction
-with those enforcing the Code of Conduct, is allowed during this period.
-Violating these terms may lead to a permanent ban.
+### 1. 纠正
 
-### 4. Permanent Ban
+适用于轻微、不专业或不受欢迎的单次行为。
 
-**Community Impact**: Demonstrating a pattern of violation of community
-standards, including sustained inappropriate behavior, harassment of an
-individual, or aggression toward or disparagement of classes of individuals.
+可能措施：私下说明问题、要求修改或删除内容、停止相关行为，并视情况要求道歉。
 
-**Consequence**: A permanent ban from any sort of public interaction within the
-community.
+### 2. 正式警告
 
-## Attribution
+适用于明确违规，或在提醒后仍重复发生的行为。
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage],
-version 2.1, available at
-[https://www.contributor-covenant.org/version/2/1/code_of_conduct.html][v2.1].
+可能措施：书面警告、限定时间内停止与相关人员互动、限制参与特定讨论，并明确再次违规的后果。
 
-Community Impact Guidelines were inspired by
-[Mozilla's code of conduct enforcement ladder][Mozilla CoC].
+### 3. 临时限制
 
-For answers to common questions about this code of conduct, see the FAQ at
-[https://www.contributor-covenant.org/faq][FAQ]. Translations are available at
-[https://www.contributor-covenant.org/translations][translations].
+适用于严重事件、持续骚扰或对协作安全造成明显风险的行为。
+
+可能措施：在指定期限内禁止评论、Review、提交或代表项目公开交流，并禁止主动接触相关人员。违反限制可能升级为永久禁止参与。
+
+### 4. 永久禁止参与
+
+适用于持续或反复严重违规、骚扰或攻击个人、报复举报人，或对某类群体持续贬损和敌视的行为。
+
+可能措施：永久禁止在项目公共空间互动、贡献或代表项目活动。
+
+必要时，维护者可以先采取临时保护措施，再完成调查。任何紧急措施都应在风险降低后复核。
+
+## 复核
+
+受到正式警告、临时限制或永久禁止参与的人员，可以通过原私密报告渠道提交一次复核请求，说明事实错误、新证据或处置明显不相称之处。
+
+复核应由未直接作出原决定且不存在利益冲突的维护者处理。复核期间，原保护措施继续有效；复核结果为仓库内部最终决定。
+
+## 来源与许可
+
+本准则基于 [Contributor Covenant 2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html) 重新整理，其社区影响分级参考了 [Mozilla Community Participation Guidelines 的执行阶梯](https://www.mozilla.org/about/governance/policies/participation/)。
+
+更多说明见 [Contributor Covenant FAQ](https://www.contributor-covenant.org/faq/)；其他语言版本见 [Contributor Covenant Translations](https://www.contributor-covenant.org/translations/)。Contributor Covenant 2.1 按 [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/) 授权。
