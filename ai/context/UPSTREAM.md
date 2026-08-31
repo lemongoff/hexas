@@ -7,6 +7,8 @@
 - 引入日期：2026-08-31
 - 上游声明许可证：MIT
 
+统一的来源与许可说明见 [`../../THIRD_PARTY_NOTICES.md`](../../THIRD_PARTY_NOTICES.md) 和 [`../../LICENSES/MIT-zeromicro.txt`](../../LICENSES/MIT-zeromicro.txt)。固定上游提交没有独立 `LICENSE` 文件，本仓库不据此虚构额外版权声明。
+
 采用了上游 `00-instructions.md`、`workflows.md`、`tools.md` 和 `patterns.md` 的“工作流层”划分，但内容已针对 FF-Hexas 重写。没有建立 submodule，也不自动跟随上游。
 
 主要适配：

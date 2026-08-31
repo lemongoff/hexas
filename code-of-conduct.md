@@ -1,5 +1,9 @@
 # FF-Hexas 社区行为准则
 
+`SPDX-License-Identifier: CC-BY-4.0`
+
+本文件改编自 Contributor Covenant 2.1，已针对 FF-Hexas 翻译、重组并增加项目特定的适用范围、举报、执行和复核流程。许可原文见 [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt)。
+
 ## 我们的承诺
 
 FF-Hexas 的维护者、贡献者和参与者共同承诺：无论年龄、身体状况、残障、族群、性别特征、性别认同与表达、经验、教育程度、社会经济状况、国籍、外貌、种族、阶层、肤色、宗教、性取向或其他个人身份如何，每个人都应能在无骚扰的环境中参与项目。
@@ -110,6 +114,6 @@ FF-Hexas 的维护者、贡献者和参与者共同承诺：无论年龄、身�
 
 ## 来源与许可
 
-本准则基于 [Contributor Covenant 2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html) 重新整理，其社区影响分级参考了 [Mozilla Community Participation Guidelines 的执行阶梯](https://www.mozilla.org/about/governance/policies/participation/)。
+本准则基于 [Contributor Covenant 2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html) 重新整理，其社区影响分级参考了 [Mozilla Community Participation Guidelines 的执行阶梯](https://www.mozilla.org/about/governance/policies/participation/)。完整来源和修改范围同时记录在 [Third-Party Notices](THIRD_PARTY_NOTICES.md)。
 
 更多说明见 [Contributor Covenant FAQ](https://www.contributor-covenant.org/faq/)；其他语言版本见 [Contributor Covenant Translations](https://www.contributor-covenant.org/translations/)。Contributor Covenant 2.1 按 [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/) 授权。

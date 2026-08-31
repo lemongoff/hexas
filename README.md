@@ -60,4 +60,4 @@ go test ./...
 
 ## 许可证
 
-基线代码沿用 [MIT License](LICENSE)。保留上游版权、贡献和安全说明文件。
+框架代码沿用 [MIT License](LICENSE)。[社区行为准则](code-of-conduct.md) 是基于 Contributor Covenant 2.1 改编的 `CC-BY-4.0` 材料。上游来源、固定提交、修改范围和许可文本见 [Third-Party Notices](THIRD_PARTY_NOTICES.md) 与 [`LICENSES/`](LICENSES/)。
