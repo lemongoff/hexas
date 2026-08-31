@@ -4,6 +4,8 @@ FF-Hexas 是面向游戏服务场景维护的 go-zero 内部分支。仓库以
 [`github.com/zeromicro/go-zero`](https://github.com/zeromicro/go-zero) `v1.10.3`
 为代码基线，保留当前工作树中已有的日志、Redis、MongoDB、服务发现、REST 和 RPC 定制，作为后续游戏化框架改造的代码基础。
 
+这些遗留定制用于说明现状，不构成必须兼容或原样保留的约束。后续专项可以根据 FF-Hexas 的目标契约重新设计、替换或删除。
+
 ## 基线
 
 | 项目 | 固定值 |
@@ -22,7 +24,7 @@ FF-Hexas 是面向游戏服务场景维护的 go-zero 内部分支。仓库以
 - [AGENTS.md](AGENTS.md)：AI 与开发协作的强制规则。
 - [ai/README.md](ai/README.md)：AI 文档索引和任务路由。
 - [ai/project-overview.md](ai/project-overview.md)：目录职责、定制区域和验证命令。
-- [初始基线审计](docs/audits/2026-08-31-initial-framework-audit.md)：已知遗留问题和后续建议；本次仅记录，未修改运行时代码。
+- [初始基线审计](docs/audits/2026-08-31-initial-framework-audit.md)：已知遗留问题、重设计输入和处理优先级；基线导入阶段仅记录，未修改运行时代码。
 - [上游英文说明快照](docs/upstream-readme.md)、[上游中文说明](readme-cn.md) 和 [上游韩文说明](readme-ko.md)：仅作原始框架参考。
 
 ## 主要目录
@@ -34,7 +36,7 @@ FF-Hexas 是面向游戏服务场景维护的 go-zero 内部分支。仓库以
 - `mcp/`：MCP 服务实现。
 - `tools/goctl/`：独立 Go module 的代码生成工具。
 - `ai/`：本仓库的 AI 协作上下文。
-- `docs/audits/`：只读审计和遗留问题记录。
+- `docs/audits/`：现状审计、遗留风险、重设计输入和处理状态。
 
 ## 验证
 
@@ -55,4 +57,4 @@ go test ./...
 
 ## 许可证
 
-导入代码沿用 [MIT License](LICENSE)。保留上游版权、贡献和安全说明文件。
+基线代码沿用 [MIT License](LICENSE)。保留上游版权、贡献和安全说明文件。
