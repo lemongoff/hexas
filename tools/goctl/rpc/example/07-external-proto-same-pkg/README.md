@@ -1,7 +1,5 @@
 # Example 07: External Proto — Same `go_package`
 
-English | [中文](README-cn.md) | [한국어](README-ko.md)
-
 This example demonstrates importing proto files from an external directory where both files share the **same** `go_package`.
 
 ## Proto Definition
@@ -19,9 +17,7 @@ Source layout:
 ├── ext_protos
 │   └── ext.proto        # External proto (go_package = "example.com/demo/pb")
 ├── service.proto        # Service definition (go_package = "example.com/demo/pb")
-├── README.md
-├── README-cn.md
-└── README-ko.md
+└── README.md
 ```
 
 - `ext.proto` lives in a separate directory (`ext_protos/`), but has the same `go_package` as `service.proto`.

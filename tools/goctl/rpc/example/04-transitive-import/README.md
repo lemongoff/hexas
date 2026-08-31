@@ -1,7 +1,5 @@
 # Example 04: Transitive Imports
 
-English | [中文](README-cn.md) | [한국어](README-ko.md)
-
 This example demonstrates transitive proto imports, where A imports B and B imports C.
 
 ## Proto Definition

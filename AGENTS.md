@@ -107,7 +107,7 @@
 - 外部 AI 资产的来源 commit、许可证声明、选取范围和适配差异记录在对应 `UPSTREAM.md`；不得静默更新快照。
 - 已发现但本轮不处理的问题放在 `docs/audits/`，注明证据、影响、验证状态、重设计方向和建议顺序。
 - 用户可见 API、配置、部署、生成方式或兼容边界变化时同步更新文档。
-- 上游 `readme-cn.md`、`readme-ko.md` 和 `docs/upstream-readme.md` 只是导入快照，不作为本仓库开发规则。
+- `docs/upstream-readme.md` 只是上游英文说明快照，不作为本仓库开发规则。
 
 ## 9. 验证矩阵
 

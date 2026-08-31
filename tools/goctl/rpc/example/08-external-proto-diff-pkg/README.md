@@ -1,7 +1,5 @@
 # Example 08: External Proto — Different `go_package`
 
-English | [中文](README-cn.md) | [한국어](README-ko.md)
-
 This example demonstrates importing proto files from an external directory where the files have **different** `go_package` values, requiring cross-package imports in the generated Go code.
 
 ## Proto Definition
@@ -19,9 +17,7 @@ Source layout:
 │   └── common
 │       └── types.proto    # External proto (go_package = "example.com/demo/pb/common")
 ├── service.proto          # Service definition (go_package = "example.com/demo/pb")
-├── README.md
-├── README-cn.md
-└── README-ko.md
+└── README.md
 ```
 
 - `types.proto` has `go_package = "example.com/demo/pb/common"` — a **different** Go package.

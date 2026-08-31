@@ -1,12 +1,10 @@
 # RPC Examples
 
-English | [中文](README-cn.md) | [한국어](README-ko.md)
-
 This directory contains complete examples for all `goctl rpc` code generation scenarios.
 
 Each example includes:
 - `.proto` source files
-- `README.md` (English), `README-cn.md` (中文), and `README-ko.md` (한국어) documentation
+- `README.md` documentation
 
 ## Examples
 

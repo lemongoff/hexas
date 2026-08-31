@@ -2,8 +2,6 @@
 
 # mapreduce
 
-English | [简体中文](readme-cn.md) | [한국어](readme-ko.md)
-
 ## Why MapReduce is needed
 
 In practical business scenarios we often need to get the corresponding properties from different RPC services to assemble complex objects.

@@ -27,7 +27,7 @@ FF-Hexas 是面向游戏服务场景维护的 go-zero 内部分支。仓库以
 - [ai/skills/zero-skills/SKILL.md](ai/skills/zero-skills/SKILL.md)：按需加载的 go-zero 知识层。
 - [ai/project-overview.md](ai/project-overview.md)：目录职责、定制区域和验证命令。
 - [初始基线审计](docs/audits/2026-08-31-initial-framework-audit.md)：已知遗留问题、重设计输入和处理优先级；基线导入阶段仅记录，未修改运行时代码。
-- [上游英文说明快照](docs/upstream-readme.md)、[上游中文说明](readme-cn.md) 和 [上游韩文说明](readme-ko.md)：仅作原始框架参考。
+- [上游英文说明快照](docs/upstream-readme.md)：仅作原始框架参考。
 
 ## 主要目录
 

@@ -1,7 +1,5 @@
 # Example 10: Streaming RPC
 
-English | [中文](README-cn.md) | [한국어](README-ko.md)
-
 This example demonstrates all three gRPC streaming patterns: server streaming, client streaming, and bidirectional streaming.
 
 ## Proto Definition

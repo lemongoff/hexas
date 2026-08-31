@@ -1,7 +1,5 @@
 # Example 09: Google Well-Known Types as RPC Parameters
 
-English | [中文](README-cn.md) | [한국어](README-ko.md)
-
 This example demonstrates using Google protobuf well-known types **directly** as RPC request or response types (not just as message fields).
 
 ## Proto Definition

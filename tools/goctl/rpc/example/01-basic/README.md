@@ -1,7 +1,5 @@
 # Example 01: Basic RPC Service
 
-English | [中文](README-cn.md) | [한국어](README-ko.md)
-
 This is the simplest example of generating an RPC service with goctl.
 
 ## Proto Definition

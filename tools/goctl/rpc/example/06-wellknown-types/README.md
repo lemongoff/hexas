@@ -1,7 +1,5 @@
 # Example 06: Well-Known Types
 
-English | [中文](README-cn.md) | [한국어](README-ko.md)
-
 This example demonstrates using a Google protobuf well-known type (`Timestamp`) as a message field.
 
 ## Proto Definition
