@@ -845,6 +845,19 @@ func TestSetWriter(t *testing.T) {
 	assert.Equal(t, mocked, writer.Load())
 }
 
+func TestBiUsesStandardLogPipeline(t *testing.T) {
+	w := new(mockWriter)
+	old := writer.Swap(w)
+	defer writer.Store(old)
+	atomic.StoreUint32(&logLevel, 0)
+
+	Bi(User{Name: "alice", Pass: "secret"})
+	output := w.String()
+	assert.Contains(t, output, `"channel":"bi"`)
+	assert.Contains(t, output, `"level":"info"`)
+	assert.NotContains(t, output, "secret")
+}
+
 func TestWithGzip(t *testing.T) {
 	fn := WithGzip()
 	var opt logOptions

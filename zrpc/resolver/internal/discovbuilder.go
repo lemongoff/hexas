@@ -23,19 +23,7 @@ func (b *discovBuilder) Build(target resolver.Target, cc resolver.ClientConn, _ 
 
 	update := func() {
 		vals := subset(sub.Values(), subsetSize)
-		addrs := make([]resolver.Address, 0, len(vals))
-		for _, val := range vals {
-			publishInfo, err := discov.DecodePublishInfo(val)
-			if err != nil {
-				logx.Errorf("DecodePublishInfo.Value: %s, err: %v", val, err)
-				break
-			}
-			logx.Infof("discovBuilder.Build serverName: %s, Addr: %s", publishInfo.ServerName, publishInfo.Addr)
-			addrs = append(addrs, resolver.Address{
-				Addr:       publishInfo.Addr,
-				ServerName: publishInfo.ServerName,
-			})
-		}
+		addrs := resolveAddresses(vals)
 		if err := cc.UpdateState(resolver.State{
 			Addresses: addrs,
 		}); err != nil {
@@ -49,6 +37,29 @@ func (b *discovBuilder) Build(target resolver.Target, cc resolver.ClientConn, _ 
 		cc:  cc,
 		sub: sub,
 	}, nil
+}
+
+func resolveAddresses(vals []string) []resolver.Address {
+	addrs := make([]resolver.Address, 0, len(vals))
+	for _, val := range vals {
+		publishInfo, err := discov.DecodePublishInfo(val)
+		if err != nil {
+			logx.Errorf("DecodePublishInfo.Value: %s, err: %v", val, err)
+			continue
+		}
+		if len(strings.TrimSpace(publishInfo.Addr)) == 0 {
+			logx.Errorf("DecodePublishInfo.Value: %s, err: empty address", val)
+			continue
+		}
+
+		logx.Infof("discovBuilder.Build serverName: %s, Addr: %s", publishInfo.ServerName, publishInfo.Addr)
+		addrs = append(addrs, resolver.Address{
+			Addr:       publishInfo.Addr,
+			ServerName: publishInfo.ServerName,
+		})
+	}
+
+	return addrs
 }
 
 func (b *discovBuilder) Scheme() string {

@@ -151,6 +151,42 @@ func TestNewRedis(t *testing.T) {
 	}
 }
 
+func TestRedisPrefixCoversCompositeCommands(t *testing.T) {
+	server := miniredis.RunT(t)
+	rds := New(server.Addr(), WithPrefix("game"))
+
+	_, err := rds.Mset("one", "1", "two", "2")
+	assert.NoError(t, err)
+	one, err := server.Get("game:one")
+	assert.NoError(t, err)
+	assert.Equal(t, "1", one)
+	two, err := server.Get("game:two")
+	assert.NoError(t, err)
+	assert.Equal(t, "2", two)
+
+	keys, err := rds.Keys("*")
+	assert.NoError(t, err)
+	assert.ElementsMatch(t, []string{"one", "two"}, keys)
+	keys, _, err = rds.Scan(0, "*", 10)
+	assert.NoError(t, err)
+	assert.ElementsMatch(t, []string{"one", "two"}, keys)
+
+	_, err = rds.Sadd("left", "a")
+	assert.NoError(t, err)
+	_, err = rds.Sadd("right", "b")
+	assert.NoError(t, err)
+	_, err = rds.Sunionstore("all", "left", "right")
+	assert.NoError(t, err)
+	assert.True(t, server.Exists("game:all"))
+}
+
+func TestClusterMultiKeyRequiresSharedHashTag(t *testing.T) {
+	rds := &Redis{Type: ClusterType}
+	assert.ErrorIs(t, rds.validateClusterKeys("player:1", "player:2"), ErrCrossSlot)
+	assert.ErrorIs(t, rds.validateClusterKeys("player:{1}:a", "player:{2}:b"), ErrCrossSlot)
+	assert.NoError(t, rds.validateClusterKeys("player:{1}:a", "inventory:{1}:b"))
+}
+
 func TestGetClientWithProtocolAndIdentity(t *testing.T) {
 	r := miniredis.RunT(t)
 	defer r.Close()

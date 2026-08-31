@@ -127,14 +127,20 @@ func ParseJsonBody(r *http.Request, v any) error {
 
 func ParsePbBody(r *http.Request, v proto.Message) error {
 	defer r.Body.Close()
+	if !strings.HasPrefix(strings.ToLower(r.Header.Get(header.ContentType)), "application/pb") {
+		return fmt.Errorf("parse protobuf body: unsupported content type %q", r.Header.Get(header.ContentType))
+	}
 
-	body, err := io.ReadAll(r.Body)
+	body, err := io.ReadAll(io.LimitReader(r.Body, maxBodyLen+1))
 	if err != nil {
-		return fmt.Errorf("read body failed")
+		return fmt.Errorf("read protobuf body: %w", err)
+	}
+	if len(body) > maxBodyLen {
+		return fmt.Errorf("parse protobuf body: body exceeds %d bytes", maxBodyLen)
 	}
 
 	if err := proto.Unmarshal(body, v); err != nil {
-		return fmt.Errorf("json to proto failed")
+		return fmt.Errorf("unmarshal protobuf body: %w", err)
 	}
 	return nil
 }

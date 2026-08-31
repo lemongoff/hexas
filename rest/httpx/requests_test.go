@@ -11,10 +11,39 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/gogo/protobuf/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/zeromicro/go-zero/rest/internal/header"
 	"github.com/zeromicro/go-zero/rest/pathvar"
 )
+
+func TestParsePbBody(t *testing.T) {
+	body, err := types.MarshalAny(&types.StringValue{Value: "hello"})
+	assert.NoError(t, err)
+	data, err := body.Marshal()
+	assert.NoError(t, err)
+
+	r := httptest.NewRequest(http.MethodPost, "/", bytes.NewReader(data))
+	r.Header.Set(header.ContentType, header.PbContentType)
+	var target types.Any
+	assert.NoError(t, ParsePbBody(r, &target))
+	assert.Equal(t, body.Value, target.Value)
+}
+
+func TestParsePbBodyRejectsInvalidInput(t *testing.T) {
+	t.Run("content type", func(t *testing.T) {
+		r := httptest.NewRequest(http.MethodPost, "/", strings.NewReader("bad"))
+		var target types.Any
+		assert.ErrorContains(t, ParsePbBody(r, &target), "unsupported content type")
+	})
+
+	t.Run("too large", func(t *testing.T) {
+		r := httptest.NewRequest(http.MethodPost, "/", bytes.NewReader(make([]byte, maxBodyLen+1)))
+		r.Header.Set(header.ContentType, header.PbContentType)
+		var target types.Any
+		assert.ErrorContains(t, ParsePbBody(r, &target), "body exceeds")
+	})
+}
 
 func TestParseForm(t *testing.T) {
 	t.Run("slice", func(t *testing.T) {

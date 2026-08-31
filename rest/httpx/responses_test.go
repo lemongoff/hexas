@@ -11,11 +11,35 @@ import (
 	"strings"
 	"testing"
 
+	ggProto "github.com/gogo/protobuf/proto"
+	"github.com/gogo/protobuf/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/zeromicro/go-zero/core/logx"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
+
+func TestErrorPb(t *testing.T) {
+	errorLock.RLock()
+	previous := errorPbHandler
+	errorLock.RUnlock()
+	t.Cleanup(func() {
+		errorLock.Lock()
+		errorPbHandler = previous
+		errorLock.Unlock()
+	})
+	SetErrorPbHandlerCtx(func(_ context.Context, err error) (int, ggProto.Message) {
+		return http.StatusConflict, &types.StringValue{Value: err.Error()}
+	})
+
+	recorder := httptest.NewRecorder()
+	ErrorPb(recorder, errors.New("conflict"))
+	assert.Equal(t, http.StatusConflict, recorder.Code)
+	assert.Equal(t, "application/pb; charset=utf-8", recorder.Header().Get(ContentType))
+	var message types.StringValue
+	assert.NoError(t, message.Unmarshal(recorder.Body.Bytes()))
+	assert.Equal(t, "conflict", message.Value)
+}
 
 type message struct {
 	Name string `json:"name"`

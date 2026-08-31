@@ -224,11 +224,8 @@ func WithMiddleware(middleware Middleware, rs ...Route) []Route {
 
 	for i := range rs {
 		route := rs[i]
-		routes[i] = Route{
-			Method:  route.Method,
-			Path:    route.Path,
-			Handler: middleware(route.Handler),
-		}
+		route.Handler = middleware(route.Handler)
+		routes[i] = route
 	}
 
 	return routes
@@ -240,11 +237,8 @@ func WithPermissionsMiddleware(permissionsMiddleware PermissionsMiddleware, rs .
 
 	for i := range rs {
 		route := rs[i]
-		routes[i] = Route{
-			Method:  route.Method,
-			Path:    route.Path,
-			Handler: permissionsMiddleware(route.Handler, route.Permissions),
-		}
+		route.Handler = permissionsMiddleware(route.Handler, route.Permissions)
+		routes[i] = route
 	}
 
 	return routes
@@ -270,12 +264,8 @@ func WithPrefix(group string) RouteOption {
 	return func(r *featuredRoutes) {
 		routes := make([]Route, 0, len(r.routes))
 		for _, rt := range r.routes {
-			p := path.Join(group, rt.Path)
-			routes = append(routes, Route{
-				Method:  rt.Method,
-				Path:    p,
-				Handler: rt.Handler,
-			})
+			rt.Path = path.Join(group, rt.Path)
+			routes = append(routes, rt)
 		}
 		r.routes = routes
 	}

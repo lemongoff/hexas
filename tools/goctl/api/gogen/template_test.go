@@ -10,6 +10,7 @@ import (
 )
 
 func TestGenTemplates(t *testing.T) {
+	pathx.RegisterGoctlHome(t.TempDir())
 	err := pathx.InitTemplates(category, templates)
 	assert.Nil(t, err)
 	dir, err := pathx.GetTemplateDir(category)
@@ -21,6 +22,7 @@ func TestGenTemplates(t *testing.T) {
 }
 
 func TestRevertTemplate(t *testing.T) {
+	pathx.RegisterGoctlHome(t.TempDir())
 	name := "main.tpl"
 	err := pathx.InitTemplates(category, templates)
 	assert.Nil(t, err)
@@ -49,6 +51,7 @@ func TestRevertTemplate(t *testing.T) {
 }
 
 func TestClean(t *testing.T) {
+	pathx.RegisterGoctlHome(t.TempDir())
 	name := "main.tpl"
 	err := pathx.InitTemplates(category, templates)
 	assert.Nil(t, err)
@@ -64,6 +67,7 @@ func TestClean(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
+	pathx.RegisterGoctlHome(t.TempDir())
 	name := "main.tpl"
 	err := pathx.InitTemplates(category, templates)
 	assert.Nil(t, err)

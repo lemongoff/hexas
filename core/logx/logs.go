@@ -603,7 +603,13 @@ func writeInfo(val any, fields ...LogField) {
 }
 
 func writeBi(val any) {
-	getWriter().Bi(val)
+	writer := getWriter()
+	fields := mergeGlobalFields(addCaller(Field("channel", "bi")))
+	if biWriter, ok := writer.(BIWriter); ok {
+		biWriter.Bi(val, fields...)
+		return
+	}
+	writer.Info(val, fields...)
 }
 
 // writeSevere writes v into severe log.

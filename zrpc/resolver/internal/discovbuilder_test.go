@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/zeromicro/go-zero/core/discov"
 	"go.etcd.io/etcd/client/v3/mock/mockserver"
 	"google.golang.org/grpc/resolver"
 	"google.golang.org/grpc/serviceconfig"
@@ -15,6 +16,19 @@ import (
 func TestDiscovBuilder_Scheme(t *testing.T) {
 	var b discovBuilder
 	assert.Equal(t, DiscovScheme, b.Scheme())
+}
+
+func TestResolveAddressesSkipsInvalidValues(t *testing.T) {
+	first, err := discov.EncodePublishInfo(&discov.PublishInfo{Addr: "127.0.0.1:8001", ServerName: "first"})
+	assert.NoError(t, err)
+	second, err := discov.EncodePublishInfo(&discov.PublishInfo{Addr: "127.0.0.1:8002", ServerName: "second"})
+	assert.NoError(t, err)
+
+	addrs := resolveAddresses([]string{first, "not-json", `{}`, second})
+	assert.Equal(t, []resolver.Address{
+		{Addr: "127.0.0.1:8001", ServerName: "first"},
+		{Addr: "127.0.0.1:8002", ServerName: "second"},
+	}, addrs)
 }
 
 func TestDiscovBuilder_Build(t *testing.T) {

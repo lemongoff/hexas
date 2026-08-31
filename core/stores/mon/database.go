@@ -3,6 +3,7 @@ package mon
 import (
 	"context"
 	"strings"
+	"sync"
 
 	"github.com/zeromicro/go-zero/core/breaker"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -15,34 +16,45 @@ type (
 	Database struct {
 		name string
 
+		client      *mongo.Client
 		database    *mongo.Database
 		brk         breaker.Breaker
 		opts        []Option
+		mutex       sync.RWMutex
 		collections map[string]Collection
 	}
 )
 
-func MustNewDatabase(uri, db, collection string, opts ...Option) *Database {
+func MustNewDatabase(uri, db string, opts ...Option) *Database {
 	database, err := NewDatabase(uri, db, opts...)
 	logx.Must(err)
 	return database
 }
 
 func NewDatabase(uri, db string, opts ...Option) (*Database, error) {
-	cli, err := getClient(uri, opts...)
+	clientOptions := mongoOptions.Client().ApplyURI(uri)
+	for _, opt := range append([]Option{defaultTimeoutOption()}, opts...) {
+		opt(clientOptions)
+	}
+	cli, err := mongo.Connect(clientOptions)
 	if err != nil {
+		return nil, err
+	}
+	if err := cli.Ping(context.Background(), nil); err != nil {
+		_ = cli.Disconnect(context.Background())
 		return nil, err
 	}
 
 	name := strings.Join([]string{uri, db}, "/")
 	brk := breaker.GetBreaker(uri)
-	return newDatabase(name, cli.Database(db), brk, opts...), nil
+	return newDatabase(name, cli, cli.Database(db), brk, opts...), nil
 }
 
-func newDatabase(name string, database *mongo.Database, brk breaker.Breaker,
+func newDatabase(name string, client *mongo.Client, database *mongo.Database, brk breaker.Breaker,
 	opts ...Option) *Database {
 	return &Database{
 		name:        name,
+		client:      client,
 		database:    database,
 		brk:         brk,
 		opts:        opts,
@@ -51,14 +63,23 @@ func newDatabase(name string, database *mongo.Database, brk breaker.Breaker,
 }
 
 func (db *Database) Close() error {
-	return db.database.Client().Disconnect(context.Background())
+	return db.client.Disconnect(context.Background())
 }
 
 func (db *Database) Collection(collection string) Collection {
-	if db.collections[collection] != nil {
-		return db.collections[collection]
+	db.mutex.RLock()
+	coll := db.collections[collection]
+	db.mutex.RUnlock()
+	if coll != nil {
+		return coll
 	}
-	coll := newCollection(db.database.Collection(collection), db.brk)
+
+	db.mutex.Lock()
+	defer db.mutex.Unlock()
+	if coll = db.collections[collection]; coll != nil {
+		return coll
+	}
+	coll = newCollection(db.database.Collection(collection), db.brk)
 	db.collections[collection] = coll
 	return coll
 }
@@ -72,11 +93,5 @@ func (db *Database) CreateIndex(ctx context.Context, collection string, unique b
 		Keys:    keys,
 		Options: mongoOptions.Index().SetUnique(unique),
 	})
-	if err != nil {
-		if strings.Contains(err.Error(), "with different options") {
-			return nil
-		}
-		return err
-	}
-	return nil
+	return err
 }

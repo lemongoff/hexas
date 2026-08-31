@@ -16,8 +16,9 @@ func cancelOnSignals() {
 	defer doneChan.Close()
 
 	go func(dc *syncx.DoneChan) {
-		c := make(chan os.Signal)
-		signal.Notify(c, syscall.SIGTERM, syscall.SIGKILL, syscall.SIGINT, syscall.SIGTSTP, syscall.SIGQUIT)
+		c := make(chan os.Signal, 1)
+		signal.Notify(c, syscall.SIGTERM, syscall.SIGINT, syscall.SIGTSTP, syscall.SIGQUIT)
+		defer signal.Stop(c)
 		select {
 		case <-c:
 			console.Error(`

@@ -39,6 +39,17 @@ func ErrorCtx(ctx context.Context, w http.ResponseWriter, err error,
 	doHandleError(w, err, buildErrorHandler(ctx), writeJson, fns...)
 }
 
+// ErrorPb writes err as a protobuf response using the configured protobuf error handler.
+func ErrorPb(w http.ResponseWriter, err error, fns ...func(w http.ResponseWriter, err error)) {
+	doHandlePbError(w, err, buildErrorPbHandler(context.Background()), fns...)
+}
+
+// ErrorPbCtx writes err as a protobuf response using the configured protobuf error handler.
+func ErrorPbCtx(ctx context.Context, w http.ResponseWriter, err error,
+	fns ...func(w http.ResponseWriter, err error)) {
+	doHandlePbError(w, err, buildErrorPbHandler(ctx), fns...)
+}
+
 // Ok writes HTTP 200 OK into w.
 func Ok(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusOK)
@@ -155,6 +166,13 @@ func WritePbCtx(ctx context.Context, w http.ResponseWriter, code int, v ggProto.
 	}
 }
 
+// WritePb writes v as a protobuf message with code.
+func WritePb(w http.ResponseWriter, code int, v ggProto.Message) {
+	if err := doWritePb(w, code, v); err != nil {
+		logx.Error(err)
+	}
+}
+
 func buildErrorHandler(ctx context.Context) func(error) (int, any) {
 	errorLock.RLock()
 	handlerCtx := errorHandler
@@ -168,6 +186,34 @@ func buildErrorHandler(ctx context.Context) func(error) (int, any) {
 	}
 
 	return handler
+}
+
+func buildErrorPbHandler(ctx context.Context) func(error) (int, ggProto.Message) {
+	errorLock.RLock()
+	handlerCtx := errorPbHandler
+	errorLock.RUnlock()
+	if handlerCtx == nil {
+		return nil
+	}
+
+	return func(err error) (int, ggProto.Message) {
+		return handlerCtx(ctx, err)
+	}
+}
+
+func doHandlePbError(w http.ResponseWriter, err error,
+	handler func(error) (int, ggProto.Message), fns ...func(w http.ResponseWriter, err error)) {
+	if handler == nil {
+		doHandleError(w, err, nil, WriteJson, fns...)
+		return
+	}
+
+	code, body := handler(err)
+	if body == nil {
+		w.WriteHeader(code)
+		return
+	}
+	WritePb(w, code, body)
 }
 
 func doHandleError(w http.ResponseWriter, err error, handler func(error) (int, any),

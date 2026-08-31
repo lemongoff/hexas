@@ -150,10 +150,9 @@ func TestApiHasMiddleware(t *testing.T) {
 }
 
 func TestApiHasJwt(t *testing.T) {
-	filename := "jwt.api"
+	filename := filepath.Join(t.TempDir(), "jwt.api")
 	err := os.WriteFile(filename, []byte(apiJwt), os.ModePerm)
 	assert.Nil(t, err)
-	defer os.Remove(filename)
 
 	_, err = parser.Parse(filename)
 	assert.Nil(t, err)
@@ -162,10 +161,9 @@ func TestApiHasJwt(t *testing.T) {
 }
 
 func TestApiHasJwtAndMiddleware(t *testing.T) {
-	filename := "jwt.api"
+	filename := filepath.Join(t.TempDir(), "jwt.api")
 	err := os.WriteFile(filename, []byte(apiJwtWithMiddleware), os.ModePerm)
 	assert.Nil(t, err)
-	defer os.Remove(filename)
 
 	_, err = parser.Parse(filename)
 	assert.Nil(t, err)
@@ -339,10 +337,7 @@ func validate(t *testing.T, api string) {
 }
 
 func validateWithCamel(t *testing.T, api, camel string) {
-	dir := "workspace"
-	t.Cleanup(func() {
-		_ = os.RemoveAll(dir)
-	})
+	dir := filepath.Join(t.TempDir(), "workspace")
 
 	err := pathx.MkdirIfNotExist(dir)
 	assert.Nil(t, err)
@@ -363,8 +358,8 @@ func validateWithCamel(t *testing.T, api, camel string) {
 	})
 }
 
-func initMod(mod string) error {
-	_, err := execx.Run("go mod init "+mod, mod)
+func initMod(dir string) error {
+	_, err := execx.Run("go mod init workspace", dir)
 	return err
 }
 

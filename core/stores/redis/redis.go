@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
+	"strings"
 	"time"
 
 	red "github.com/redis/go-redis/v9"
@@ -35,6 +36,7 @@ var (
 	ErrNilNode    = errors.New("nil redis node")
 	slowThreshold = syncx.ForAtomicDuration(defaultSlowThreshold)
 	ErrModified   = errors.New("key has modified")
+	ErrCrossSlot  = errors.New("redis cluster multi-key operations require a shared hash tag")
 )
 
 type (
@@ -186,6 +188,49 @@ func (r *Redis) keysPrefix(keys []string) []string {
 	return fKeys
 }
 
+func (r *Redis) keyPattern(pattern string) string {
+	return r.keyPrefix(pattern)
+}
+
+func (r *Redis) logicalKeys(keys []string) []string {
+	if r.Prefix == "" {
+		return keys
+	}
+	prefix := r.Prefix + ":"
+	for i, key := range keys {
+		keys[i] = strings.TrimPrefix(key, prefix)
+	}
+	return keys
+}
+
+func (r *Redis) validateClusterKeys(keys ...string) error {
+	if r.Type != ClusterType || len(keys) < 2 {
+		return nil
+	}
+	tag := redisHashTag(keys[0])
+	if tag == "" {
+		return ErrCrossSlot
+	}
+	for _, key := range keys[1:] {
+		if redisHashTag(key) != tag {
+			return ErrCrossSlot
+		}
+	}
+	return nil
+}
+
+func redisHashTag(key string) string {
+	start := strings.IndexByte(key, '{')
+	if start < 0 {
+		return ""
+	}
+	end := strings.IndexByte(key[start+1:], '}')
+	if end <= 0 {
+		return ""
+	}
+	return key[start+1 : start+1+end]
+}
+
 func (s *Redis) GetOrSet(ctx context.Context, key string, value interface{}) *CmdResult {
 	return s.runScriptCtx(ctx, getOrSetScript, []string{key}, value)
 }
@@ -211,22 +256,6 @@ func (r *Redis) CompareAndDel(ctx context.Context, key string, old interface{}) 
 		return ErrModified
 	}
 	return nil
-}
-
-func (r *Redis) MarkDirty(ctx context.Context, key string) error {
-	_, err := r.runScriptCtx(ctx, markdirtyscript, []string{"dirty:set", "dirty:queue"}, r.keyPrefix(key)).Result()
-	if err != nil {
-		return err
-	}
-	return err
-}
-
-func (r *Redis) SetAndMarkDirty(ctx context.Context, key string, value string, seconds int) error {
-	_, err := r.runScriptCtx(ctx, setandmarkdirtyscript, []string{"dirty:set", "dirty:queue"}, r.keyPrefix(key), value, seconds).Result()
-	if err != nil {
-		return err
-	}
-	return err
 }
 
 func (r *Redis) ZCompareHigher(ctx context.Context, key string, score, member interface{}) (int, error) {
@@ -258,6 +287,9 @@ func (s *Redis) BitOpAnd(destKey string, keys ...string) (int64, error) {
 
 // BitOpAndCtx is redis bit operation (and) command implementation.
 func (s *Redis) BitOpAndCtx(ctx context.Context, destKey string, keys ...string) (int64, error) {
+	if err := s.validateClusterKeys(append([]string{destKey}, keys...)...); err != nil {
+		return 0, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return 0, err
@@ -273,6 +305,9 @@ func (s *Redis) BitOpNot(destKey, key string) (int64, error) {
 
 // BitOpNotCtx is redis bit operation (not) command implementation.
 func (s *Redis) BitOpNotCtx(ctx context.Context, destKey, key string) (int64, error) {
+	if err := s.validateClusterKeys(destKey, key); err != nil {
+		return 0, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return 0, err
@@ -288,6 +323,9 @@ func (s *Redis) BitOpOr(destKey string, keys ...string) (int64, error) {
 
 // BitOpOrCtx is redis bit operation (or) command implementation.
 func (s *Redis) BitOpOrCtx(ctx context.Context, destKey string, keys ...string) (int64, error) {
+	if err := s.validateClusterKeys(append([]string{destKey}, keys...)...); err != nil {
+		return 0, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return 0, err
@@ -303,6 +341,9 @@ func (s *Redis) BitOpXor(destKey string, keys ...string) (int64, error) {
 
 // BitOpXorCtx is redis bit operation (xor) command implementation.
 func (s *Redis) BitOpXorCtx(ctx context.Context, destKey string, keys ...string) (int64, error) {
+	if err := s.validateClusterKeys(append([]string{destKey}, keys...)...); err != nil {
+		return 0, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return 0, err
@@ -460,6 +501,9 @@ func (s *Redis) Del(keys ...string) (int, error) {
 
 // DelCtx deletes keys.
 func (s *Redis) DelCtx(ctx context.Context, keys ...string) (int, error) {
+	if err := s.validateClusterKeys(keys...); err != nil {
+		return 0, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return 0, err
@@ -500,6 +544,9 @@ func (s *Redis) Eval(script string, keys []string, args ...any) (any, error) {
 // EvalCtx is the implementation of redis eval command.
 func (s *Redis) EvalCtx(ctx context.Context, script string, keys []string,
 	args ...any) (any, error) {
+	if err := s.validateClusterKeys(keys...); err != nil {
+		return nil, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return nil, err
@@ -516,6 +563,9 @@ func (s *Redis) EvalSha(sha string, keys []string, args ...any) (any, error) {
 // EvalShaCtx is the implementation of redis evalsha command.
 func (s *Redis) EvalShaCtx(ctx context.Context, sha string, keys []string,
 	args ...any) (any, error) {
+	if err := s.validateClusterKeys(keys...); err != nil {
+		return nil, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return nil, err
@@ -553,6 +603,9 @@ func (s *Redis) ExistsMany(keys ...string) (int64, error) {
 // ExistsManyCtx is the implementation of redis exists command.
 // checks the existence of multiple keys in Redis using the EXISTS command.
 func (s *Redis) ExistsManyCtx(ctx context.Context, keys ...string) (int64, error) {
+	if err := s.validateClusterKeys(keys...); err != nil {
+		return 0, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return 0, err
@@ -1092,7 +1145,8 @@ func (s *Redis) KeysCtx(ctx context.Context, pattern string) ([]string, error) {
 		return nil, err
 	}
 
-	return conn.Keys(ctx, pattern).Result()
+	keys, err := conn.Keys(ctx, s.keyPattern(pattern)).Result()
+	return s.logicalKeys(keys), err
 }
 
 // Llen is the implementation of redis llen command.
@@ -1250,6 +1304,9 @@ func (s *Redis) MgetNoKeysPrefixCtx(ctx context.Context, keys ...string) ([]stri
 }
 
 func (s *Redis) MgetCtx(ctx context.Context, keys ...string) ([]string, error) {
+	if err := s.validateClusterKeys(keys...); err != nil {
+		return nil, err
+	}
 	return s.MgetNoKeysPrefixCtx(ctx, s.keysPrefix(keys)...)
 }
 
@@ -1260,12 +1317,28 @@ func (s *Redis) Mset(fieldsAndValues ...any) (string, error) {
 
 // MsetCtx is the implementation of redis mset command.
 func (s *Redis) MsetCtx(ctx context.Context, fieldsAndValues ...any) (string, error) {
+	if len(fieldsAndValues)%2 != 0 {
+		return "", errors.New("mset requires key/value pairs")
+	}
+	prefixed := append([]any(nil), fieldsAndValues...)
+	keys := make([]string, 0, len(prefixed)/2)
+	for i := 0; i < len(prefixed); i += 2 {
+		key, ok := prefixed[i].(string)
+		if !ok {
+			return "", fmt.Errorf("mset key at index %d must be a string", i)
+		}
+		keys = append(keys, key)
+		prefixed[i] = s.keyPrefix(key)
+	}
+	if err := s.validateClusterKeys(keys...); err != nil {
+		return "", err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return "", err
 	}
 
-	return conn.MSet(ctx, fieldsAndValues...).Result()
+	return conn.MSet(ctx, prefixed...).Result()
 }
 
 // Persist is the implementation of redis persist command.
@@ -1325,12 +1398,15 @@ func (s *Redis) Pfmerge(dest string, keys ...string) error {
 
 // PfmergeCtx is the implementation of redis pfmerge command.
 func (s *Redis) PfmergeCtx(ctx context.Context, dest string, keys ...string) error {
+	if err := s.validateClusterKeys(append([]string{dest}, keys...)...); err != nil {
+		return err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return err
 	}
 
-	_, err = conn.PFMerge(ctx, dest, s.keysPrefix(keys)...).Result()
+	_, err = conn.PFMerge(ctx, s.keyPrefix(dest), s.keysPrefix(keys)...).Result()
 	return err
 }
 
@@ -1441,6 +1517,9 @@ func (s *Redis) RPopLPush(source string, destination string) (string, error) {
 
 // RPopLPushCtx is the context-aware version of RPopLPush.
 func (s *Redis) RPopLPushCtx(ctx context.Context, source string, destination string) (string, error) {
+	if err := s.validateClusterKeys(source, destination); err != nil {
+		return "", err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return "", err
@@ -1481,7 +1560,8 @@ func (s *Redis) ScanCtx(ctx context.Context, cursor uint64, match string, count 
 		return nil, 0, err
 	}
 
-	return conn.Scan(ctx, cursor, match, count).Result()
+	keys, next, err := conn.Scan(ctx, cursor, s.keyPattern(match), count).Result()
+	return s.logicalKeys(keys), next, err
 }
 
 // SetBit is the implementation of redis setbit command.
@@ -1559,6 +1639,9 @@ func (s *Redis) ScriptRun(script *Script, keys []string, args ...any) (any, erro
 // ScriptRunCtx is the implementation of *redis.Script run command.
 func (s *Redis) ScriptRunCtx(ctx context.Context, script *Script, keys []string,
 	args ...any) (any, error) {
+	if err := s.validateClusterKeys(keys...); err != nil {
+		return nil, err
+	}
 	return s.runScriptCtx(ctx, script, keys, args...).Result()
 }
 
@@ -1725,6 +1808,9 @@ func (s *Redis) Sunion(keys ...string) ([]string, error) {
 
 // SunionCtx is the implementation of redis sunion command.
 func (s *Redis) SunionCtx(ctx context.Context, keys ...string) ([]string, error) {
+	if err := s.validateClusterKeys(keys...); err != nil {
+		return nil, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return nil, err
@@ -1741,12 +1827,15 @@ func (s *Redis) Sunionstore(destination string, keys ...string) (int, error) {
 // SunionstoreCtx is the implementation of redis sunionstore command.
 func (s *Redis) SunionstoreCtx(ctx context.Context, destination string, keys ...string) (
 	int, error) {
+	if err := s.validateClusterKeys(append([]string{destination}, keys...)...); err != nil {
+		return 0, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return 0, err
 	}
 
-	v, err := conn.SUnionStore(ctx, destination, s.keysPrefix(keys)...).Result()
+	v, err := conn.SUnionStore(ctx, s.keyPrefix(destination), s.keysPrefix(keys)...).Result()
 	if err != nil {
 		return 0, err
 	}
@@ -1761,6 +1850,9 @@ func (s *Redis) Sdiff(keys ...string) ([]string, error) {
 
 // SdiffCtx is the implementation of redis sdiff command.
 func (s *Redis) SdiffCtx(ctx context.Context, keys ...string) ([]string, error) {
+	if err := s.validateClusterKeys(keys...); err != nil {
+		return nil, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return nil, err
@@ -1777,6 +1869,9 @@ func (s *Redis) Sdiffstore(destination string, keys ...string) (int, error) {
 // SdiffstoreCtx is the implementation of redis sdiffstore command.
 func (s *Redis) SdiffstoreCtx(ctx context.Context, destination string, keys ...string) (
 	int, error) {
+	if err := s.validateClusterKeys(append([]string{destination}, keys...)...); err != nil {
+		return 0, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return 0, err
@@ -1797,6 +1892,9 @@ func (s *Redis) Sinter(keys ...string) ([]string, error) {
 
 // SinterCtx is the implementation of redis sinter command.
 func (s *Redis) SinterCtx(ctx context.Context, keys ...string) ([]string, error) {
+	if err := s.validateClusterKeys(keys...); err != nil {
+		return nil, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return nil, err
@@ -1813,6 +1911,9 @@ func (s *Redis) Sinterstore(destination string, keys ...string) (int, error) {
 // SinterstoreCtx is the implementation of redis sinterstore command.
 func (s *Redis) SinterstoreCtx(ctx context.Context, destination string, keys ...string) (
 	int, error) {
+	if err := s.validateClusterKeys(append([]string{destination}, keys...)...); err != nil {
+		return 0, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return 0, err
@@ -1868,6 +1969,9 @@ func (s *Redis) Unlink(keys ...string) (int64, error) {
 }
 
 func (s *Redis) UnlinkCtx(ctx context.Context, keys ...string) (int64, error) {
+	if err := s.validateClusterKeys(keys...); err != nil {
+		return 0, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return 0, err
@@ -1889,7 +1993,7 @@ func (s *Redis) XAckCtx(ctx context.Context, stream string, group string, ids ..
 		return 0, err
 	}
 
-	return conn.XAck(ctx, stream, group, ids...).Result()
+	return conn.XAck(ctx, s.keyPrefix(stream), group, ids...).Result()
 }
 
 // XAdd adds a new entry to a Redis stream with the specified ID and field-value pairs.
@@ -1907,7 +2011,7 @@ func (s *Redis) XAddCtx(ctx context.Context, stream string, noMkStream bool, id 
 	}
 
 	return conn.XAdd(ctx, &red.XAddArgs{
-		Stream:     stream,
+		Stream:     s.keyPrefix(stream),
 		ID:         id,
 		Values:     values,
 		NoMkStream: noMkStream,
@@ -1928,7 +2032,7 @@ func (s *Redis) XGroupCreateMkStreamCtx(ctx context.Context, stream string, grou
 		return "", err
 	}
 
-	return conn.XGroupCreateMkStream(ctx, stream, group, start).Result()
+	return conn.XGroupCreateMkStream(ctx, s.keyPrefix(stream), group, start).Result()
 }
 
 // XGroupCreate creates a consumer group for a Redis stream.
@@ -1945,7 +2049,7 @@ func (s *Redis) XGroupCreateCtx(ctx context.Context, stream string, group string
 		return "", err
 	}
 
-	return conn.XGroupCreate(ctx, stream, group, start).Result()
+	return conn.XGroupCreate(ctx, s.keyPrefix(stream), group, start).Result()
 }
 
 // XGroupSetID sets the last delivered ID for a Redis stream consumer group.
@@ -1960,7 +2064,7 @@ func (s *Redis) XGroupSetIDCtx(ctx context.Context, stream, group, start string)
 		return "", err
 	}
 
-	return conn.XGroupSetID(ctx, stream, group, start).Result()
+	return conn.XGroupSetID(ctx, s.keyPrefix(stream), group, start).Result()
 }
 
 // XInfoConsumers returns information about consumers in a Redis stream consumer group.
@@ -1976,7 +2080,7 @@ func (s *Redis) XInfoConsumersCtx(ctx context.Context, stream string, group stri
 		return nil, err
 	}
 
-	return conn.XInfoConsumers(ctx, stream, group).Result()
+	return conn.XInfoConsumers(ctx, s.keyPrefix(stream), group).Result()
 }
 
 // XInfoGroups returns information about consumer groups for a Redis stream.
@@ -1991,7 +2095,7 @@ func (s *Redis) XInfoGroupsCtx(ctx context.Context, stream string) ([]red.XInfoG
 		return nil, err
 	}
 
-	return conn.XInfoGroups(ctx, stream).Result()
+	return conn.XInfoGroups(ctx, s.keyPrefix(stream)).Result()
 }
 
 // XInfoStream returns general information about a Redis stream.
@@ -2006,7 +2110,7 @@ func (s *Redis) XInfoStreamCtx(ctx context.Context, stream string) (*red.XInfoSt
 		return nil, err
 	}
 
-	return conn.XInfoStream(ctx, stream).Result()
+	return conn.XInfoStream(ctx, s.keyPrefix(stream)).Result()
 }
 
 // XReadGroup reads messages from Redis streams as part of a consumer group.
@@ -2052,14 +2156,30 @@ func (s *Redis) XReadGroupCtx(ctx context.Context, node RedisNode, group string,
 		return nil, ErrNilNode
 	}
 
-	return node.XReadGroup(ctx, &red.XReadGroupArgs{
+	if len(streams)%2 != 0 {
+		return nil, errors.New("xreadgroup requires stream/id pairs")
+	}
+	streamArgs := append([]string(nil), streams...)
+	if err := s.validateClusterKeys(streamArgs[:len(streamArgs)/2]...); err != nil {
+		return nil, err
+	}
+	for i := 0; i < len(streamArgs)/2; i++ {
+		streamArgs[i] = s.keyPrefix(streamArgs[i])
+	}
+	result, err := node.XReadGroup(ctx, &red.XReadGroupArgs{
 		Group:    group,
 		Consumer: consumerId,
 		Count:    count,
 		Block:    block,
 		NoAck:    noAck,
-		Streams:  streams,
+		Streams:  streamArgs,
 	}).Result()
+	if s.Prefix != "" {
+		for i := range result {
+			result[i].Stream = strings.TrimPrefix(result[i].Stream, s.Prefix+":")
+		}
+	}
+	return result, err
 }
 
 // Zadd is the implementation of redis zadd command.
@@ -2741,12 +2861,20 @@ func (s *Redis) Zunionstore(dest string, store *ZStore) (int64, error) {
 // ZunionstoreCtx is the implementation of redis zunionstore command.
 func (s *Redis) ZunionstoreCtx(ctx context.Context, dest string, store *ZStore) (
 	int64, error) {
+	if store == nil {
+		return 0, errors.New("zunionstore requires a store")
+	}
+	if err := s.validateClusterKeys(append([]string{dest}, store.Keys...)...); err != nil {
+		return 0, err
+	}
 	conn, err := getRedis(s)
 	if err != nil {
 		return 0, err
 	}
 
-	return conn.ZUnionStore(ctx, s.keyPrefix(dest), store).Result()
+	prefixed := *store
+	prefixed.Keys = s.keysPrefix(store.Keys)
+	return conn.ZUnionStore(ctx, s.keyPrefix(dest), &prefixed).Result()
 }
 
 func (s *Redis) checkConnection(pingTimeout time.Duration) error {

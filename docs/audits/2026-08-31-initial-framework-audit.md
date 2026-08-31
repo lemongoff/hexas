@@ -1,7 +1,7 @@
 # FF-Hexas 初始框架基线审计
 
 日期：2026-08-31
-状态：记录完成；基线导入阶段未修改运行时代码，后续专项允许重新设计
+状态：专项处置完成；初始发现作为历史证据保留，最终设计见 3.1 节
 
 ## 1. 审计范围
 
@@ -14,7 +14,7 @@
 - 差异规模：47 个文件，约 1278 行新增、169 行删除
 - 审计方式：Git 历史与 diff 对照、关键路径静态检查、根 module 与 goctl 独立 module 测试
 
-本轮只复制代码、整理入口文档并记录问题。以下条目均未在运行时代码中修复。
+本文第 4 节保留初始导入时的原始发现，用于解释改造动机；这些描述不再代表当前实现状态。
 
 ### 1.1 遗留问题处置原则
 
@@ -35,19 +35,32 @@
 
 | 编号 | 等级 | 区域 | 结论 |
 | --- | --- | --- | --- |
-| A-01 | 高 | Mongo 脏数据落盘 | 部分失败路径仍会清除脏标记，存在未持久化数据失去重试资格的窗口 |
-| A-02 | 高 | Mongo 脏数据落盘 | key 解析可 panic、对象池不归还、worker 不响应取消，生命周期契约不完整 |
-| A-03 | 高 | Redis prefix/Lua | prefix 覆盖不完整；多 key Lua 在 Redis Cluster 下缺少同 slot 设计 |
-| A-04 | 中 | Mongo Database | collection cache 并发不安全，Close 与共享 client manager 的所有权冲突 |
-| A-05 | 高 | etcd/zRPC | 注册值切换为 JSON 且 resolver 遇单个坏值即停止处理，混合或脏数据可缩减节点集 |
-| A-06 | 高 | REST 权限 | Route helper 重建 Route 时丢弃 `Permissions`，可能绕过预期授权信息 |
-| A-07 | 中 | REST protobuf | protobuf error handler 没有消费入口，解析无限制读取且错误信息不保留原因 |
-| A-08 | 中 | logx | `Writer` 接口新增方法形成硬破坏；BI 输出绕过标准字段和敏感值处理 |
-| A-09 | 中 | goctl | 独立 module 使用官方 v1.10.3，且 BuildVersion 为 1.10.2，与根框架不同轨 |
-| A-10 | 中 | 默认行为 | RPC 阻塞连接、超时、缓存 TTL 等默认语义已改变但缺少本仓库迁移说明 |
-| A-11 | 中 | 测试覆盖 | 全量测试通过，但多项定制没有针对失败、并发、Cluster 和元数据保持的测试 |
-| A-12 | 高 | GitHub workflow | CI 只监听 `master`，自动依赖更新和 goctl 发布仍沿用上游策略，与独立分支边界冲突 |
-| A-13 | 低 | 基线格式 | 导入快照含既有尾随空白，完整导入的 `git diff HEAD --check` 不能通过 |
+| A-01 | 高 | Mongo 脏数据落盘 | 已关闭：删除未被业务使用且无法证明一致性的异步脏写链路 |
+| A-02 | 高 | Mongo 脏数据落盘 | 已关闭：随脏写 worker 一并删除，不保留不安全生命周期契约 |
+| A-03 | 高 | Redis prefix/Lua | 已关闭：补齐复合命令和 Streams 前缀；Cluster 多 key 强制共享 hash tag |
+| A-04 | 中 | Mongo Database | 已关闭：Database 独占 client，collection cache 加锁并显式返回索引冲突 |
+| A-05 | 高 | etcd/zRPC | 已关闭：保持 JSON-only，隔离坏值和空地址并继续构造其余节点 |
+| A-06 | 高 | REST 权限 | 已关闭：Route helper 复制完整结构并保留 `Permissions` |
+| A-07 | 中 | REST protobuf | 已关闭：补齐 protobuf error/write API、8 MiB 限制、content-type 和错误链 |
+| A-08 | 中 | logx | 已关闭：BI 改为可选 writer 能力并进入标准日志字段、脱敏和截断路径 |
+| A-09 | 中 | goctl | 已关闭：根 `go.work` 绑定本地 module，版本更新为 `1.10.3-ffhexas` |
+| A-10 | 中 | 默认行为 | 已关闭：新增 FF-Hexas 默认行为契约文档并保留对应测试 |
+| A-11 | 中 | 测试覆盖 | 已关闭：新增关键失败、元数据、前缀、Cluster、并发与 BI 回归测试 |
+| A-12 | 高 | GitHub workflow | 已关闭：CI 对齐 `main` 和双 module，删除上游 goctl 发布/版本任务及 gomod 自动升级 |
+| A-13 | 低 | 基线格式 | 已接受：CI 只检查本次变更行，不批量改写导入快照 |
+
+### 3.1 最终设计与迁移结论
+
+- Mongo 持久化采用同步写入并在成功后失效缓存；删除 `ModelDirtyWorker`、`SetWithDirtyCtx`、脏标记 Lua 和 `UpdateOneWithCacheDirty`。仓库内没有这些 API 的业务调用方，因此无需数据迁移；外部调用方必须改用 `UpdateOne` 等同步路径。
+- `Database` 不再借用全局共享 client：每个实例创建、持有并关闭自己的 client；collection lazy cache 使用互斥锁。`MustNewDatabase` 删除未使用的 collection 参数，未消费的 `DatabaseOptions` API 被删除，索引选项冲突直接返回错误。
+- Redis 对公开 API 统一接收逻辑 key。`Keys`/`Scan` 自动限定前缀并返回去前缀的逻辑 key；复合 destination、MSET key、ZStore key 和 Stream key 均加前缀。Cluster 多 key 操作必须让所有 key 使用同一非空 `{hash-tag}`，否则返回 `ErrCrossSlot`。
+- etcd 服务发现坚持 JSON-only 硬切换，不恢复旧纯地址格式兼容；单条损坏或空地址记录只被隔离，不再截断合法节点列表。
+- REST Route 的元数据在 helper 组合中完整保留。Protobuf HTTP 使用 `application/pb`、8 MiB 请求上限和独立 success/error 写入入口。
+- `logx.Writer` 不再强制实现 BI；实现 `BIWriter` 可选择独立路由，否则落到 Info。两条路径都使用 caller、全局字段、`channel=bi`、敏感值遮罩和内容截断。
+- goctl 通过根 `go.work` 使用当前框架源码，显示版本为 `1.10.3-ffhexas`。本仓库不发布上游 goctl tag，也不自动跟随 go-zero 后续版本。
+- RPC、缓存和成功日志的默认值见 [`../framework-defaults.md`](../framework-defaults.md)。
+
+回滚时应按条目独立回退代码和测试；不要恢复已删除的异步脏写链路。若必须重新引入异步持久化，应作为新设计完成 outbox/ack、幂等、崩溃恢复和真实故障注入验证。
 
 ## 4. 详细发现
 

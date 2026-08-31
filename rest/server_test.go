@@ -192,6 +192,29 @@ func TestWithMiddleware(t *testing.T) {
 	}, m)
 }
 
+func TestRouteOptionsPreservePermissions(t *testing.T) {
+	permissions := []string{"game.read"}
+	route := Route{
+		Method:      http.MethodGet,
+		Path:        "/games",
+		Handler:     func(http.ResponseWriter, *http.Request) {},
+		Permissions: permissions,
+	}
+	middleware := func(next http.HandlerFunc) http.HandlerFunc { return next }
+	permissionMiddleware := func(next http.HandlerFunc, got []string) http.HandlerFunc {
+		assert.Equal(t, permissions, got)
+		return next
+	}
+
+	routes := WithMiddleware(middleware, route)
+	routes = WithPermissionsMiddleware(permissionMiddleware, routes...)
+	fr := featuredRoutes{routes: routes}
+	WithPrefix("/api")(&fr)
+
+	assert.Equal(t, "/api/games", fr.routes[0].Path)
+	assert.Equal(t, permissions, fr.routes[0].Permissions)
+}
+
 func TestWithFileServerMiddleware(t *testing.T) {
 	tests := []struct {
 		name            string

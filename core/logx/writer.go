@@ -40,7 +40,11 @@ type (
 		Stack(v any)
 		// Stat logs a message at stat level.
 		Stat(v any, fields ...LogField)
-		Bi(v any)
+	}
+
+	// BIWriter is an optional capability for writers that route BI events separately.
+	BIWriter interface {
+		Bi(v any, fields ...LogField)
 	}
 
 	atomicWriter struct {
@@ -139,9 +143,13 @@ func (c comboWriter) Info(v any, fields ...LogField) {
 	}
 }
 
-func (c comboWriter) Bi(v any) {
+func (c comboWriter) Bi(v any, fields ...LogField) {
 	for _, w := range c.writers {
-		w.Bi(v)
+		if writer, ok := w.(BIWriter); ok {
+			writer.Bi(v, fields...)
+		} else {
+			w.Info(v, fields...)
+		}
 	}
 }
 
@@ -288,8 +296,8 @@ func (w *concreteWriter) Info(v any, fields ...LogField) {
 	output(w.infoLog, levelInfo, v, fields...)
 }
 
-func (w *concreteWriter) Bi(v any) {
-	writeJson(w.infoLog, v)
+func (w *concreteWriter) Bi(v any, fields ...LogField) {
+	output(w.infoLog, levelInfo, v, fields...)
 }
 
 func (w *concreteWriter) Severe(v any) {
@@ -324,9 +332,6 @@ func (n nopWriter) Error(_ any, _ ...LogField) {
 }
 
 func (n nopWriter) Info(_ any, _ ...LogField) {
-}
-
-func (n nopWriter) Bi(_ any) {
 }
 
 func (n nopWriter) Severe(_ any) {
