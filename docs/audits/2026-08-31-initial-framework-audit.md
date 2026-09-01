@@ -58,7 +58,7 @@
 - REST Route 的元数据在 helper 组合中完整保留。Protobuf HTTP 使用 `application/pb`、8 MiB 请求上限和独立 success/error 写入入口。
 - `logx.Writer` 不再强制实现 BI；实现 `BIWriter` 可选择独立路由，否则落到 Info。两条路径都使用 caller、全局字段、`channel=bi`、敏感值遮罩和内容截断。
 - 根 module 已迁移为 `github.com/lemongoff/hexas`，goctl module 已迁移为 `github.com/lemongoff/hexas/tools/goctl`；旧路径只保留在官方基线、历史发现和第三方来源记录中，不提供 import 兼容层。
-- goctl 通过根 `go.work` 使用当前框架源码，显示版本为 `1.10.4-hexas`；独立 module 固定依赖 Hexas `v0.1.0` 和 hexas-config `v1.0.0`，不再提交相对 `replace`。本仓库不发布上游 goctl tag，也不自动跟随 go-zero 后续版本。
+- goctl 通过根 `go.work` 使用当前框架源码，显示版本为 `1.10.4-hexas`；独立 module 固定依赖 Hexas `v0.1.0` 和 hexas-config `v1.0.0`，不再提交相对 `replace`。Hexas goctl 使用 `tools/goctl/v<version>` 多模块标签发布，不复用上游发布自动化，也不自动跟随 go-zero 后续版本。
 - RPC、缓存和成功日志的默认值见 [`../framework-defaults.md`](../framework-defaults.md)。
 - 配置加载已整体迁移到 `github.com/lemongoff/hexas-config`；删除 `core/conf`、`core/configcenter`、旧反射默认标签和兼容入口。Bootstrap 与 Runtime Config 分离，goctl 新项目使用 `config/base.yaml`。完整契约见 [`../configuration.md`](../configuration.md)。
 
@@ -239,25 +239,21 @@ RPC server 不再发布纯 `host:port`，而是发布 `{"Addr":...,"ServerName":
 - REST helper 没有验证 `Permissions` 在 middleware/prefix 组合后保持。
 - protobuf error handler 未被测试为实际响应路径。
 - BI 没有 schema、脱敏和自定义 Writer 迁移测试。
-- goctl module 的 `go vet ./...` 不能通过：存在无缓冲 signal channel 用法和 2 处不可达代码。
-- `tools/goctl/api/gogen` 的测试在包目录复用并删除已跟踪的 `jwt.api`，测试结束会污染工作树；本次验证后已按源快照恢复该文件。
 
-影响：全量绿测只能证明既有测试集通过，不能关闭 A-01 至 A-10；goctl 也尚未达到静态检查全绿，且测试不具备完整的工作树隔离性。
+影响：全量绿测只能证明既有测试集通过，不能关闭 A-01 至 A-10。goctl 的静态检查与工作树隔离问题已经修复，剩余风险来自上述尚未覆盖的框架行为。
 
-### A-12：复制的 GitHub workflow 仍假设上游仓库
+### A-12：复制的 GitHub workflow 仍假设上游仓库（已关闭）
 
-等级：高
+原等级：高
 
-证据：
+处理结果：
 
-- `.github/workflows/go.yml` 和 `codeql-analysis.yml` 只监听 `master`，而 Hexas 当前主分支为 `main`。
-- `.github/dependabot.yml` 每日更新根 module 和 goctl module，可能持续引入官方依赖变化，与“不默认跟进上游”冲突。
-- `.github/workflows/release.yaml` 在 `tools/goctl/*` tag 上使用 `zeromicro/go-zero-release-action@master` 发布 goctl，并固定下载 Go 1.21.13；当前两个 go.mod 均要求 Go 1.24.0。
-- `.github/workflows/version-check.yml` 同样使用 Go 1.21，且当前 goctl `BuildVersion` 仍为 1.10.2。
+- `go.yml` 与 `codeql-analysis.yml` 已监听 `main`。
+- `go.yml` 分别验证根 module 与 `tools/goctl` 独立 module，并使用各自 `go.mod` 声明的 Go 版本。
+- 已删除上游 `release.yaml` 和 `version-check.yml`，创建 Hexas 多模块标签不会触发上游发布 action。
+- Dependabot 只维护 Docker 与 GitHub Actions，不自动改写两个 Go module 的依赖。
 
-影响：`main` 的 push/PR 可能没有预期的测试和 CodeQL 闸门；创建 goctl tag 可能触发不符合 Hexas 发布边界的自动发布或因 Go 版本不匹配失败；Dependabot 会制造未经专项审计的版本漂移。
-
-后续建议：在单独 CI/发布治理任务中决定保留、禁用或重写这些 workflow。完成前不要创建 `tools/goctl/*` tag，并把本地验证作为必需闸门。本轮按“遗留问题只审计”要求保持原文件不变。
+发布约束：goctl 只使用标准多模块标签 `tools/goctl/v<version>` 发布源码 module；打标签前必须完成根 module、goctl 独立 module、`GOWORK=off` 构建和目标项目生成验证。
 
 ### A-13：导入快照含既有空白格式告警
 

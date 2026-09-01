@@ -29,6 +29,12 @@ go install github.com/lemongoff/hexas/tools/goctl@latest
 
 `@latest` 可能引入与 Hexas 基线不同的模板、命令和运行时假设。
 
+安装已发布版本时必须显式固定版本：
+
+```bash
+GOWORK=off go install github.com/lemongoff/hexas/tools/goctl@v1.10.4-hexas
+```
+
 在已有服务中只更新 RPC 适配器和客户端时使用 `rpc protoc --skip-scaffold`，避免生成新的服务入口和 bootstrap YAML。新建完整服务时不使用该开关。
 
 ## 生成前检查
