@@ -3,7 +3,7 @@ package swagger
 import (
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
 )
 
 type Context struct {

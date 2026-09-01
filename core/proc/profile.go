@@ -14,7 +14,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/lemongoff/hexas/core/logx"
 )
 
 // DefaultMemProfileRate is the default memory profiling rate.

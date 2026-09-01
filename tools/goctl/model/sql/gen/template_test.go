@@ -5,10 +5,10 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/parser"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/template"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/stringx"
+	"github.com/lemongoff/hexas/tools/goctl/model/sql/parser"
+	"github.com/lemongoff/hexas/tools/goctl/model/sql/template"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/util/stringx"
 	"github.com/stretchr/testify/assert"
 )
 

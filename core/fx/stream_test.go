@@ -10,8 +10,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx/logtest"
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
+	"github.com/lemongoff/hexas/core/logx/logtest"
+	"github.com/lemongoff/hexas/core/stringx"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/goleak"
 )

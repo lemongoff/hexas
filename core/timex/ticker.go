@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
+	"github.com/lemongoff/hexas/core/lang"
 )
 
 // errTimeout indicates a timeout.

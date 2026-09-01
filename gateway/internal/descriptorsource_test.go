@@ -7,7 +7,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/hash"
+	"github.com/lemongoff/hexas/core/hash"
 	"github.com/fullstorydev/grpcurl"
 	"github.com/jhump/protoreflect/desc"
 	"github.com/stretchr/testify/assert"

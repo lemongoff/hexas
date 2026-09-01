@@ -5,9 +5,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/execx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/core/stringx"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/execx"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
+	"github.com/lemongoff/hexas/core/lang"
 	"github.com/pelletier/go-toml/v2"
 	"github.com/titanous/json5"
 	"gopkg.in/yaml.v2"

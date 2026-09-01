@@ -4,8 +4,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/util"
 )
 
 func rangeValueFromOptions(options []string) (minimum *float64, maximum *float64, exclusiveMinimum bool, exclusiveMaximum bool) {

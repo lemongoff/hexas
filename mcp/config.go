@@ -3,7 +3,7 @@ package mcp
 import (
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/rest"
+	"github.com/lemongoff/hexas/rest"
 )
 
 // McpConf defines the configuration for an MCP server.

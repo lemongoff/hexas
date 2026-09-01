@@ -8,10 +8,10 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/JellyGoFF/FF-Hexas/core/configcenter/subscriber"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/mapping"
-	"github.com/JellyGoFF/FF-Hexas/core/threading"
+	"github.com/lemongoff/hexas/core/configcenter/subscriber"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/mapping"
+	"github.com/lemongoff/hexas/core/threading"
 )
 
 var (

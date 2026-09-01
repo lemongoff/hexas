@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/stringx"
 	"github.com/alicebob/miniredis/v2"
 	red "github.com/redis/go-redis/v9"
 	"github.com/redis/go-redis/v9/maintnotifications"

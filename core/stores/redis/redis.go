@@ -8,11 +8,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/breaker"
-	"github.com/JellyGoFF/FF-Hexas/core/errorx"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/mapping"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/breaker"
+	"github.com/lemongoff/hexas/core/errorx"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/mapping"
+	"github.com/lemongoff/hexas/core/syncx"
 	red "github.com/redis/go-redis/v9"
 	"github.com/redis/go-redis/v9/maintnotifications"
 )

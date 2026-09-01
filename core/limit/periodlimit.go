@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
+	"github.com/lemongoff/hexas/core/stores/redis"
 )
 
 const (

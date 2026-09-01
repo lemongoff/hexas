@@ -3,7 +3,7 @@ package mapping
 import (
 	"io"
 
-	"github.com/JellyGoFF/FF-Hexas/core/jsonx"
+	"github.com/lemongoff/hexas/core/jsonx"
 )
 
 const jsonTagKey = "json"

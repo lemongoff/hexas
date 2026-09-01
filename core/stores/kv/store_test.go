@@ -4,10 +4,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/hash"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/cache"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
+	"github.com/lemongoff/hexas/core/hash"
+	"github.com/lemongoff/hexas/core/stores/cache"
+	"github.com/lemongoff/hexas/core/stores/redis"
+	"github.com/lemongoff/hexas/core/stringx"
 	"github.com/alicebob/miniredis/v2"
 	"github.com/stretchr/testify/assert"
 )

@@ -4,8 +4,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/mathx"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/mathx"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 type (

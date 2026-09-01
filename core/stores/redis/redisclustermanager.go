@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/syncx"
 	red "github.com/redis/go-redis/v9"
 )
 

@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis/redistest"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/stores/redis/redistest"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/zrpc/internal/clientinterceptors"
-	"github.com/JellyGoFF/FF-Hexas/zrpc/resolver"
+	"github.com/lemongoff/hexas/zrpc/internal/clientinterceptors"
+	"github.com/lemongoff/hexas/zrpc/resolver"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"

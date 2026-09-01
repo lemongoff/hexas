@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/vars"
+	"github.com/lemongoff/hexas/tools/goctl/vars"
 )
 
 const (

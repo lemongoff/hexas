@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/collection"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
+	"github.com/lemongoff/hexas/core/collection"
+	"github.com/lemongoff/hexas/core/stores/redis"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"

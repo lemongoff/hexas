@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
+	"github.com/lemongoff/hexas/core/stringx"
 )
 
 var replacer = stringx.NewReplacer(map[string]string{

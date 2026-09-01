@@ -15,7 +15,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/JellyGoFF/FF-Hexas/rest"
+	"github.com/lemongoff/hexas/rest"
 )
 
 func TestMain(m *testing.M) {

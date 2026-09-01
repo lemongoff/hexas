@@ -3,10 +3,10 @@ package breaker
 import (
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/collection"
-	"github.com/JellyGoFF/FF-Hexas/core/mathx"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/collection"
+	"github.com/lemongoff/hexas/core/mathx"
+	"github.com/lemongoff/hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 const (

@@ -1,8 +1,8 @@
 package gateway
 
 import (
-	"github.com/JellyGoFF/FF-Hexas/rest"
-	"github.com/JellyGoFF/FF-Hexas/zrpc"
+	"github.com/lemongoff/hexas/rest"
+	"github.com/lemongoff/hexas/zrpc"
 )
 
 type (

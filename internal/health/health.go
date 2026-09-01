@@ -6,7 +6,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/syncx"
 )
 
 // defaultHealthManager is global comboHealthManager.

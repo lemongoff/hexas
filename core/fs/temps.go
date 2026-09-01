@@ -3,7 +3,7 @@ package fs
 import (
 	"os"
 
-	"github.com/JellyGoFF/FF-Hexas/core/hash"
+	"github.com/lemongoff/hexas/core/hash"
 )
 
 // TempFileWithText creates the temporary file with the given content,

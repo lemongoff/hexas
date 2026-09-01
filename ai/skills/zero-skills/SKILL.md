@@ -1,12 +1,12 @@
 ---
 name: zero-skills
-description: Work on FF-Hexas go-zero framework internals, REST/RPC/storage/resilience behavior, local goctl generation, or go-zero consumer examples. Use project rules for framework changes and load pinned upstream patterns only when the task needs them.
+description: Work on Hexas go-zero framework internals, REST/RPC/storage/resilience behavior, local goctl generation, or go-zero consumer examples. Use project rules for framework changes and load pinned upstream patterns only when the task needs them.
 license: MIT
 ---
 
-# FF-Hexas zero-skills
+# Hexas zero-skills
 
-This project adaptation combines FF-Hexas framework rules with a pinned selection from `zeromicro/zero-skills`.
+This project adaptation combines Hexas framework rules with a pinned selection from `zeromicro/zero-skills`.
 
 ## Authority
 
@@ -17,7 +17,7 @@ Before acting, read the relevant higher-priority project sources:
 3. [`../../context/00-instructions.md`](../../context/00-instructions.md)
 4. The matching entries in [`../../../docs/audits/2026-08-31-initial-framework-audit.md`](../../../docs/audits/2026-08-31-initial-framework-audit.md)
 
-The vendored upstream references are general consumer-service guidance. They never override FF-Hexas code, tests, audits, defaults, or approved design decisions.
+The vendored upstream references are general consumer-service guidance. They never override Hexas code, tests, audits, defaults, or approved design decisions.
 
 ## Workflow
 
@@ -32,7 +32,7 @@ The vendored upstream references are general consumer-service guidance. They nev
 
 - Framework workflow and approvals: [`../../context/workflows.md`](../../context/workflows.md)
 - Local commands and goctl boundary: [`../../context/tools.md`](../../context/tools.md)
-- FF-Hexas framework invariants: [`../../context/patterns.md`](../../context/patterns.md)
+- Hexas framework invariants: [`../../context/patterns.md`](../../context/patterns.md)
 - Source snapshot and adaptation record: [`UPSTREAM.md`](UPSTREAM.md)
 
 ## Pinned upstream references
@@ -49,11 +49,11 @@ Load these only when their subject is relevant:
 
 Do not load all references by default.
 
-## FF-Hexas overrides
+## Hexas overrides
 
 - This repository develops the framework itself. Handler/Logic/Model layering applies to generated consumer services, not every framework package.
 - Never install or select `goctl@latest` automatically. Build and test `tools/goctl` from this repository when generator behavior matters.
-- Do not assume upstream version ranges, defaults, generated output, configuration, or troubleshooting fixes apply to FF-Hexas.
+- Do not assume upstream version ranges, defaults, generated output, configuration, or troubleshooting fixes apply to Hexas.
 - Do not update dependencies, sync upstream, generate into the working tree, or modify runtime code without task authorization.
 - Existing customizations are redesign inputs, not compatibility requirements. Preserve old behavior only when the user explicitly requires it.
 - Generated code boundaries must be established from the current generator and templates; upstream claims that regeneration is always safe are advisory only.

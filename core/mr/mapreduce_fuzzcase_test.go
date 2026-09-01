@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/threading"
+	"github.com/lemongoff/hexas/core/threading"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/cheggaaa/pb.v1"
 )

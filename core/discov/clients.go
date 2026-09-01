@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/discov/internal"
+	"github.com/lemongoff/hexas/core/discov/internal"
 )
 
 const (

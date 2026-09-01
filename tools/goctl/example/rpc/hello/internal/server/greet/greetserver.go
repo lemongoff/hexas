@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	greetlogic "github.com/JellyGoFF/FF-Hexas/tools/goctl/example/rpc/hello/internal/logic/greet"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/example/rpc/hello/internal/svc"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/example/rpc/hello/pb/hello"
+	greetlogic "github.com/lemongoff/hexas/tools/goctl/example/rpc/hello/internal/logic/greet"
+	"github.com/lemongoff/hexas/tools/goctl/example/rpc/hello/internal/svc"
+	"github.com/lemongoff/hexas/tools/goctl/example/rpc/hello/pb/hello"
 )
 
 type GreetServer struct {

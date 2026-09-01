@@ -6,8 +6,8 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
-	"github.com/JellyGoFF/FF-Hexas/rest/pathvar"
+	"github.com/lemongoff/hexas/rest/httpx"
+	"github.com/lemongoff/hexas/rest/pathvar"
 	"github.com/fullstorydev/grpcurl"
 	"github.com/golang/protobuf/jsonpb"
 )

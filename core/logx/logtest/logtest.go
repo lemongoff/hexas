@@ -6,7 +6,7 @@ import (
 	"io"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/lemongoff/hexas/core/logx"
 )
 
 type Buffer struct {

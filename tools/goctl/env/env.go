@@ -3,7 +3,7 @@ package env
 import (
 	"fmt"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/env"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/env"
 	"github.com/spf13/cobra"
 )
 

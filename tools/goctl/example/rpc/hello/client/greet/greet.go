@@ -6,8 +6,8 @@ package client
 import (
 	"context"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/example/rpc/hello/pb/hello"
-	"github.com/JellyGoFF/FF-Hexas/zrpc"
+	"github.com/lemongoff/hexas/tools/goctl/example/rpc/hello/pb/hello"
+	"github.com/lemongoff/hexas/zrpc"
 	"google.golang.org/grpc"
 )
 

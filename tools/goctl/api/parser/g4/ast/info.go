@@ -1,6 +1,6 @@
 package ast
 
-import "github.com/JellyGoFF/FF-Hexas/tools/goctl/api/parser/g4/gen/api"
+import "github.com/lemongoff/hexas/tools/goctl/api/parser/g4/gen/api"
 
 // InfoExpr defines info syntax for api
 type InfoExpr struct {

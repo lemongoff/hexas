@@ -3,9 +3,9 @@ package handler
 import (
 	"net/http"
 
-	"github.com/JellyGoFF/FF-Hexas/core/collection"
-	"github.com/JellyGoFF/FF-Hexas/core/trace"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/response"
+	"github.com/lemongoff/hexas/core/collection"
+	"github.com/lemongoff/hexas/core/trace"
+	"github.com/lemongoff/hexas/rest/internal/response"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/propagation"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"

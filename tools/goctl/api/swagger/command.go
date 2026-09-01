@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/parser"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/parser"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )

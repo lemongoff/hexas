@@ -3,7 +3,7 @@ package util
 import (
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/test"
+	"github.com/lemongoff/hexas/tools/goctl/test"
 )
 
 func TestIsTemplate(t *testing.T) {

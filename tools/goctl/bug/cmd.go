@@ -1,7 +1,7 @@
 package bug
 
 import (
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/cobrax"
+	"github.com/lemongoff/hexas/tools/goctl/internal/cobrax"
 	"github.com/spf13/cobra"
 )
 

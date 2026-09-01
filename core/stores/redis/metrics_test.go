@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/conf"
-	"github.com/JellyGoFF/FF-Hexas/internal/devserver"
+	"github.com/lemongoff/hexas/core/conf"
+	"github.com/lemongoff/hexas/internal/devserver"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/testutil"
 	red "github.com/redis/go-redis/v9"

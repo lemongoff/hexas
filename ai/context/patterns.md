@@ -1,11 +1,11 @@
-# FF-Hexas 框架模式
+# Hexas 框架模式
 
 本文件只列会改变框架维护决策的项目模式。业务服务示例模式按需读取 `ai/skills/zero-skills`。
 
 ## 公共契约
 
 - module path 与官方相同不代表行为相同；修改公开类型、接口、默认值或配置时检查仓库内全部构造、实现、mock 和生成模板。
-- 不为官方后续版本自动增加兼容层。FF-Hexas 调用方迁移仍需明确说明。
+- 不为官方后续版本自动增加兼容层。Hexas 调用方迁移仍需明确说明。
 - adapter、resolver 和 handler 保持薄层，但框架内部不强制套用业务项目的 Handler/Logic/Model 目录结构。
 
 ## Context 与生命周期

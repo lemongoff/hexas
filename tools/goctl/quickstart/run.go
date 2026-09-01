@@ -5,7 +5,7 @@ import (
 	"os/exec"
 	"runtime"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/vars"
+	"github.com/lemongoff/hexas/tools/goctl/vars"
 )
 
 func goStart(dir string) {

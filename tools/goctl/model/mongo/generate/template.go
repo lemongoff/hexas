@@ -3,8 +3,8 @@ package generate
 import (
 	"fmt"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/mongo/template"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/model/mongo/template"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 const (

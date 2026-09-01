@@ -5,11 +5,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/ast"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/importstack"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/placeholder"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/token"
+	"github.com/lemongoff/hexas/core/lang"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/ast"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/importstack"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/placeholder"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/token"
 )
 
 const (

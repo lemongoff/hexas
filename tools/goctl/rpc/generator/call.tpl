@@ -9,7 +9,7 @@ import (
 	{{if ne .pbPackage .protoGoPackage}}{{.protoGoPackage}}{{end}}
 	{{.extraImports}}
 
-	"github.com/JellyGoFF/FF-Hexas/zrpc"
+	"github.com/lemongoff/hexas/zrpc"
 	"google.golang.org/grpc"
 )
 

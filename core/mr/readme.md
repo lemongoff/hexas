@@ -53,7 +53,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/JellyGoFF/FF-Hexas/core/mr"
+    "github.com/lemongoff/hexas/core/mr"
 )
 
 func main() {

@@ -4,8 +4,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 const statInterval = time.Minute

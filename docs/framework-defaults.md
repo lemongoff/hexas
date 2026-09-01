@@ -1,6 +1,6 @@
-# FF-Hexas 框架默认值
+# Hexas 框架默认值
 
-本文件记录 FF-Hexas 基于 `zeromicro/go-zero v1.10.3` 固定分支形成的运行时默认契约。项目不跟随 go-zero 后续版本，也不以官方默认值推断本分支行为。
+本文件记录 Hexas 基于 `zeromicro/go-zero v1.10.3` 固定分支形成的运行时默认契约。项目不跟随 go-zero 后续版本，也不以官方默认值推断本分支行为。
 
 ## RPC
 

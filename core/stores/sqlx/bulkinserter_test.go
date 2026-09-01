@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/dbtest"
+	"github.com/lemongoff/hexas/core/stores/dbtest"
 	"github.com/stretchr/testify/assert"
 )
 

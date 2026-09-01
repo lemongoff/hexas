@@ -8,9 +8,9 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/jsonx"
-	"github.com/JellyGoFF/FF-Hexas/core/mapping"
-	"github.com/JellyGoFF/FF-Hexas/internal/encoding"
+	"github.com/lemongoff/hexas/core/jsonx"
+	"github.com/lemongoff/hexas/core/mapping"
+	"github.com/lemongoff/hexas/internal/encoding"
 )
 
 const (

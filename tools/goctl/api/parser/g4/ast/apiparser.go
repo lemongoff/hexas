@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/parser/g4/gen/api"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
+	"github.com/lemongoff/hexas/tools/goctl/api/parser/g4/gen/api"
+	"github.com/lemongoff/hexas/tools/goctl/util/console"
 	"github.com/zeromicro/antlr"
 )
 

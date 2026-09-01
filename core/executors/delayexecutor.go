@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/threading"
+	"github.com/lemongoff/hexas/core/threading"
 )
 
 // A DelayExecutor delays a tasks on given delay interval.

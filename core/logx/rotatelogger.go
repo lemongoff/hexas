@@ -13,8 +13,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/fs"
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
+	"github.com/lemongoff/hexas/core/fs"
+	"github.com/lemongoff/hexas/core/lang"
 )
 
 const (

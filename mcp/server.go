@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/rest"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/rest"
 	sdkmcp "github.com/modelcontextprotocol/go-sdk/mcp"
 )
 

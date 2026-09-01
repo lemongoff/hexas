@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 // An ElapsedTimer is a timer to track the elapsed time.

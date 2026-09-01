@@ -3,9 +3,9 @@ package generator
 import (
 	"log"
 
-	conf "github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/env"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
+	conf "github.com/lemongoff/hexas/tools/goctl/config"
+	"github.com/lemongoff/hexas/tools/goctl/env"
+	"github.com/lemongoff/hexas/tools/goctl/util/console"
 )
 
 // Generator defines the environment needs of rpc service generation

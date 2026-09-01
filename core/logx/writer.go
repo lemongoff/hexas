@@ -12,8 +12,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/color"
-	"github.com/JellyGoFF/FF-Hexas/core/errorx"
+	"github.com/lemongoff/hexas/core/color"
+	"github.com/lemongoff/hexas/core/errorx"
 	fatihcolor "github.com/fatih/color"
 )
 

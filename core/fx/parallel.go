@@ -1,8 +1,8 @@
 package fx
 
 import (
-	"github.com/JellyGoFF/FF-Hexas/core/errorx"
-	"github.com/JellyGoFF/FF-Hexas/core/threading"
+	"github.com/lemongoff/hexas/core/errorx"
+	"github.com/lemongoff/hexas/core/threading"
 )
 
 // Parallel runs fns parallelly and waits for done.

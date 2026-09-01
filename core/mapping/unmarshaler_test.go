@@ -11,8 +11,8 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/JellyGoFF/FF-Hexas/core/jsonx"
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
+	"github.com/lemongoff/hexas/core/jsonx"
+	"github.com/lemongoff/hexas/core/stringx"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 )

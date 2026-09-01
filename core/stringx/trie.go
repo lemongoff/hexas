@@ -1,6 +1,6 @@
 package stringx
 
-import "github.com/JellyGoFF/FF-Hexas/core/lang"
+import "github.com/lemongoff/hexas/core/lang"
 
 const defaultMask = '*'
 

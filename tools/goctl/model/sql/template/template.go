@@ -4,8 +4,8 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/version"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
+	"github.com/lemongoff/hexas/tools/goctl/internal/version"
+	"github.com/lemongoff/hexas/tools/goctl/util"
 )
 
 // Customized defines a template for customized in model

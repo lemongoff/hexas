@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 const (

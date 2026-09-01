@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/breaker"
-	"github.com/JellyGoFF/FF-Hexas/core/logx/logtest"
-	"github.com/JellyGoFF/FF-Hexas/core/trace/tracetest"
+	"github.com/lemongoff/hexas/core/breaker"
+	"github.com/lemongoff/hexas/core/logx/logtest"
+	"github.com/lemongoff/hexas/core/trace/tracetest"
 	red "github.com/redis/go-redis/v9"
 	"github.com/stretchr/testify/assert"
 	tracesdk "go.opentelemetry.io/otel/trace"

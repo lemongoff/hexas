@@ -6,11 +6,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stores/builder"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/cache"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/sqlc"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/sqlx"
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
+	"github.com/lemongoff/hexas/core/stores/builder"
+	"github.com/lemongoff/hexas/core/stores/cache"
+	"github.com/lemongoff/hexas/core/stores/sqlc"
+	"github.com/lemongoff/hexas/core/stores/sqlx"
+	"github.com/lemongoff/hexas/core/stringx"
 )
 
 var (

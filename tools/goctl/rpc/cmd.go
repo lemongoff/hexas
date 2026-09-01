@@ -1,9 +1,9 @@
 package rpc
 
 import (
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/cobrax"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/cli"
+	"github.com/lemongoff/hexas/tools/goctl/config"
+	"github.com/lemongoff/hexas/tools/goctl/internal/cobrax"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/cli"
 	"github.com/spf13/cobra"
 )
 

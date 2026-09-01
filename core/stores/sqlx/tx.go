@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/JellyGoFF/FF-Hexas/core/breaker"
+	"github.com/lemongoff/hexas/core/breaker"
 )
 
 type (

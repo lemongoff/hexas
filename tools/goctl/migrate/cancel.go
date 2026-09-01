@@ -7,8 +7,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
+	"github.com/lemongoff/hexas/core/syncx"
+	"github.com/lemongoff/hexas/tools/goctl/util/console"
 )
 
 func cancelOnSignals() {

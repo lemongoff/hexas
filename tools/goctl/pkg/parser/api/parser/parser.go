@@ -7,9 +7,9 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/ast"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/scanner"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/token"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/ast"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/scanner"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/token"
 )
 
 const (

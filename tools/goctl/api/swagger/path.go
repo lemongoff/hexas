@@ -5,8 +5,8 @@ import (
 	"path"
 	"strings"
 
-	apiSpec "github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/stringx"
+	apiSpec "github.com/lemongoff/hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/util/stringx"
 	"github.com/go-openapi/spec"
 )
 

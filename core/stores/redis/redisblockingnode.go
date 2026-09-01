@@ -3,7 +3,7 @@ package redis
 import (
 	"fmt"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/lemongoff/hexas/core/logx"
 	red "github.com/redis/go-redis/v9"
 )
 

@@ -11,12 +11,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/errorx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/parser"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/util"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/env"
-	apiF "github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/format"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/core/errorx"
+	"github.com/lemongoff/hexas/tools/goctl/api/parser"
+	"github.com/lemongoff/hexas/tools/goctl/api/util"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/env"
+	apiF "github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/format"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 	"github.com/spf13/cobra"
 )
 

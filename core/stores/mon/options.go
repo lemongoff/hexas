@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/syncx"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )

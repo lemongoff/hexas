@@ -12,7 +12,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/version"
+	"github.com/lemongoff/hexas/tools/goctl/internal/version"
 	"github.com/gookit/color"
 )
 

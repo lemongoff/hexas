@@ -3,11 +3,11 @@ package zrpc
 import (
 	"testing"
 
-	zconf "github.com/JellyGoFF/FF-Hexas/core/conf"
-	"github.com/JellyGoFF/FF-Hexas/core/discov"
-	"github.com/JellyGoFF/FF-Hexas/core/service"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
-	"github.com/JellyGoFF/FF-Hexas/zrpc/internal/balancer/p2c"
+	zconf "github.com/lemongoff/hexas/core/conf"
+	"github.com/lemongoff/hexas/core/discov"
+	"github.com/lemongoff/hexas/core/service"
+	"github.com/lemongoff/hexas/core/stores/redis"
+	"github.com/lemongoff/hexas/zrpc/internal/balancer/p2c"
 	"github.com/stretchr/testify/assert"
 )
 

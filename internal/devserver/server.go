@@ -7,10 +7,10 @@ import (
 	"net/http/pprof"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/prometheus"
-	"github.com/JellyGoFF/FF-Hexas/core/threading"
-	"github.com/JellyGoFF/FF-Hexas/internal/health"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/prometheus"
+	"github.com/lemongoff/hexas/core/threading"
+	"github.com/lemongoff/hexas/internal/health"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 

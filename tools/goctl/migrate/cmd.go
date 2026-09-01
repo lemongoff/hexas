@@ -1,6 +1,6 @@
 package migrate
 
-import "github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/cobrax"
+import "github.com/lemongoff/hexas/tools/goctl/internal/cobrax"
 
 var (
 	boolVarVerbose   bool

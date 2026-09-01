@@ -3,8 +3,8 @@ package mon
 import (
 	"context"
 
-	"github.com/JellyGoFF/FF-Hexas/core/errorx"
-	"github.com/JellyGoFF/FF-Hexas/core/trace"
+	"github.com/lemongoff/hexas/core/errorx"
+	"github.com/lemongoff/hexas/core/trace"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"

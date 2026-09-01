@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	apiSpec "github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/version"
+	apiSpec "github.com/lemongoff/hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/internal/version"
 	"github.com/go-openapi/spec"
 )
 
@@ -296,7 +296,7 @@ func specExtensions(api apiSpec.Info) (spec.Extensions, *spec.Info) {
 	ext.Add("x-goctl-version", version.BuildVersion)
 	ext.Add("x-description", "This is a goctl generated swagger file.")
 	ext.Add("x-date", time.Now().Format(time.DateTime))
-	ext.Add("x-github", "https://github.com/JellyGoFF/FF-Hexas")
+	ext.Add("x-github", "https://github.com/lemongoff/hexas")
 	ext.Add("x-go-zero-doc", "https://go-zero.dev/")
 
 	info := &spec.Info{}

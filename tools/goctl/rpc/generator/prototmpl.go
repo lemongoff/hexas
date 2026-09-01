@@ -5,9 +5,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/stringx"
+	"github.com/lemongoff/hexas/tools/goctl/util"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/util/stringx"
 )
 
 //go:embed rpc.tpl

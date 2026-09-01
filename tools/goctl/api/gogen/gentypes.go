@@ -9,13 +9,13 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/collection"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
-	apiutil "github.com/JellyGoFF/FF-Hexas/tools/goctl/api/util"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/version"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/format"
+	"github.com/lemongoff/hexas/core/collection"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
+	apiutil "github.com/lemongoff/hexas/tools/goctl/api/util"
+	"github.com/lemongoff/hexas/tools/goctl/config"
+	"github.com/lemongoff/hexas/tools/goctl/internal/version"
+	"github.com/lemongoff/hexas/tools/goctl/util"
+	"github.com/lemongoff/hexas/tools/goctl/util/format"
 )
 
 const typesFile = "types"

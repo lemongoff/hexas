@@ -5,12 +5,12 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/collection"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/proc"
-	"github.com/JellyGoFF/FF-Hexas/core/stat"
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
-	"github.com/JellyGoFF/FF-Hexas/core/threading"
+	"github.com/lemongoff/hexas/core/collection"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/proc"
+	"github.com/lemongoff/hexas/core/stat"
+	"github.com/lemongoff/hexas/core/stringx"
+	"github.com/lemongoff/hexas/core/threading"
 )
 
 const (

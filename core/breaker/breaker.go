@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/proc"
-	"github.com/JellyGoFF/FF-Hexas/core/stat"
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
+	"github.com/lemongoff/hexas/core/proc"
+	"github.com/lemongoff/hexas/core/stat"
+	"github.com/lemongoff/hexas/core/stringx"
 )
 
 const numHistoryReasons = 5

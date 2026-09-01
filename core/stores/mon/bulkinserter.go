@@ -5,8 +5,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/executors"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/lemongoff/hexas/core/executors"
+	"github.com/lemongoff/hexas/core/logx"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )

@@ -12,8 +12,8 @@ import (
 	"testing"
 	"testing/iotest"
 
-	"github.com/JellyGoFF/FF-Hexas/core/codec"
-	"github.com/JellyGoFF/FF-Hexas/core/logx/logtest"
+	"github.com/lemongoff/hexas/core/codec"
+	"github.com/lemongoff/hexas/core/logx/logtest"
 	"github.com/stretchr/testify/assert"
 )
 

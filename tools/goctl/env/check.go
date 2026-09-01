@@ -5,11 +5,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/env"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/protoc"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/protocgengo"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/protocgengogrpc"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/env"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/protoc"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/protocgengo"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/protocgengogrpc"
+	"github.com/lemongoff/hexas/tools/goctl/util/console"
 	"github.com/spf13/cobra"
 )
 

@@ -1,6 +1,6 @@
 package resolver
 
-import "github.com/JellyGoFF/FF-Hexas/zrpc/resolver/internal"
+import "github.com/lemongoff/hexas/zrpc/resolver/internal"
 
 // Register registers schemes defined zrpc.
 // Keep it in a separated package to let third party register manually.

@@ -13,8 +13,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/ctx"
+	"github.com/lemongoff/hexas/tools/goctl/util/console"
+	"github.com/lemongoff/hexas/tools/goctl/util/ctx"
 	"github.com/gookit/color"
 	"github.com/spf13/cobra"
 )

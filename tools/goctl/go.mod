@@ -1,18 +1,18 @@
-module github.com/JellyGoFF/FF-Hexas/tools/goctl
+module github.com/lemongoff/hexas/tools/goctl
 
 go 1.24.0
 
-replace github.com/JellyGoFF/FF-Hexas => ../..
+replace github.com/lemongoff/hexas => ../..
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.2
-	github.com/JellyGoFF/FF-Hexas v0.0.0
 	github.com/emicklei/proto v1.14.3
 	github.com/fatih/structtag v1.2.0
 	github.com/go-openapi/spec v0.21.1-0.20250328170532-a3928469592e
 	github.com/go-sql-driver/mysql v1.10.0
 	github.com/gookit/color v1.6.1
 	github.com/iancoleman/strcase v0.3.0
+	github.com/lemongoff/hexas v0.0.0
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/pflag v1.0.10
 	github.com/stretchr/testify v1.11.1

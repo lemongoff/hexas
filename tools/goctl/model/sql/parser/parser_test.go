@@ -6,9 +6,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/model"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/util"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/model/sql/model"
+	"github.com/lemongoff/hexas/tools/goctl/model/sql/util"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 	"github.com/stretchr/testify/assert"
 )
 

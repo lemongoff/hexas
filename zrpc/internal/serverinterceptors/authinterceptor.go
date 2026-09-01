@@ -3,7 +3,7 @@ package serverinterceptors
 import (
 	"context"
 
-	"github.com/JellyGoFF/FF-Hexas/zrpc/internal/auth"
+	"github.com/lemongoff/hexas/zrpc/internal/auth"
 	"google.golang.org/grpc"
 )
 

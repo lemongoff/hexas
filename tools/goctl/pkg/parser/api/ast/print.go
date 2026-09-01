@@ -7,7 +7,7 @@ import (
 	"os"
 	"reflect"
 
-	apitoken "github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/token"
+	apitoken "github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/token"
 )
 
 // A FieldFilter may be provided to Fprint to control the output.

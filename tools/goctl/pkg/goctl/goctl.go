@@ -4,10 +4,10 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/golang"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/vars"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/golang"
+	"github.com/lemongoff/hexas/tools/goctl/util/console"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/vars"
 )
 
 func Install(cacheDir, name string, installFn func(dest string) (string, error)) (string, error) {

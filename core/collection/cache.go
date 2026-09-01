@@ -6,9 +6,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/mathx"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/mathx"
+	"github.com/lemongoff/hexas/core/syncx"
 )
 
 const (

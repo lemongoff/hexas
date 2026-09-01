@@ -3,8 +3,8 @@ package service
 import (
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/internal/devserver"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/internal/devserver"
 	"github.com/stretchr/testify/assert"
 )
 

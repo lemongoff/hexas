@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/fs"
+	"github.com/lemongoff/hexas/core/fs"
 	"github.com/stretchr/testify/assert"
 )
 

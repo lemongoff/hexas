@@ -10,11 +10,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
-	"github.com/JellyGoFF/FF-Hexas/core/logc"
-	"github.com/JellyGoFF/FF-Hexas/core/mathx"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
-	"github.com/JellyGoFF/FF-Hexas/core/threading"
+	"github.com/lemongoff/hexas/core/lang"
+	"github.com/lemongoff/hexas/core/logc"
+	"github.com/lemongoff/hexas/core/mathx"
+	"github.com/lemongoff/hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/threading"
 	"go.etcd.io/etcd/api/v3/v3rpc/rpctypes"
 	clientv3 "go.etcd.io/etcd/client/v3"
 )

@@ -5,9 +5,9 @@ import (
 	"context"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/breaker"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/breaker"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/timex"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )

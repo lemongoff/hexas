@@ -7,8 +7,8 @@ import (
 	"path"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/util"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/api/util"
 )
 
 const (

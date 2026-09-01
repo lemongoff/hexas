@@ -2,7 +2,7 @@ package svc
 
 import (
 	"{{.configPkg}}"{{if .callRPC}}
-	"github.com/JellyGoFF/FF-Hexas/zrpc"
+	"github.com/lemongoff/hexas/zrpc"
 	"{{.rpcClientPkg}}"{{end}}
 )
 

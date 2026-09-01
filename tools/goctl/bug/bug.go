@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"runtime"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/version"
+	"github.com/lemongoff/hexas/tools/goctl/internal/version"
 	"github.com/spf13/cobra"
 )
 
@@ -33,7 +33,7 @@ func runE(_ *cobra.Command, _ []string) error {
 	env := getEnv()
 	content := fmt.Sprintf(issueTemplate, version.BuildVersion, env.string())
 	content = url.QueryEscape(content)
-	url := fmt.Sprintf("https://github.com/JellyGoFF/FF-Hexas/issues/new?body=%s", content)
+	url := fmt.Sprintf("https://github.com/lemongoff/hexas/issues/new?body=%s", content)
 
 	goos := runtime.GOOS
 	var cmd string

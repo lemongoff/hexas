@@ -3,7 +3,7 @@ package configurator
 import (
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/conf"
+	"github.com/lemongoff/hexas/core/conf"
 )
 
 var registry = &unmarshalerRegistry{

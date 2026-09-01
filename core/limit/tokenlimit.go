@@ -10,9 +10,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/errorx"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
+	"github.com/lemongoff/hexas/core/errorx"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/stores/redis"
 	xrate "golang.org/x/time/rate"
 )
 

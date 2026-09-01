@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"runtime/debug"
 
-	"github.com/JellyGoFF/FF-Hexas/rest/internal"
+	"github.com/lemongoff/hexas/rest/internal"
 )
 
 // RecoverHandler returns a middleware that recovers if panic happens.

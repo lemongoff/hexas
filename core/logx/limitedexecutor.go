@@ -4,8 +4,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 type limitedExecutor struct {

@@ -1,6 +1,6 @@
 package prof
 
-import "github.com/JellyGoFF/FF-Hexas/core/utils"
+import "github.com/lemongoff/hexas/core/utils"
 
 type (
 	// A ProfilePoint is a profile time point.

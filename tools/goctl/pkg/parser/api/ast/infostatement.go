@@ -1,6 +1,6 @@
 package ast
 
-import "github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/token"
+import "github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/token"
 
 // InfoStmt is the info statement.
 type InfoStmt struct {

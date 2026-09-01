@@ -3,7 +3,7 @@ package consistenthash
 import (
 	"context"
 
-	"github.com/JellyGoFF/FF-Hexas/core/hash"
+	"github.com/lemongoff/hexas/core/hash"
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/balancer/base"
 	"google.golang.org/grpc/codes"

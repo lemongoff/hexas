@@ -1,6 +1,6 @@
 package swagger
 
-import "github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
+import "github.com/lemongoff/hexas/tools/goctl/api/spec"
 
 func fillAllStructs(api *spec.ApiSpec) {
 	var (

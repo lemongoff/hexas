@@ -4,7 +4,7 @@ import (
 	"errors"
 	"os"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/execx"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/execx"
 )
 
 // IsGoMod is used to determine whether workDir is a go module project through command `go env GOMOD`

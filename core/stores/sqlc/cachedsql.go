@@ -5,10 +5,10 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stores/cache"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/sqlx"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/stores/cache"
+	"github.com/lemongoff/hexas/core/stores/redis"
+	"github.com/lemongoff/hexas/core/stores/sqlx"
+	"github.com/lemongoff/hexas/core/syncx"
 )
 
 // see doc/sql-cache.md

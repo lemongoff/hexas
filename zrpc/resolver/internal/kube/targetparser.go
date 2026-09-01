@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/zrpc/resolver/internal/targets"
+	"github.com/lemongoff/hexas/zrpc/resolver/internal/targets"
 	"google.golang.org/grpc/resolver"
 )
 

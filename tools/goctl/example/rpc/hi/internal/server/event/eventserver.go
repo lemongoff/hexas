@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	eventlogic "github.com/JellyGoFF/FF-Hexas/tools/goctl/example/rpc/hi/internal/logic/event"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/example/rpc/hi/internal/svc"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/example/rpc/hi/pb/hi"
+	eventlogic "github.com/lemongoff/hexas/tools/goctl/example/rpc/hi/internal/logic/event"
+	"github.com/lemongoff/hexas/tools/goctl/example/rpc/hi/internal/svc"
+	"github.com/lemongoff/hexas/tools/goctl/example/rpc/hi/pb/hi"
 )
 
 type EventServer struct {

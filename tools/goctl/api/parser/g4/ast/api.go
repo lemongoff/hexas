@@ -5,7 +5,7 @@ import (
 	"path"
 	"sort"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/parser/g4/gen/api"
+	"github.com/lemongoff/hexas/tools/goctl/api/parser/g4/gen/api"
 )
 
 const (

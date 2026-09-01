@@ -1,6 +1,6 @@
 package internal
 
-import "github.com/JellyGoFF/FF-Hexas/zrpc/internal/serverinterceptors"
+import "github.com/lemongoff/hexas/zrpc/internal/serverinterceptors"
 
 type (
 	// StatConf defines the stat config.

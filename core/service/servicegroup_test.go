@@ -4,7 +4,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/proc"
+	"github.com/lemongoff/hexas/core/proc"
 	"github.com/stretchr/testify/assert"
 )
 

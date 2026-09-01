@@ -6,7 +6,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
 )
 
 const dataTemplate = `// --{{with .APISpec.Info}}{{.Title}}{{end}}--

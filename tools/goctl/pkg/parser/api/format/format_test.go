@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/assertx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/parser"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/assertx"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/parser"
 	"github.com/stretchr/testify/assert"
 )
 

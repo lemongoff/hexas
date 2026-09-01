@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"testing"
 
-	ztrace "github.com/JellyGoFF/FF-Hexas/core/trace"
-	"github.com/JellyGoFF/FF-Hexas/core/trace/tracetest"
-	"github.com/JellyGoFF/FF-Hexas/rest/chain"
+	ztrace "github.com/lemongoff/hexas/core/trace"
+	"github.com/lemongoff/hexas/core/trace/tracetest"
+	"github.com/lemongoff/hexas/rest/chain"
 	"github.com/stretchr/testify/assert"
 	"go.opentelemetry.io/otel"
 	tcodes "go.opentelemetry.io/otel/codes"

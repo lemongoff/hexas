@@ -1,6 +1,6 @@
 package tpl
 
-import "github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/cobrax"
+import "github.com/lemongoff/hexas/tools/goctl/internal/cobrax"
 
 var (
 	varStringHome     string

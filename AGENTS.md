@@ -1,6 +1,6 @@
 # AGENTS.md
 
-本文件是 FF-Hexas 的 AI 协作与默认开发流程入口。仓库是面向游戏服务场景维护的 go-zero 独立硬分支，不是 LemonGo 业务服务仓库，也不是 `zeromicro/go-zero` 的兼容镜像。
+本文件是 Hexas 的 AI 协作与默认开发流程入口。仓库是面向游戏服务场景维护的 go-zero 独立硬分支，不是 LemonGo 业务服务仓库，也不是 `zeromicro/go-zero` 的兼容镜像。
 
 如果文档与代码、脚本、配置或 CI 行为不一致，以可执行内容为准，并在相关改动中同步修正文档。
 
@@ -34,11 +34,11 @@
 ## 3. 仓库身份与版本边界
 
 - 代码基线：`github.com/zeromicro/go-zero v1.10.3`，提交为 `925f8a2bcc159eaf3b1da0f5fc695beac26e15ff`。
-- 当前工作树已经包含面向游戏服务场景的定制；这些定制属于 FF-Hexas 初始基线，不按官方同版本行为推断。
-- 根 module 为 `github.com/JellyGoFF/FF-Hexas`，Go 版本为 `1.24.0`。
-- `tools/goctl` 是独立 module，module path 为 `github.com/JellyGoFF/FF-Hexas/tools/goctl`；根 `go.work` 与其本地 `replace` 负责在本仓库内绑定框架源码。
+- 当前工作树已经包含面向游戏服务场景的定制；这些定制属于 Hexas 初始基线，不按官方同版本行为推断。
+- 根 module 为 `github.com/lemongoff/hexas`，Go 版本为 `1.24.0`。
+- `tools/goctl` 是独立 module，module path 为 `github.com/lemongoff/hexas/tools/goctl`；根 `go.work` 与其本地 `replace` 负责在本仓库内绑定框架源码。
 
-`github.com/zeromicro/go-zero` 只用于标识固定的官方代码基线和历史来源，不再是 FF-Hexas 的 module/import path。FF-Hexas 不承诺兼容官方后续分支、版本、API、配置或行为；不得为了“上游兼容”主动加入兼容层、双实现、自动 fallback 或同步逻辑。
+`github.com/zeromicro/go-zero` 只用于标识固定的官方代码基线和历史来源，不再是 Hexas 的 module/import path。Hexas 不承诺兼容官方后续分支、版本、API、配置或行为；不得为了“上游兼容”主动加入兼容层、双实现、自动 fallback 或同步逻辑。
 
 后续若要合并、挑选或对照官方改动，必须作为独立任务明确目标提交、冲突处理、行为差异和验证范围。
 
@@ -76,7 +76,7 @@
 
 - 优先修改现有文件；只有职责明确且无合适入口时才新增文件。
 - 处理遗留问题时先定义目标契约，再选择修复、重构、替换或删除；不得因旧代码已经存在就默认延续其结构和行为。
-- 重新设计不默认兼容遗留实现。涉及 FF-Hexas 已有调用方、存量数据、配置或部署时，必须说明影响、迁移、切换、验证和回滚；只有用户明确要求时才增加兼容层。
+- 重新设计不默认兼容遗留实现。涉及 Hexas 已有调用方、存量数据、配置或部署时，必须说明影响、迁移、切换、验证和回滚；只有用户明确要求时才增加兼容层。
 - 公共 API、配置字段、默认值、存储语义、服务发现编码、日志格式和生成模板都属于高风险变更。
 - 修改接口时检查所有实现、mock、调用点和独立 module；不能只补当前编译错误。
 - 修改配置语义时同步检查默认值、解析标签、示例、文档和启动行为。

@@ -3,8 +3,8 @@ package token
 import (
 	"fmt"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/placeholder"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/placeholder"
+	"github.com/lemongoff/hexas/tools/goctl/util"
 )
 
 const (

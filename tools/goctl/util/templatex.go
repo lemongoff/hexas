@@ -7,8 +7,8 @@ import (
 	"regexp"
 	"text/template"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/errorx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/internal/errorx"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 const regularPerm = 0o666

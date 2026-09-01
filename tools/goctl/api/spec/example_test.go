@@ -3,7 +3,7 @@ package spec_test
 import (
 	"fmt"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
 )
 
 func ExampleMember_GetEnumOptions() {

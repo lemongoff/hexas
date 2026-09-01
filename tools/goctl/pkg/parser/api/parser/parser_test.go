@@ -5,9 +5,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/assertx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/ast"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/token"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/assertx"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/ast"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/token"
 	"github.com/stretchr/testify/assert"
 )
 

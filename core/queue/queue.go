@@ -6,11 +6,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/rescue"
-	"github.com/JellyGoFF/FF-Hexas/core/stat"
-	"github.com/JellyGoFF/FF-Hexas/core/threading"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/rescue"
+	"github.com/lemongoff/hexas/core/stat"
+	"github.com/lemongoff/hexas/core/threading"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 const queueName = "queue"

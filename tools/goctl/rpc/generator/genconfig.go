@@ -5,10 +5,10 @@ import (
 	"os"
 	"path/filepath"
 
-	conf "github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/parser"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/format"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	conf "github.com/lemongoff/hexas/tools/goctl/config"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/parser"
+	"github.com/lemongoff/hexas/tools/goctl/util/format"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 //go:embed config.tpl
@@ -17,7 +17,7 @@ var configTemplate string
 // GenConfig generates the configuration structure definition file of the rpc service,
 // which contains the zrpc.RpcServerConf configuration item by default.
 // You can specify the naming style of the target file name through config.Config. For details,
-// see https://github.com/JellyGoFF/FF-Hexas/tree/master/tools/goctl/config/config.go
+// see https://github.com/lemongoff/hexas/tree/master/tools/goctl/config/config.go
 func (g *Generator) GenConfig(ctx DirContext, _ parser.Proto, cfg *conf.Config) error {
 	dir := ctx.GetConfig()
 	configFilename, err := format.FileNamingFormat(cfg.NamingFormat, "config")

@@ -5,9 +5,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/breaker"
-	"github.com/JellyGoFF/FF-Hexas/core/stat"
-	rcodes "github.com/JellyGoFF/FF-Hexas/zrpc/internal/codes"
+	"github.com/lemongoff/hexas/core/breaker"
+	"github.com/lemongoff/hexas/core/stat"
+	rcodes "github.com/lemongoff/hexas/zrpc/internal/codes"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"

@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/token"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/token"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 const (

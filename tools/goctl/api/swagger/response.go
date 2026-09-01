@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	apiSpec "github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
+	apiSpec "github.com/lemongoff/hexas/tools/goctl/api/spec"
 	"github.com/go-openapi/spec"
 )
 

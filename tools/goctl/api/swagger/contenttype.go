@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
 )
 
 func consumesFromTypeOrDef(ctx Context, method string, tp spec.Type) []string {

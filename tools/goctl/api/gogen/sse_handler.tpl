@@ -8,9 +8,9 @@ import (
     "fmt"
 	"net/http"
 
-    "github.com/JellyGoFF/FF-Hexas/core/logc"
-    "github.com/JellyGoFF/FF-Hexas/core/threading"
-	{{if .HasRequest}}"github.com/JellyGoFF/FF-Hexas/rest/httpx"{{end}}
+    "github.com/lemongoff/hexas/core/logc"
+    "github.com/lemongoff/hexas/core/threading"
+	{{if .HasRequest}}"github.com/lemongoff/hexas/rest/httpx"{{end}}
 	{{.ImportPackages}}
 )
 

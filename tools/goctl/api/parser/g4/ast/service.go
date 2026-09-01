@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/parser/g4/gen/api"
+	"github.com/lemongoff/hexas/tools/goctl/api/parser/g4/gen/api"
 )
 
 // Service describes service for api syntax

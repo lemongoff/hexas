@@ -6,9 +6,9 @@ import (
 	"errors"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/breaker"
-	"github.com/JellyGoFF/FF-Hexas/core/errorx"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/breaker"
+	"github.com/lemongoff/hexas/core/errorx"
+	"github.com/lemongoff/hexas/core/timex"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 	"go.mongodb.org/mongo-driver/v2/x/mongo/driver/session"

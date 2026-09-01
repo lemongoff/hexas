@@ -5,11 +5,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/gogen"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/golang"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/tools/goctl/api/gogen"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/golang"
+	"github.com/lemongoff/hexas/tools/goctl/util"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 var (

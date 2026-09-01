@@ -3,7 +3,7 @@ package redis
 import (
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/metric"
+	"github.com/lemongoff/hexas/core/metric"
 	"github.com/prometheus/client_golang/prometheus"
 	red "github.com/redis/go-redis/v9"
 )

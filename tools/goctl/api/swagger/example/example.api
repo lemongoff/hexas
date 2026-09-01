@@ -4,12 +4,12 @@ info (
 	title:                  "Demo API" // title corresponding to Swagger
 	description:            "Generating Swagger files using the API demo." // description corresponding to Swagger
 	version:                "v1" // version corresponding to Swagger
-	termsOfService:         "https://github.com/JellyGoFF/FF-Hexas" // termsOfService corresponding to Swagger
+	termsOfService:         "https://github.com/lemongoff/hexas" // termsOfService corresponding to Swagger
 	contactName:            "keson.an" // contactName corresponding to Swagger
-	contactURL:             "https://github.com/JellyGoFF/FF-Hexas" // contactURL corresponding to Swagger
+	contactURL:             "https://github.com/lemongoff/hexas" // contactURL corresponding to Swagger
 	contactEmail:           "example@gmail.com" // contactEmail corresponding to Swagger
 	licenseName:            "MIT" // licenseName corresponding to Swagger
-	licenseURL:             "https://github.com/JellyGoFF/FF-Hexas" // licenseURL corresponding to Swagger
+	licenseURL:             "https://github.com/lemongoff/hexas" // licenseURL corresponding to Swagger
 	consumes:               "application/json" // consumes corresponding to Swagger,default value is `application/json`
 	produces:               "application/json" // produces corresponding to Swagger,default value is `application/json`
 	schemes:                "http,https" // schemes corresponding to Swagger,default value is `https``

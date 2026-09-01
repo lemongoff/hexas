@@ -1,12 +1,12 @@
-# FF-Hexas 社区行为准则
+# Hexas 社区行为准则
 
 `SPDX-License-Identifier: CC-BY-4.0`
 
-本文件改编自 Contributor Covenant 2.1，已针对 FF-Hexas 翻译、重组并增加项目特定的适用范围、举报、执行和复核流程。许可原文见 [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt)。
+本文件改编自 Contributor Covenant 2.1，已针对 Hexas 翻译、重组并增加项目特定的适用范围、举报、执行和复核流程。许可原文见 [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt)。
 
 ## 我们的承诺
 
-FF-Hexas 的维护者、贡献者和参与者共同承诺：无论年龄、身体状况、残障、族群、性别特征、性别认同与表达、经验、教育程度、社会经济状况、国籍、外貌、种族、阶层、肤色、宗教、性取向或其他个人身份如何，每个人都应能在无骚扰的环境中参与项目。
+Hexas 的维护者、贡献者和参与者共同承诺：无论年龄、身体状况、残障、族群、性别特征、性别认同与表达、经验、教育程度、社会经济状况、国籍、外貌、种族、阶层、肤色、宗教、性取向或其他个人身份如何，每个人都应能在无骚扰的环境中参与项目。
 
 我们将以开放、友善、尊重、包容和专业的方式协作，共同维护健康的技术社区。
 
@@ -38,14 +38,14 @@ FF-Hexas 的维护者、贡献者和参与者共同承诺：无论年龄、身�
 本准则适用于：
 
 - 仓库中的 Issue、Pull Request、Review、提交、讨论、Wiki 和其他协作空间。
-- 与 FF-Hexas 相关的即时通信、会议、邮件及线上或线下活动。
+- 与 Hexas 相关的即时通信、会议、邮件及线上或线下活动。
 - 使用项目官方身份、账号或邮箱，或被指定代表项目公开发言的场景。
 
 发生在项目空间之外、但会实质影响参与者安全或项目协作的行为，也可以纳入处理范围。
 
 ## 举报方式
 
-如遇骚扰、威胁或其他违反本准则的行为，请通过 [FF-Hexas Security Advisory 私密报告入口](https://github.com/JellyGoFF/FF-Hexas/security/advisories/new) 联系仓库维护者。
+如遇骚扰、威胁或其他违反本准则的行为，请通过 [Hexas Security Advisory 私密报告入口](https://github.com/lemongoff/hexas/security/advisories/new) 联系仓库维护者。
 
 报告建议包含：
 

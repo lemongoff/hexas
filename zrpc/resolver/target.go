@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/zrpc/resolver/internal"
+	"github.com/lemongoff/hexas/zrpc/resolver/internal"
 )
 
 // BuildDirectTarget returns a string that represents the given endpoints with direct schema.

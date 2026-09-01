@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/lemongoff/hexas/core/logx"
 	"github.com/stretchr/testify/assert"
 )
 

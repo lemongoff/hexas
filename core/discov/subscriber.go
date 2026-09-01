@@ -4,9 +4,9 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/JellyGoFF/FF-Hexas/core/discov/internal"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/discov/internal"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/syncx"
 )
 
 type (

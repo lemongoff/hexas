@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/vars"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/vars"
 	"github.com/stretchr/testify/assert"
 )
 

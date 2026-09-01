@@ -1,15 +1,15 @@
-# FF-Hexas 初始框架基线审计
+# Hexas 初始框架基线审计
 
 日期：2026-08-31
 状态：专项处置完成；初始发现作为历史证据保留，最终设计见 3.1 节
 
 ## 1. 审计范围
 
-本审计用于固定 FF-Hexas 初始导入基线中的已有定制和遗留风险，不代表已经完成专项设计或生产验收。
+本审计用于固定 Hexas 初始导入基线中的已有定制和遗留风险，不代表已经完成专项设计或生产验收。
 
 比较范围：
 
-- 当前版本：FF-Hexas 初始游戏化框架工作树
+- 当前版本：Hexas 初始游戏化框架工作树
 - 官方基线：`zeromicro/go-zero v1.10.3@925f8a2bcc159eaf3b1da0f5fc695beac26e15ff`
 - 差异规模：47 个文件，约 1278 行新增、169 行删除
 - 审计方式：Git 历史与 diff 对照、关键路径静态检查、根 module 与 goctl 独立 module 测试
@@ -22,7 +22,7 @@
 - 获得专项改造授权后，每个问题都可以选择局部修复、整体重构、替换实现或删除能力，不要求沿用当前代码路径。
 - 高风险项应先定义目标契约、一致性或安全边界和失败模型，再设计实现与测试；不要默认在现有错误分支上叠加补丁。
 - 不要求兼容官方后续版本，也不默认兼容遗留定制。只有用户明确要求时才为旧行为增加过渡层。
-- 涉及 FF-Hexas 已有调用方、存量数据、配置或部署时，重新设计仍需给出影响评估、迁移或切换方案、验收测试和回滚路径。
+- 涉及 Hexas 已有调用方、存量数据、配置或部署时，重新设计仍需给出影响评估、迁移或切换方案、验收测试和回滚路径。
 - 完成专项处理后更新对应审计项状态，记录最终选择、被替换或删除的能力及验证证据。
 
 ## 2. 风险等级
@@ -43,8 +43,8 @@
 | A-06 | 高 | REST 权限 | 已关闭：Route helper 复制完整结构并保留 `Permissions` |
 | A-07 | 中 | REST protobuf | 已关闭：补齐 protobuf error/write API、8 MiB 限制、content-type 和错误链 |
 | A-08 | 中 | logx | 已关闭：BI 改为可选 writer 能力并进入标准日志字段、脱敏和截断路径 |
-| A-09 | 中 | goctl | 已关闭：根 `go.work` 绑定本地 module，版本更新为 `1.10.3-ffhexas`，module path 随项目迁移 |
-| A-10 | 中 | 默认行为 | 已关闭：新增 FF-Hexas 默认行为契约文档并保留对应测试 |
+| A-09 | 中 | goctl | 已关闭：根 `go.work` 绑定本地 module，版本更新为 `1.10.3-hexas`，module path 随项目迁移 |
+| A-10 | 中 | 默认行为 | 已关闭：新增 Hexas 默认行为契约文档并保留对应测试 |
 | A-11 | 中 | 测试覆盖 | 已关闭：新增关键失败、元数据、前缀、Cluster、并发与 BI 回归测试 |
 | A-12 | 高 | GitHub workflow | 已关闭：CI 对齐 `main` 和双 module，删除上游 goctl 发布/版本任务及 gomod 自动升级 |
 | A-13 | 低 | 基线格式 | 已接受：CI 只检查本次变更行，不批量改写导入快照 |
@@ -57,8 +57,8 @@
 - etcd 服务发现坚持 JSON-only 硬切换，不恢复旧纯地址格式兼容；单条损坏或空地址记录只被隔离，不再截断合法节点列表。
 - REST Route 的元数据在 helper 组合中完整保留。Protobuf HTTP 使用 `application/pb`、8 MiB 请求上限和独立 success/error 写入入口。
 - `logx.Writer` 不再强制实现 BI；实现 `BIWriter` 可选择独立路由，否则落到 Info。两条路径都使用 caller、全局字段、`channel=bi`、敏感值遮罩和内容截断。
-- 根 module 已迁移为 `github.com/JellyGoFF/FF-Hexas`，goctl module 已迁移为 `github.com/JellyGoFF/FF-Hexas/tools/goctl`；旧路径只保留在官方基线、历史发现和第三方来源记录中，不提供 import 兼容层。
-- goctl 通过根 `go.work` 和自身的相对 `replace` 使用当前框架源码，显示版本为 `1.10.3-ffhexas`。其根 module 依赖在正式版本发布前使用 `v0.0.0` 本地占位；发布前必须替换为真实版本并删除相对 `replace`。本仓库不发布上游 goctl tag，也不自动跟随 go-zero 后续版本。
+- 根 module 已迁移为 `github.com/lemongoff/hexas`，goctl module 已迁移为 `github.com/lemongoff/hexas/tools/goctl`；旧路径只保留在官方基线、历史发现和第三方来源记录中，不提供 import 兼容层。
+- goctl 通过根 `go.work` 和自身的相对 `replace` 使用当前框架源码，显示版本为 `1.10.3-hexas`。其根 module 依赖在正式版本发布前使用 `v0.0.0` 本地占位；发布前必须替换为真实版本并删除相对 `replace`。本仓库不发布上游 goctl tag，也不自动跟随 go-zero 后续版本。
 - RPC、缓存和成功日志的默认值见 [`../framework-defaults.md`](../framework-defaults.md)。
 
 回滚时应按条目独立回退代码和测试；不要恢复已删除的异步脏写链路。若必须重新引入异步持久化，应作为新设计完成 outbox/ack、幂等、崩溃恢复和真实故障注入验证。
@@ -196,7 +196,7 @@ RPC server 不再发布纯 `host:port`，而是发布 `{"Addr":...,"ServerName":
 
 影响：日志消费者、脱敏和 schema 需要按 BI 独立评估；外部 Writer 是有意的硬破坏点。
 
-后续建议：把 BI schema、必填字段、脱敏责任、写入失败和 Writer 扩展方式定义成显式契约。由于本项目不承诺官方兼容，不需要为官方 Writer API 增加兼容层，但需要管理 FF-Hexas 自身调用方迁移。
+后续建议：把 BI schema、必填字段、脱敏责任、写入失败和 Writer 扩展方式定义成显式契约。由于本项目不承诺官方兼容，不需要为官方 Writer API 增加兼容层，但需要管理 Hexas 自身调用方迁移。
 
 ### A-09：goctl 与根框架不在同一依赖轨道
 
@@ -207,11 +207,11 @@ RPC server 不再发布纯 `host:port`，而是发布 `{"Addr":...,"ServerName":
 - `tools/goctl/go.mod:1-23` 直接依赖官方 `github.com/zeromicro/go-zero v1.10.3`
 - `tools/goctl/internal/version/version.go:8-9` 的 `BuildVersion` 为 `1.10.2`
 
-`tools/goctl` 是独立 module。根目录 `go test ./...` 不包含它；在 goctl 目录构建时，默认下载官方 v1.10.3，而不是使用本地 FF-Hexas 根 module。
+`tools/goctl` 是独立 module。根目录 `go test ./...` 不包含它；在 goctl 目录构建时，默认下载官方 v1.10.3，而不是使用本地 Hexas 根 module。
 
-影响：生成器测试通过不能证明其模板与 FF-Hexas 定制一致；版本显示也不能代表当前导入基线。
+影响：生成器测试通过不能证明其模板与 Hexas 定制一致；版本显示也不能代表当前导入基线。
 
-后续建议：在需要游戏化生成能力时单独设计本地 workspace/replace、模板来源和 FF-Hexas 版本命名。本轮保持原样。
+后续建议：在需要游戏化生成能力时单独设计本地 workspace/replace、模板来源和 Hexas 版本命名。本轮保持原样。
 
 ### A-10：已有默认行为变更缺少迁移契约
 
@@ -223,9 +223,9 @@ RPC server 不再发布纯 `host:port`，而是发布 `{"Addr":...,"ServerName":
 - `core/stores/cache/cacheopt.go:5-8`：默认缓存 TTL 为一天，而官方基线为七天。
 - HTTP/RPC 成功日志由 info 调整为 debug，REST log middleware 顺序发生变化。
 
-影响：未显式配置的调用方会改变启动阻塞、调用超时、缓存回源频率和观测量。它们可能是预期定制，但目前缺少 FF-Hexas 自身的配置和迁移说明。
+影响：未显式配置的调用方会改变启动阻塞、调用超时、缓存回源频率和观测量。它们可能是预期定制，但目前缺少 Hexas 自身的配置和迁移说明。
 
-后续建议：建立 FF-Hexas 配置参考和变更记录；不要以官方默认值推断本仓库行为。
+后续建议：建立 Hexas 配置参考和变更记录；不要以官方默认值推断本仓库行为。
 
 ### A-11：现有测试通过但未覆盖关键定制反例
 
@@ -251,12 +251,12 @@ RPC server 不再发布纯 `host:port`，而是发布 `{"Addr":...,"ServerName":
 
 证据：
 
-- `.github/workflows/go.yml` 和 `codeql-analysis.yml` 只监听 `master`，而 FF-Hexas 当前主分支为 `main`。
+- `.github/workflows/go.yml` 和 `codeql-analysis.yml` 只监听 `master`，而 Hexas 当前主分支为 `main`。
 - `.github/dependabot.yml` 每日更新根 module 和 goctl module，可能持续引入官方依赖变化，与“不默认跟进上游”冲突。
 - `.github/workflows/release.yaml` 在 `tools/goctl/*` tag 上使用 `zeromicro/go-zero-release-action@master` 发布 goctl，并固定下载 Go 1.21.13；当前两个 go.mod 均要求 Go 1.24.0。
 - `.github/workflows/version-check.yml` 同样使用 Go 1.21，且当前 goctl `BuildVersion` 仍为 1.10.2。
 
-影响：`main` 的 push/PR 可能没有预期的测试和 CodeQL 闸门；创建 goctl tag 可能触发不符合 FF-Hexas 发布边界的自动发布或因 Go 版本不匹配失败；Dependabot 会制造未经专项审计的版本漂移。
+影响：`main` 的 push/PR 可能没有预期的测试和 CodeQL 闸门；创建 goctl tag 可能触发不符合 Hexas 发布边界的自动发布或因 Go 版本不匹配失败；Dependabot 会制造未经专项审计的版本漂移。
 
 后续建议：在单独 CI/发布治理任务中决定保留、禁用或重写这些 workflow。完成前不要创建 `tools/goctl/*` tag，并把本地验证作为必需闸门。本轮按“遗留问题只审计”要求保持原文件不变。
 
@@ -293,7 +293,7 @@ RPC server 不再发布纯 `host:port`，而是发布 `{"Addr":...,"ServerName":
 3. 明确 Mongo client 所有权、collection 生命周期和并发模型，处理 A-04；必要时替换当前 Database 封装。
 4. 治理 CI、Dependabot 和发布触发条件，处理 A-12，避免主分支无闸门或误发布。
 5. 定义 protobuf、日志和配置目标契约，处理 A-07、A-08、A-10；无实际消费方的能力可以删除。
-6. 决定 goctl 是否进入 FF-Hexas 发布轨道，处理 A-09；不需要时可从框架发布范围移除。
+6. 决定 goctl 是否进入 Hexas 发布轨道，处理 A-09；不需要时可从框架发布范围移除。
 7. 每个专项都以 A-11 中的反例和目标契约测试作为完成条件，并同步关闭、替换或拆分对应审计项。
 
 ## 7. 本次验证记录
@@ -336,4 +336,4 @@ git diff HEAD --check
 
 ## 8. 回滚说明
 
-本次没有修改上述运行时代码。若需要回滚本次导入，应整体撤销初始框架工作树并恢复 FF-Hexas 导入前的初始提交；不要逐项回滚审计中列出的既有定制，因为它们属于初始基线本身。
+本次没有修改上述运行时代码。若需要回滚本次导入，应整体撤销初始框架工作树并恢复 Hexas 导入前的初始提交；不要逐项回滚审计中列出的既有定制，因为它们属于初始基线本身。

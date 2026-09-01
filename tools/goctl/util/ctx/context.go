@@ -4,7 +4,7 @@ import (
 	"errors"
 	"path/filepath"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/execx"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/execx"
 )
 
 var errModuleCheck = errors.New("the work directory must be found in the go mod or the $GOPATH")
@@ -17,7 +17,7 @@ type ProjectContext struct {
 	// eg: go-zero、greet
 	Name string
 	// Path identifies which module a project belongs to, which is module value if it's a go mod project,
-	// or else it is the root name of the project, eg: github.com/JellyGoFF/FF-Hexas、greet
+	// or else it is the root name of the project, eg: github.com/lemongoff/hexas、greet
 	Path string
 	// Dir is the path of the project, eg: /Users/keson/goland/go/go-zero、/Users/keson/go/src/greet
 	Dir string

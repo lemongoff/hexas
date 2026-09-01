@@ -6,10 +6,10 @@ import (
 	"errors"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/breaker"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/breaker"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 const defaultSlowThreshold = time.Millisecond * 500

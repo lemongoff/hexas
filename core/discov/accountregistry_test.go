@@ -3,8 +3,8 @@ package discov
 import (
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/discov/internal"
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
+	"github.com/lemongoff/hexas/core/discov/internal"
+	"github.com/lemongoff/hexas/core/stringx"
 	"github.com/stretchr/testify/assert"
 )
 

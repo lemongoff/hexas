@@ -10,11 +10,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/errorx"
-	"github.com/JellyGoFF/FF-Hexas/core/hash"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis/redistest"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/errorx"
+	"github.com/lemongoff/hexas/core/hash"
+	"github.com/lemongoff/hexas/core/stores/redis"
+	"github.com/lemongoff/hexas/core/stores/redis/redistest"
+	"github.com/lemongoff/hexas/core/syncx"
 	"github.com/alicebob/miniredis/v2"
 	"github.com/stretchr/testify/assert"
 )

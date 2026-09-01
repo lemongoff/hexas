@@ -1,14 +1,14 @@
 package service
 
 import (
-	"github.com/JellyGoFF/FF-Hexas/core/load"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/proc"
-	"github.com/JellyGoFF/FF-Hexas/core/prometheus"
-	"github.com/JellyGoFF/FF-Hexas/core/stat"
-	"github.com/JellyGoFF/FF-Hexas/core/trace"
-	"github.com/JellyGoFF/FF-Hexas/internal/devserver"
-	"github.com/JellyGoFF/FF-Hexas/internal/profiling"
+	"github.com/lemongoff/hexas/core/load"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/proc"
+	"github.com/lemongoff/hexas/core/prometheus"
+	"github.com/lemongoff/hexas/core/stat"
+	"github.com/lemongoff/hexas/core/trace"
+	"github.com/lemongoff/hexas/internal/devserver"
+	"github.com/lemongoff/hexas/internal/profiling"
 )
 
 const (

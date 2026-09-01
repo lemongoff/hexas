@@ -3,8 +3,8 @@ package handler
 import (
 	"net/http"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stat"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/stat"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 // MetricHandler returns a middleware that stat the metrics.

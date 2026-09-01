@@ -4,8 +4,8 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
-	"github.com/JellyGoFF/FF-Hexas/core/rescue"
+	"github.com/lemongoff/hexas/core/lang"
+	"github.com/lemongoff/hexas/core/rescue"
 )
 
 // ErrTaskRunnerBusy is the error that indicates the runner is busy.

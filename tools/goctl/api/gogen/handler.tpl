@@ -6,7 +6,7 @@ package {{.PkgName}}
 import (
 	"net/http"
 
-	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
+	"github.com/lemongoff/hexas/rest/httpx"
 	{{.ImportPackages}}
 )
 

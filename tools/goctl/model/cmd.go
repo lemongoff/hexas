@@ -1,9 +1,9 @@
 package model
 
 import (
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/cobrax"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/mongo"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/command"
+	"github.com/lemongoff/hexas/tools/goctl/internal/cobrax"
+	"github.com/lemongoff/hexas/tools/goctl/model/mongo"
+	"github.com/lemongoff/hexas/tools/goctl/model/sql/command"
 )
 
 var (

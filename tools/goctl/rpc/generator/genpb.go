@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/execx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/parser"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/execx"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/parser"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 // GenPb generates the pb.go file, which is a layer of packaging for protoc to generate gprc,

@@ -4,9 +4,9 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/collection"
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
-	"github.com/JellyGoFF/FF-Hexas/core/threading"
+	"github.com/lemongoff/hexas/core/collection"
+	"github.com/lemongoff/hexas/core/lang"
+	"github.com/lemongoff/hexas/core/threading"
 )
 
 const (

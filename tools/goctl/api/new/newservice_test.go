@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/gogen"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
+	"github.com/lemongoff/hexas/tools/goctl/api/gogen"
+	"github.com/lemongoff/hexas/tools/goctl/config"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

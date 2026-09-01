@@ -6,10 +6,10 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
-	apiutil "github.com/JellyGoFF/FF-Hexas/tools/goctl/api/util"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/version"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
+	apiutil "github.com/lemongoff/hexas/tools/goctl/api/util"
+	"github.com/lemongoff/hexas/tools/goctl/internal/version"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 //go:embed components.tpl

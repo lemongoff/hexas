@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/mapping"
+	"github.com/lemongoff/hexas/core/mapping"
 )
 
 const (

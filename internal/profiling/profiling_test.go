@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/conf"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/conf"
+	"github.com/lemongoff/hexas/core/syncx"
 	"github.com/grafana/pyroscope-go"
 	"github.com/stretchr/testify/assert"
 )

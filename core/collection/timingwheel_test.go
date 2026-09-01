@@ -7,10 +7,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/lang"
+	"github.com/lemongoff/hexas/core/stringx"
+	"github.com/lemongoff/hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/timex"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -630,7 +630,7 @@ func TestMoveAndRemoveTask(t *testing.T) {
 }
 
 // TestTimingWheel_DrainClosureBug tests the closure capture bug in drainAll
-// Issue: https://github.com/JellyGoFF/FF-Hexas/issues/5314
+// Issue: https://github.com/lemongoff/hexas/issues/5314
 func TestTimingWheel_DrainClosureBug(t *testing.T) {
 	ticker := timex.NewFakeTicker()
 	tw, _ := NewTimingWheelWithTicker(testStep, 10, func(k, v any) {}, ticker)
@@ -668,7 +668,7 @@ func TestTimingWheel_DrainClosureBug(t *testing.T) {
 }
 
 // TestTimingWheel_RunTasksClosureBug tests the closure capture bug in runTasks
-// Issue: https://github.com/JellyGoFF/FF-Hexas/issues/5314
+// Issue: https://github.com/lemongoff/hexas/issues/5314
 func TestTimingWheel_RunTasksClosureBug(t *testing.T) {
 	ticker := timex.NewFakeTicker()
 	var mu sync.Mutex

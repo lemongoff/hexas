@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/test"
+	"github.com/lemongoff/hexas/tools/goctl/test"
 )
 
 func TestFlags_Get(t *testing.T) {

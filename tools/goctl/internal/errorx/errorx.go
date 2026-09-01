@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/env"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/env"
 )
 
 var errorFormat = `goctl error: %+v

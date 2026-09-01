@@ -3,7 +3,7 @@ package ast
 import (
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/parser/g4/gen/api"
+	"github.com/lemongoff/hexas/tools/goctl/api/parser/g4/gen/api"
 )
 
 // KvExpr describes key-value for api

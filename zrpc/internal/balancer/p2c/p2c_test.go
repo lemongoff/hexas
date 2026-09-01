@@ -8,9 +8,9 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/mathx"
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/mathx"
+	"github.com/lemongoff/hexas/core/stringx"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/balancer/base"

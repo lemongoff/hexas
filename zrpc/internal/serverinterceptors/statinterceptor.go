@@ -6,12 +6,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/collection"
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/stat"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/collection"
+	"github.com/lemongoff/hexas/core/lang"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/stat"
+	"github.com/lemongoff/hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/timex"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/peer"
 )

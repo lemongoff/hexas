@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/format"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/config"
+	"github.com/lemongoff/hexas/tools/goctl/util/format"
 )
 
 const (

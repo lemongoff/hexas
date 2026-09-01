@@ -9,9 +9,9 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/env"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/util"
+	"github.com/lemongoff/hexas/tools/goctl/util/env"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 	"github.com/gookit/color"
 	"github.com/spf13/cobra"
 )

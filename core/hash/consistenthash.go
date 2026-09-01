@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
+	"github.com/lemongoff/hexas/core/lang"
 )
 
 const (

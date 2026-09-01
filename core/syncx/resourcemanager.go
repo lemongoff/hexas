@@ -4,7 +4,7 @@ import (
 	"io"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/errorx"
+	"github.com/lemongoff/hexas/core/errorx"
 )
 
 // A ResourceManager is a manager that used to manage resources.

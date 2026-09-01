@@ -7,11 +7,11 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/JellyGoFF/FF-Hexas/core/collection"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/util"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/golang"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/core/collection"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/api/util"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/golang"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 type fileGenConfig struct {

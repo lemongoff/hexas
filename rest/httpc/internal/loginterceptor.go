@@ -3,8 +3,8 @@ package internal
 import (
 	"net/http"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/timex"
 	"go.opentelemetry.io/otel/propagation"
 )
 

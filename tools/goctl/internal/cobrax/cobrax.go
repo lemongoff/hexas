@@ -3,7 +3,7 @@ package cobrax
 import (
 	"fmt"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/flags"
+	"github.com/lemongoff/hexas/tools/goctl/internal/flags"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )

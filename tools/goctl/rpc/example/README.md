@@ -26,7 +26,7 @@ Each example includes:
 - [Go](https://go.dev/) 1.22+
 - [protoc](https://github.com/protocolbuffers/protobuf/releases) (Protocol Buffers compiler)
 - [protoc-gen-go](https://pkg.go.dev/google.golang.org/protobuf/cmd/protoc-gen-go) and [protoc-gen-go-grpc](https://pkg.go.dev/google.golang.org/grpc/cmd/protoc-gen-go-grpc)
-- [FF-Hexas goctl](https://github.com/JellyGoFF/FF-Hexas/tree/main/tools/goctl)
+- [Hexas goctl](https://github.com/lemongoff/hexas/tree/main/tools/goctl)
 
 ## Quick Start
 

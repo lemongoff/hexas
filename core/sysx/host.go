@@ -3,7 +3,7 @@ package sysx
 import (
 	"os"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stringx"
+	"github.com/lemongoff/hexas/core/stringx"
 )
 
 var hostname string

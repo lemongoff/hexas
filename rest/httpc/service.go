@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/JellyGoFF/FF-Hexas/core/breaker"
+	"github.com/lemongoff/hexas/core/breaker"
 )
 
 type (

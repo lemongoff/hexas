@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/plugin"
+	"github.com/lemongoff/hexas/tools/goctl/plugin"
 )
 
 func main() {

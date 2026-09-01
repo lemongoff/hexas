@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stat"
+	"github.com/lemongoff/hexas/core/stat"
 	"github.com/stretchr/testify/assert"
 )
 

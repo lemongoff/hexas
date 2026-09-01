@@ -1,7 +1,7 @@
 package metric
 
 import (
-	"github.com/JellyGoFF/FF-Hexas/core/proc"
+	"github.com/lemongoff/hexas/core/proc"
 	prom "github.com/prometheus/client_golang/prometheus"
 )
 

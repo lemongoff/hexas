@@ -11,8 +11,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx/logtest"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/response"
+	"github.com/lemongoff/hexas/core/logx/logtest"
+	"github.com/lemongoff/hexas/rest/internal/response"
 	"github.com/stretchr/testify/assert"
 )
 

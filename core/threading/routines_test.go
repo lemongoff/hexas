@@ -5,9 +5,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/logx/logtest"
+	"github.com/lemongoff/hexas/core/lang"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/logx/logtest"
 	"github.com/stretchr/testify/assert"
 )
 

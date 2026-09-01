@@ -1,12 +1,12 @@
 package {{.pkg}}
 {{if .withCache}}
 import (
-	"github.com/JellyGoFF/FF-Hexas/core/stores/cache"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/sqlx"
+	"github.com/lemongoff/hexas/core/stores/cache"
+	"github.com/lemongoff/hexas/core/stores/sqlx"
 )
 {{else}}
 
-import "github.com/JellyGoFF/FF-Hexas/core/stores/sqlx"
+import "github.com/lemongoff/hexas/core/stores/sqlx"
 {{end}}
 var _ {{.upperStartCamelObject}}Model = (*custom{{.upperStartCamelObject}}Model)(nil)
 

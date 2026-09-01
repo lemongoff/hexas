@@ -11,6 +11,6 @@ We publish releases monthly.
 
 ## Reporting a Vulnerability
 
-https://github.com/JellyGoFF/FF-Hexas/security/advisories
+https://github.com/lemongoff/hexas/security/advisories
 
 Accepted vulnerabilities are expected to be fixed within a month.

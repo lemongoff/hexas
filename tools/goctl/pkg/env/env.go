@@ -9,12 +9,12 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/version"
-	sortedmap "github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/collection"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/protoc"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/protocgengo"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/protocgengogrpc"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/internal/version"
+	sortedmap "github.com/lemongoff/hexas/tools/goctl/pkg/collection"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/protoc"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/protocgengo"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/protocgengogrpc"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 var goctlEnv *sortedmap.SortedMap

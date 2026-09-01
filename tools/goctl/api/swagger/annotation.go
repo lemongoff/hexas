@@ -3,7 +3,7 @@ package swagger
 import (
 	"strconv"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
+	"github.com/lemongoff/hexas/tools/goctl/util"
 	"google.golang.org/grpc/metadata"
 )
 

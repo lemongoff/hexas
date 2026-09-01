@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 const slowThreshold = time.Millisecond * 500

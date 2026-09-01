@@ -7,7 +7,7 @@ import (
     "context"
     "time"
 
-    {{if .Cache}}"github.com/JellyGoFF/FF-Hexas/core/stores/monc"{{else}}"github.com/JellyGoFF/FF-Hexas/core/stores/mon"{{end}}
+    {{if .Cache}}"github.com/lemongoff/hexas/core/stores/monc"{{else}}"github.com/lemongoff/hexas/core/stores/mon"{{end}}
     "go.mongodb.org/mongo-driver/v2/bson"
     "go.mongodb.org/mongo-driver/v2/mongo"
 )

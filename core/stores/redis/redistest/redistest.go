@@ -3,7 +3,7 @@ package redistest
 import (
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
+	"github.com/lemongoff/hexas/core/stores/redis"
 	"github.com/alicebob/miniredis/v2"
 )
 

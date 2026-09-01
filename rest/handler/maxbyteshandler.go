@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	"github.com/JellyGoFF/FF-Hexas/rest/internal"
+	"github.com/lemongoff/hexas/rest/internal"
 )
 
 // MaxBytesHandler returns a middleware that limit reading of http request body.

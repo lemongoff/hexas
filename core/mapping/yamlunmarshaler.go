@@ -3,7 +3,7 @@ package mapping
 import (
 	"io"
 
-	"github.com/JellyGoFF/FF-Hexas/internal/encoding"
+	"github.com/lemongoff/hexas/internal/encoding"
 )
 
 // UnmarshalYamlBytes unmarshals content into v.

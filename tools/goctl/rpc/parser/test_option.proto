@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package stream;
 
-option go_package = "github.com/JellyGoFF/FF-Hexas";
+option go_package = "github.com/lemongoff/hexas";
 
 message placeholder {}
 

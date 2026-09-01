@@ -3,9 +3,9 @@ package handler
 import (
 	"net/http"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/syncx"
+	"github.com/lemongoff/hexas/rest/internal"
 )
 
 // MaxConnsHandler returns a middleware that limit the concurrent connections.

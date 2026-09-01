@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/mapping"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/mapping"
 )
 
 // ErrNotFound is the alias of sql.ErrNoRows

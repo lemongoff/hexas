@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/rest/pathvar"
+	"github.com/lemongoff/hexas/rest/pathvar"
 	"github.com/stretchr/testify/assert"
 )
 

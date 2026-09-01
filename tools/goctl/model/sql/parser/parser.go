@@ -6,12 +6,12 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/collection"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/converter"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/model"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/util"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/stringx"
+	"github.com/lemongoff/hexas/core/collection"
+	"github.com/lemongoff/hexas/tools/goctl/model/sql/converter"
+	"github.com/lemongoff/hexas/tools/goctl/model/sql/model"
+	"github.com/lemongoff/hexas/tools/goctl/model/sql/util"
+	"github.com/lemongoff/hexas/tools/goctl/util/console"
+	"github.com/lemongoff/hexas/tools/goctl/util/stringx"
 	"github.com/zeromicro/ddl-parser/parser"
 )
 

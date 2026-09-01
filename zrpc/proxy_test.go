@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/internal/mock"
+	"github.com/lemongoff/hexas/internal/mock"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"

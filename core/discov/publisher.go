@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/discov/internal"
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
-	"github.com/JellyGoFF/FF-Hexas/core/logc"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/proc"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
-	"github.com/JellyGoFF/FF-Hexas/core/threading"
+	"github.com/lemongoff/hexas/core/discov/internal"
+	"github.com/lemongoff/hexas/core/lang"
+	"github.com/lemongoff/hexas/core/logc"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/proc"
+	"github.com/lemongoff/hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/threading"
 	clientv3 "go.etcd.io/etcd/client/v3"
 )
 

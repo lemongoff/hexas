@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/lemongoff/hexas/core/logx"
 )
 
 type (

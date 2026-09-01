@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/metric"
+	"github.com/lemongoff/hexas/core/metric"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

@@ -4,7 +4,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/discov/internal"
+	"github.com/lemongoff/hexas/core/discov/internal"
 	"github.com/stretchr/testify/assert"
 )
 

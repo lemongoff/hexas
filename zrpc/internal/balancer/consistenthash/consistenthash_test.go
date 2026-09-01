@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/hash"
+	"github.com/lemongoff/hexas/core/hash"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/balancer/base"

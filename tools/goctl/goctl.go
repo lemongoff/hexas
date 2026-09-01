@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/JellyGoFF/FF-Hexas/core/load"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/cmd"
+	"github.com/lemongoff/hexas/core/load"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/tools/goctl/cmd"
 )
 
 func main() {

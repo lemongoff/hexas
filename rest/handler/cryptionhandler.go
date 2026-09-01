@@ -10,8 +10,8 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/JellyGoFF/FF-Hexas/core/codec"
-	"github.com/JellyGoFF/FF-Hexas/core/logc"
+	"github.com/lemongoff/hexas/core/codec"
+	"github.com/lemongoff/hexas/core/logc"
 )
 
 const maxBytes = 1 << 20 // 1 MiB

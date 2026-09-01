@@ -9,9 +9,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/header"
-	"github.com/JellyGoFF/FF-Hexas/rest/pathvar"
+	"github.com/lemongoff/hexas/rest/httpx"
+	"github.com/lemongoff/hexas/rest/internal/header"
+	"github.com/lemongoff/hexas/rest/pathvar"
 	"github.com/stretchr/testify/assert"
 )
 

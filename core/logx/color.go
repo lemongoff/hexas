@@ -3,7 +3,7 @@ package logx
 import (
 	"sync/atomic"
 
-	"github.com/JellyGoFF/FF-Hexas/core/color"
+	"github.com/lemongoff/hexas/core/color"
 )
 
 // WithColor is a helper function to add color to a string, only in plain encoding.

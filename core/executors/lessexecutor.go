@@ -3,8 +3,8 @@ package executors
 import (
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 // A LessExecutor is an executor to limit execution once within given time interval.

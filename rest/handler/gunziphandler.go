@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
+	"github.com/lemongoff/hexas/rest/httpx"
 )
 
 const gzipEncoding = "gzip"

@@ -1,6 +1,6 @@
 package config
 
-import "github.com/JellyGoFF/FF-Hexas/core/logx"
+import "github.com/lemongoff/hexas/core/logx"
 
 // Config defines a service configure for goctl update
 type Config struct {

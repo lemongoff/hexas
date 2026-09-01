@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis/redistest"
-	"github.com/JellyGoFF/FF-Hexas/zrpc/internal/auth"
+	"github.com/lemongoff/hexas/core/stores/redis/redistest"
+	"github.com/lemongoff/hexas/zrpc/internal/auth"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"

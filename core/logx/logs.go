@@ -11,7 +11,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/JellyGoFF/FF-Hexas/core/sysx"
+	"github.com/lemongoff/hexas/core/sysx"
 )
 
 const callerDepth = 4

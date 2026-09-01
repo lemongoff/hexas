@@ -8,11 +8,11 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/mapping"
-	"github.com/JellyGoFF/FF-Hexas/core/validation"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/encoding"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/header"
-	"github.com/JellyGoFF/FF-Hexas/rest/pathvar"
+	"github.com/lemongoff/hexas/core/mapping"
+	"github.com/lemongoff/hexas/core/validation"
+	"github.com/lemongoff/hexas/rest/internal/encoding"
+	"github.com/lemongoff/hexas/rest/internal/header"
+	"github.com/lemongoff/hexas/rest/pathvar"
 	"github.com/gogo/protobuf/proto"
 )
 

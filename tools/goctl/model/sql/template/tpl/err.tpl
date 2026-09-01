@@ -1,5 +1,5 @@
 package {{.pkg}}
 
-import "github.com/JellyGoFF/FF-Hexas/core/stores/sqlx"
+import "github.com/lemongoff/hexas/core/stores/sqlx"
 
 var ErrNotFound = sqlx.ErrNotFound

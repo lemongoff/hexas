@@ -4,7 +4,7 @@ import (
 	"errors"
 	"os"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/execx"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/execx"
 )
 
 // UpdateGoWorkIfExist updates go work if workDir is in a go workspace

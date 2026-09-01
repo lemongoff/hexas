@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
+	"github.com/lemongoff/hexas/tools/goctl/util/console"
 )
 
 var client = http.Client{

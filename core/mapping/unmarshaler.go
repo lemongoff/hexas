@@ -13,9 +13,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/jsonx"
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
-	"github.com/JellyGoFF/FF-Hexas/core/proc"
+	"github.com/lemongoff/hexas/core/jsonx"
+	"github.com/lemongoff/hexas/core/lang"
+	"github.com/lemongoff/hexas/core/proc"
 )
 
 const (

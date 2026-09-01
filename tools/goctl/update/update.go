@@ -6,11 +6,11 @@ import (
 	"os"
 	"path"
 
-	"github.com/JellyGoFF/FF-Hexas/core/conf"
-	"github.com/JellyGoFF/FF-Hexas/core/hash"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/update/config"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/core/conf"
+	"github.com/lemongoff/hexas/core/hash"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/tools/goctl/update/config"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 const (

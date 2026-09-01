@@ -3,10 +3,10 @@ package protocgengogrpc
 import (
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/goctl"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/golang"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/execx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/env"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/goctl"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/golang"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/execx"
+	"github.com/lemongoff/hexas/tools/goctl/util/env"
 )
 
 const (

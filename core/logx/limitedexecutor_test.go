@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/timex"
 	"github.com/stretchr/testify/assert"
 )
 

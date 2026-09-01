@@ -4,8 +4,8 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/JellyGoFF/FF-Hexas/core/metric"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/metric"
+	"github.com/lemongoff/hexas/core/timex"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/status"
 )

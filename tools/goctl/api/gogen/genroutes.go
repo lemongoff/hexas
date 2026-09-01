@@ -10,13 +10,13 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/collection"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/version"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/format"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/vars"
+	"github.com/lemongoff/hexas/core/collection"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/config"
+	"github.com/lemongoff/hexas/tools/goctl/internal/version"
+	"github.com/lemongoff/hexas/tools/goctl/util/format"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/vars"
 )
 
 const (

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
-	"github.com/JellyGoFF/FF-Hexas/internal/trace"
+	"github.com/lemongoff/hexas/core/timex"
+	"github.com/lemongoff/hexas/internal/trace"
 )
 
 // WithCallerSkip returns a Logger with given caller skip.

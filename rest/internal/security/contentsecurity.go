@@ -12,10 +12,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/codec"
-	"github.com/JellyGoFF/FF-Hexas/core/iox"
-	"github.com/JellyGoFF/FF-Hexas/core/logc"
-	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
+	"github.com/lemongoff/hexas/core/codec"
+	"github.com/lemongoff/hexas/core/iox"
+	"github.com/lemongoff/hexas/core/logc"
+	"github.com/lemongoff/hexas/rest/httpx"
 )
 
 const (

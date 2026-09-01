@@ -1,6 +1,6 @@
 package discov
 
-import "github.com/JellyGoFF/FF-Hexas/core/discov/internal"
+import "github.com/lemongoff/hexas/core/discov/internal"
 
 // RegisterAccount registers the username/password to the given etcd cluster.
 func RegisterAccount(endpoints []string, user, pass string) {

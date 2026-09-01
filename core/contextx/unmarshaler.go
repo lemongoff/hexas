@@ -3,7 +3,7 @@ package contextx
 import (
 	"context"
 
-	"github.com/JellyGoFF/FF-Hexas/core/mapping"
+	"github.com/lemongoff/hexas/core/mapping"
 )
 
 const contextTagKey = "ctx"

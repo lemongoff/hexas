@@ -5,7 +5,7 @@ import (
 	"errors"
 	"io"
 
-	ztrace "github.com/JellyGoFF/FF-Hexas/core/trace"
+	ztrace "github.com/lemongoff/hexas/core/trace"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/trace"

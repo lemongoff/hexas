@@ -27,8 +27,8 @@ $ goctl model mongo -t User -c --dir .
 package model
 
 import (
-	"github.com/JellyGoFF/FF-Hexas/core/stores/cache"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/monc"
+	"github.com/lemongoff/hexas/core/stores/cache"
+	"github.com/lemongoff/hexas/core/stores/monc"
 )
 
 var _ UserModel = (*customUserModel)(nil)
@@ -64,7 +64,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stores/monc"
+	"github.com/lemongoff/hexas/core/stores/monc"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -163,7 +163,7 @@ package model
 import (
 	"errors"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stores/mon"
+	"github.com/lemongoff/hexas/core/stores/mon"
 )
 
 var (
@@ -197,8 +197,8 @@ Flags:
   -h, --help            help for mongo
       --home string     The goctl home path of the template, --home and --remote cannot be set at the same time, if they are, --remote has higher priority
       --remote string   The remote git repo of the template, --home and --remote cannot be set at the same time, if they are, --remote has higher priority
-                                The git repo directory must be consistent with the https://github.com/JellyGoFF/FF-Hexas-template directory structure
-      --style string    The file naming format, see [https://github.com/JellyGoFF/FF-Hexas/tree/master/tools/goctl/config/readme.md]
+                                The git repo directory must be consistent with the https://github.com/lemongoff/hexas-template directory structure
+      --style string    The file naming format, see [https://github.com/lemongoff/hexas/tree/master/tools/goctl/config/readme.md]
   -t, --type strings    Specified model type name
 
 ```

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/discov"
+	"github.com/lemongoff/hexas/core/discov"
 	"github.com/stretchr/testify/assert"
 	"go.etcd.io/etcd/client/v3/mock/mockserver"
 	"google.golang.org/grpc/resolver"

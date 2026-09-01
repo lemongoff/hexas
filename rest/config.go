@@ -3,7 +3,7 @@ package rest
 import (
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/service"
+	"github.com/lemongoff/hexas/core/service"
 )
 
 type (

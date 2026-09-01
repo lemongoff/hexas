@@ -8,11 +8,11 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/jsonx"
-	"github.com/JellyGoFF/FF-Hexas/core/logc"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/errcode"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/header"
+	"github.com/lemongoff/hexas/core/jsonx"
+	"github.com/lemongoff/hexas/core/logc"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/rest/internal/errcode"
+	"github.com/lemongoff/hexas/rest/internal/header"
 	ggProto "github.com/gogo/protobuf/proto"
 )
 

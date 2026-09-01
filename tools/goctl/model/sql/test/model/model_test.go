@@ -8,10 +8,10 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/cache"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis/redistest"
-	mocksql "github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/test"
+	"github.com/lemongoff/hexas/core/stores/cache"
+	"github.com/lemongoff/hexas/core/stores/redis"
+	"github.com/lemongoff/hexas/core/stores/redis/redistest"
+	mocksql "github.com/lemongoff/hexas/tools/goctl/model/sql/test"
 	"github.com/stretchr/testify/assert"
 )
 

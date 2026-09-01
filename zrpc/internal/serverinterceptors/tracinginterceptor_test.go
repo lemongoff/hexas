@@ -8,8 +8,8 @@ import (
 	"sync/atomic"
 	"testing"
 
-	ztrace "github.com/JellyGoFF/FF-Hexas/core/trace"
-	"github.com/JellyGoFF/FF-Hexas/core/trace/tracetest"
+	ztrace "github.com/lemongoff/hexas/core/trace"
+	"github.com/lemongoff/hexas/core/trace/tracetest"
 	"github.com/stretchr/testify/assert"
 	"go.opentelemetry.io/otel/attribute"
 	tcodes "go.opentelemetry.io/otel/codes"

@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/codec"
-	"github.com/JellyGoFF/FF-Hexas/core/logc"
-	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/security"
+	"github.com/lemongoff/hexas/core/codec"
+	"github.com/lemongoff/hexas/core/logc"
+	"github.com/lemongoff/hexas/rest/httpx"
+	"github.com/lemongoff/hexas/rest/internal/security"
 )
 
 const contentSecurity = "X-Content-Security"

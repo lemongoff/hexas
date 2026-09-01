@@ -3,7 +3,7 @@ package cache
 import (
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 func TestCacheStat_statLoop(t *testing.T) {

@@ -3,7 +3,7 @@ package subscriber
 import (
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/discov"
+	"github.com/lemongoff/hexas/core/discov"
 	"github.com/stretchr/testify/assert"
 )
 

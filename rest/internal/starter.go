@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/proc"
-	"github.com/JellyGoFF/FF-Hexas/internal/health"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/proc"
+	"github.com/lemongoff/hexas/internal/health"
 )
 
 const probeNamePrefix = "rest"

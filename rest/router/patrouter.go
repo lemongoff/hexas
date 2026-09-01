@@ -6,9 +6,9 @@ import (
 	"path"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/search"
-	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
-	"github.com/JellyGoFF/FF-Hexas/rest/pathvar"
+	"github.com/lemongoff/hexas/core/search"
+	"github.com/lemongoff/hexas/rest/httpx"
+	"github.com/lemongoff/hexas/rest/pathvar"
 )
 
 const (

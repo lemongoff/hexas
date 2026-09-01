@@ -6,7 +6,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/util"
+	"github.com/lemongoff/hexas/tools/goctl/api/util"
 	"github.com/iancoleman/strcase"
 )
 

@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/mathx"
+	"github.com/lemongoff/hexas/core/mathx"
 	"github.com/stretchr/testify/assert"
 )
 

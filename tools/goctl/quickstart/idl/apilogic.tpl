@@ -3,7 +3,7 @@ package logic
 import (
 	"context"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/lemongoff/hexas/core/logx"
 
 	"{{.svcPkg}}"
 	"{{.typesPkg}}"{{if .callRPC}}

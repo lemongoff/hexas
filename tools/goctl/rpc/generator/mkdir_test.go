@@ -3,7 +3,7 @@ package generator
 import (
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/parser"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/parser"
 	"github.com/emicklei/proto"
 	"github.com/stretchr/testify/assert"
 )

@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/lemongoff/hexas/core/logx"
 	"github.com/stretchr/testify/assert"
 	"go.opentelemetry.io/otel"
 )

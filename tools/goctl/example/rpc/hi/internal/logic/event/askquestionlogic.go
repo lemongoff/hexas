@@ -3,9 +3,9 @@ package eventlogic
 import (
 	"context"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/example/rpc/hi/internal/svc"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/example/rpc/hi/pb/hi"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/tools/goctl/example/rpc/hi/internal/svc"
+	"github.com/lemongoff/hexas/tools/goctl/example/rpc/hi/pb/hi"
 )
 
 type AskQuestionLogic struct {

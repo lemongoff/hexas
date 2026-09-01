@@ -8,8 +8,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/env"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/util/env"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 func CloneIntoGitHome(url, branch string) (dir string, err error) {

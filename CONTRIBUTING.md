@@ -1,8 +1,8 @@
-# Contributing to FF-Hexas
+# Contributing to Hexas
 
-感谢你参与 FF-Hexas。本文说明提交 Issue、修改代码和发起 Pull Request 的基本流程。
+感谢你参与 Hexas。本文说明提交 Issue、修改代码和发起 Pull Request 的基本流程。
 
-FF-Hexas 是基于 `github.com/JellyGoFF/FF-Hexas v1.10.3` 维护的游戏服务框架独立硬分支，不是 go-zero 官方发行版或兼容镜像。仓库保留 `github.com/JellyGoFF/FF-Hexas` module/import path，但不默认合并、升级或兼容官方后续版本。
+Hexas 是以 `github.com/zeromicro/go-zero v1.10.3` 为代码基线维护的游戏服务框架独立硬分支，不是 go-zero 官方发行版或兼容镜像。当前 module/import path 为 `github.com/lemongoff/hexas`，项目不默认合并、升级或兼容官方后续版本。
 
 参与贡献即表示你同意遵守 [Code of Conduct](code-of-conduct.md)。安全问题请按 [SECURITY.md](SECURITY.md) 私下报告，不要在公开 Issue 中披露漏洞细节。
 

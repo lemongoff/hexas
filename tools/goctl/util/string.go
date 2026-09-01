@@ -4,7 +4,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
+	"github.com/lemongoff/hexas/tools/goctl/util/console"
 )
 
 var goKeyword = map[string]string{

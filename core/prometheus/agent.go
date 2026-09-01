@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
-	"github.com/JellyGoFF/FF-Hexas/core/threading"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/threading"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 

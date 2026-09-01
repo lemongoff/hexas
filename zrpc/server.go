@@ -3,13 +3,13 @@ package zrpc
 import (
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/load"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/stat"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
-	"github.com/JellyGoFF/FF-Hexas/zrpc/internal"
-	"github.com/JellyGoFF/FF-Hexas/zrpc/internal/auth"
-	"github.com/JellyGoFF/FF-Hexas/zrpc/internal/serverinterceptors"
+	"github.com/lemongoff/hexas/core/load"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/stat"
+	"github.com/lemongoff/hexas/core/stores/redis"
+	"github.com/lemongoff/hexas/zrpc/internal"
+	"github.com/lemongoff/hexas/zrpc/internal/auth"
+	"github.com/lemongoff/hexas/zrpc/internal/serverinterceptors"
 	"google.golang.org/grpc"
 )
 

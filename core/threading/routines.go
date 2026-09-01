@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"strconv"
 
-	"github.com/JellyGoFF/FF-Hexas/core/rescue"
+	"github.com/lemongoff/hexas/core/rescue"
 )
 
 // GoSafe runs the given fn using another goroutine, recovers if fn panics.

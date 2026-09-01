@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	conf "github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/parser"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/stringx"
+	conf "github.com/lemongoff/hexas/tools/goctl/config"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/parser"
+	"github.com/lemongoff/hexas/tools/goctl/util/stringx"
 	"github.com/emicklei/proto"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

@@ -5,7 +5,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/parser"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/parser"
 )
 
 // File formats the api file.

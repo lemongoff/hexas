@@ -6,9 +6,9 @@ import (
 
 	{{.imports}}
 
-	"github.com/JellyGoFF/FF-Hexas/core/conf"
-	"github.com/JellyGoFF/FF-Hexas/core/service"
-	"github.com/JellyGoFF/FF-Hexas/zrpc"
+	"github.com/lemongoff/hexas/core/conf"
+	"github.com/lemongoff/hexas/core/service"
+	"github.com/lemongoff/hexas/zrpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

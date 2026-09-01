@@ -5,8 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/conf"
-	"github.com/JellyGoFF/FF-Hexas/core/logx/logtest"
+	"github.com/lemongoff/hexas/core/conf"
+	"github.com/lemongoff/hexas/core/logx/logtest"
 	"github.com/stretchr/testify/assert"
 )
 

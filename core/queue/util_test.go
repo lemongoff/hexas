@@ -5,8 +5,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/mathx"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/mathx"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/parser"
+	"github.com/lemongoff/hexas/tools/goctl/api/parser"
 	"github.com/gookit/color"
 	"github.com/spf13/cobra"
 )

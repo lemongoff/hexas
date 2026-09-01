@@ -8,9 +8,9 @@ import (
 	"math/rand"
 	"sync/atomic"
 
-	"github.com/JellyGoFF/FF-Hexas/core/breaker"
-	"github.com/JellyGoFF/FF-Hexas/core/errorx"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/lemongoff/hexas/core/breaker"
+	"github.com/lemongoff/hexas/core/errorx"
+	"github.com/lemongoff/hexas/core/logx"
 )
 
 // spanName is used to identify the span name for the SQL execution.

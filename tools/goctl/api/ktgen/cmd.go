@@ -3,7 +3,7 @@ package ktgen
 import (
 	"errors"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/parser"
+	"github.com/lemongoff/hexas/tools/goctl/api/parser"
 	"github.com/spf13/cobra"
 )
 

@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/parser/g4/ast"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/api/parser/g4/ast"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 	"github.com/stretchr/testify/assert"
 )
 

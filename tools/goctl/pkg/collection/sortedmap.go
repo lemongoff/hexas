@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/stringx"
+	"github.com/lemongoff/hexas/tools/goctl/util/stringx"
 )
 
 var (

@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/mapping"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/encoding"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/header"
+	"github.com/lemongoff/hexas/core/mapping"
+	"github.com/lemongoff/hexas/rest/internal/encoding"
+	"github.com/lemongoff/hexas/rest/internal/header"
 )
 
 // Parse parses the response.

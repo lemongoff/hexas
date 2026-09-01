@@ -3,8 +3,8 @@ package syncx
 import (
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/lang"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 // A Cond is used to wait for conditions.

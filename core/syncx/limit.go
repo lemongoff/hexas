@@ -3,7 +3,7 @@ package syncx
 import (
 	"errors"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
+	"github.com/lemongoff/hexas/core/lang"
 )
 
 // ErrLimitReturn indicates that the more than borrowed elements were returned.

@@ -3,9 +3,9 @@ package greetlogic
 import (
 	"context"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/example/rpc/hello/internal/svc"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/example/rpc/hello/pb/hello"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/tools/goctl/example/rpc/hello/internal/svc"
+	"github.com/lemongoff/hexas/tools/goctl/example/rpc/hello/pb/hello"
 )
 
 type SayHelloLogic struct {

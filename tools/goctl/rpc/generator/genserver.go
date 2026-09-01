@@ -6,13 +6,13 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/collection"
-	conf "github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/parser"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/format"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/stringx"
+	"github.com/lemongoff/hexas/core/collection"
+	conf "github.com/lemongoff/hexas/tools/goctl/config"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/parser"
+	"github.com/lemongoff/hexas/tools/goctl/util"
+	"github.com/lemongoff/hexas/tools/goctl/util/format"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/util/stringx"
 )
 
 const functionTemplate = `

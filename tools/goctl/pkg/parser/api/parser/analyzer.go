@@ -5,12 +5,12 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/ast"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/importstack"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/placeholder"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/token"
+	"github.com/lemongoff/hexas/core/lang"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/ast"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/importstack"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/placeholder"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/token"
 )
 
 // Analyzer analyzes the ast and converts it to spec.

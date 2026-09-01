@@ -3,7 +3,7 @@ package metric
 import (
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/proc"
+	"github.com/lemongoff/hexas/core/proc"
 	"github.com/prometheus/client_golang/prometheus/testutil"
 	"github.com/stretchr/testify/assert"
 )

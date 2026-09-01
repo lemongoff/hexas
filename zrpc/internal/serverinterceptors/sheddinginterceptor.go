@@ -5,8 +5,8 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/load"
-	"github.com/JellyGoFF/FF-Hexas/core/stat"
+	"github.com/lemongoff/hexas/core/load"
+	"github.com/lemongoff/hexas/core/stat"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

@@ -8,9 +8,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/config"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/gen"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/config"
+	"github.com/lemongoff/hexas/tools/goctl/model/sql/gen"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 	"github.com/stretchr/testify/assert"
 )
 

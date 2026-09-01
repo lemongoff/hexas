@@ -16,8 +16,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/codec"
-	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
+	"github.com/lemongoff/hexas/core/codec"
+	"github.com/lemongoff/hexas/rest/httpx"
 	"github.com/stretchr/testify/assert"
 )
 

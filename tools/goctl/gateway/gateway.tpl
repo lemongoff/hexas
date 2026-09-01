@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 
-	"github.com/JellyGoFF/FF-Hexas/core/conf"
-	"github.com/JellyGoFF/FF-Hexas/gateway"
+	"github.com/lemongoff/hexas/core/conf"
+	"github.com/lemongoff/hexas/gateway"
 )
 
 var configFile = flag.String("f", "etc/gateway.yaml", "config file")

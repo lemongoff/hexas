@@ -4,8 +4,8 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/parser/g4/ast"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/parser/g4/gen/api"
+	"github.com/lemongoff/hexas/tools/goctl/api/parser/g4/ast"
+	"github.com/lemongoff/hexas/tools/goctl/api/parser/g4/gen/api"
 	"github.com/stretchr/testify/assert"
 )
 

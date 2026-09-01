@@ -4,7 +4,7 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/color"
+	"github.com/lemongoff/hexas/core/color"
 	"github.com/stretchr/testify/assert"
 )
 

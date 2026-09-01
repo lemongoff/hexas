@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/internal/cobrax"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/internal/cobrax"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 	"github.com/spf13/cobra"
 )
 

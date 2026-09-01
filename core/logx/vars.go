@@ -3,7 +3,7 @@ package logx
 import (
 	"errors"
 
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/syncx"
 )
 
 const (

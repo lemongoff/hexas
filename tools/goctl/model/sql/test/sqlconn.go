@@ -6,7 +6,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stores/sqlx"
+	"github.com/lemongoff/hexas/core/stores/sqlx"
 )
 
 type (

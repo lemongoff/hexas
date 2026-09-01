@@ -7,7 +7,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/iox"
+	"github.com/lemongoff/hexas/core/iox"
 )
 
 // PropertyError represents a configuration error message.

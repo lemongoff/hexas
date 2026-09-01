@@ -3,7 +3,7 @@ package mcp
 import (
 	"context"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/lemongoff/hexas/core/logx"
 	sdkmcp "github.com/modelcontextprotocol/go-sdk/mcp"
 )
 

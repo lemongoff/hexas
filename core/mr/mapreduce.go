@@ -9,7 +9,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/JellyGoFF/FF-Hexas/core/errorx"
+	"github.com/lemongoff/hexas/core/errorx"
 )
 
 const (

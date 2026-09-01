@@ -4,8 +4,8 @@ import (
 	"context"
 	"path"
 
-	"github.com/JellyGoFF/FF-Hexas/core/breaker"
-	"github.com/JellyGoFF/FF-Hexas/zrpc/internal/codes"
+	"github.com/lemongoff/hexas/core/breaker"
+	"github.com/lemongoff/hexas/zrpc/internal/codes"
 	"google.golang.org/grpc"
 )
 

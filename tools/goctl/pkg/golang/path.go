@@ -4,8 +4,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/ctx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/util/ctx"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 func GetParentPackage(dir string) (string, string, error) {

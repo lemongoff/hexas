@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
+	"github.com/lemongoff/hexas/core/lang"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc/resolver"
 )

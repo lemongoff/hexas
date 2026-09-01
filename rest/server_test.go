@@ -14,13 +14,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/conf"
-	"github.com/JellyGoFF/FF-Hexas/core/logx/logtest"
-	"github.com/JellyGoFF/FF-Hexas/rest/chain"
-	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/cors"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/header"
-	"github.com/JellyGoFF/FF-Hexas/rest/router"
+	"github.com/lemongoff/hexas/core/conf"
+	"github.com/lemongoff/hexas/core/logx/logtest"
+	"github.com/lemongoff/hexas/rest/chain"
+	"github.com/lemongoff/hexas/rest/httpx"
+	"github.com/lemongoff/hexas/rest/internal/cors"
+	"github.com/lemongoff/hexas/rest/internal/header"
+	"github.com/lemongoff/hexas/rest/router"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -7,14 +7,14 @@ import (
 	"path"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/rest/chain"
-	"github.com/JellyGoFF/FF-Hexas/rest/handler"
-	"github.com/JellyGoFF/FF-Hexas/rest/httpx"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/cors"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/fileserver"
-	"github.com/JellyGoFF/FF-Hexas/rest/router"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/rest/chain"
+	"github.com/lemongoff/hexas/rest/handler"
+	"github.com/lemongoff/hexas/rest/httpx"
+	"github.com/lemongoff/hexas/rest/internal"
+	"github.com/lemongoff/hexas/rest/internal/cors"
+	"github.com/lemongoff/hexas/rest/internal/fileserver"
+	"github.com/lemongoff/hexas/rest/router"
 )
 
 type (

@@ -3,8 +3,8 @@ package limit
 import (
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis/redistest"
+	"github.com/lemongoff/hexas/core/stores/redis"
+	"github.com/lemongoff/hexas/core/stores/redis/redistest"
 	"github.com/alicebob/miniredis/v2"
 	"github.com/stretchr/testify/assert"
 )

@@ -3,7 +3,7 @@ package model
 import (
 	"errors"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stores/mon"
+	"github.com/lemongoff/hexas/core/stores/mon"
 )
 
 var (

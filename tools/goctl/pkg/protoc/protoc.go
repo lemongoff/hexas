@@ -8,12 +8,12 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/downloader"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/goctl"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/execx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/env"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/zipx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/vars"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/downloader"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/goctl"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/execx"
+	"github.com/lemongoff/hexas/tools/goctl/util/env"
+	"github.com/lemongoff/hexas/tools/goctl/util/zipx"
+	"github.com/lemongoff/hexas/tools/goctl/vars"
 )
 
 var url = map[string]string{

@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/proc"
-	"github.com/JellyGoFF/FF-Hexas/internal/mock"
+	"github.com/lemongoff/hexas/core/proc"
+	"github.com/lemongoff/hexas/internal/mock"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
 )

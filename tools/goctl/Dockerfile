@@ -34,7 +34,7 @@ LABEL org.opencontainers.image.authors="Kevin Wan"
 LABEL org.opencontainers.image.base.name="docker.io/library/golang:alpine"
 LABEL org.opencontainers.image.description="A cloud-native Go microservices framework with cli tool for productivity."
 LABEL org.opencontainers.image.licenses="MIT"
-LABEL org.opencontainers.image.source="https://github.com/JellyGoFF/FF-Hexas"
+LABEL org.opencontainers.image.source="https://github.com/lemongoff/hexas"
 LABEL org.opencontainers.image.title="goctl (cli)"
 
 ENTRYPOINT ["/usr/local/bin/goctl"]

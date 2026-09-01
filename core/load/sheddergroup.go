@@ -3,7 +3,7 @@ package load
 import (
 	"io"
 
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
+	"github.com/lemongoff/hexas/core/syncx"
 )
 
 // A ShedderGroup is a manager to manage key-based shedders.

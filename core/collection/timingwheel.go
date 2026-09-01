@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
-	"github.com/JellyGoFF/FF-Hexas/core/threading"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/lang"
+	"github.com/lemongoff/hexas/core/threading"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 const drainWorkers = 8

@@ -70,8 +70,8 @@ func TestDefaultProtoParse_Option(t *testing.T) {
 	p := NewDefaultProtoParser()
 	data, err := p.Parse("./test_option.proto")
 	assert.Nil(t, err)
-	assert.Equal(t, "github.com/JellyGoFF/FF-Hexas", data.GoPackage)
-	assert.Equal(t, "FF_Hexas", data.PbPackage)
+	assert.Equal(t, "github.com/lemongoff/hexas", data.GoPackage)
+	assert.Equal(t, "hexas", data.PbPackage)
 }
 
 func TestDefaultProtoParse_Option2(t *testing.T) {

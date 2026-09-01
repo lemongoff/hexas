@@ -5,9 +5,9 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/model/sql/parser"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/stringx"
+	"github.com/lemongoff/hexas/tools/goctl/model/sql/parser"
+	"github.com/lemongoff/hexas/tools/goctl/util"
+	"github.com/lemongoff/hexas/tools/goctl/util/stringx"
 )
 
 // Key describes cache key

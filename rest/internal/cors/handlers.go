@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/response"
+	"github.com/lemongoff/hexas/rest/internal/response"
 )
 
 const (

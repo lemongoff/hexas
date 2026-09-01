@@ -5,7 +5,7 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx/logtest"
+	"github.com/lemongoff/hexas/core/logx/logtest"
 	"github.com/stretchr/testify/assert"
 )
 

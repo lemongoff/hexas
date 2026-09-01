@@ -3,11 +3,11 @@ package zrpc
 import (
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/discov"
-	"github.com/JellyGoFF/FF-Hexas/core/service"
-	"github.com/JellyGoFF/FF-Hexas/core/stores/redis"
-	"github.com/JellyGoFF/FF-Hexas/zrpc/internal"
-	"github.com/JellyGoFF/FF-Hexas/zrpc/resolver"
+	"github.com/lemongoff/hexas/core/discov"
+	"github.com/lemongoff/hexas/core/service"
+	"github.com/lemongoff/hexas/core/stores/redis"
+	"github.com/lemongoff/hexas/zrpc/internal"
+	"github.com/lemongoff/hexas/zrpc/resolver"
 )
 
 type (

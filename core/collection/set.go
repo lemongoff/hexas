@@ -1,6 +1,6 @@
 package collection
 
-import "github.com/JellyGoFF/FF-Hexas/core/lang"
+import "github.com/lemongoff/hexas/core/lang"
 
 // Set is a type-safe generic set collection.
 // It's not thread-safe, use with synchronization for concurrent access.

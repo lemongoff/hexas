@@ -4,9 +4,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/breaker"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/core/stat"
+	"github.com/lemongoff/hexas/core/breaker"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/core/stat"
 	"github.com/go-sql-driver/mysql"
 	"github.com/stretchr/testify/assert"
 )

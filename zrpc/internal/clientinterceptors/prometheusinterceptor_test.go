@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/prometheus"
+	"github.com/lemongoff/hexas/core/prometheus"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
 )

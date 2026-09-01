@@ -7,8 +7,8 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/pkg/parser/api/token"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util"
+	"github.com/lemongoff/hexas/tools/goctl/pkg/parser/api/token"
+	"github.com/lemongoff/hexas/tools/goctl/util"
 )
 
 const (

@@ -1,6 +1,6 @@
 package queue
 
-import "github.com/JellyGoFF/FF-Hexas/core/errorx"
+import "github.com/lemongoff/hexas/core/errorx"
 
 // A MultiPusher is a pusher that can push messages to multiple underlying pushers.
 type MultiPusher struct {

@@ -4,10 +4,10 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/rpc/parser"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/console"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/ctx"
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/util/pathx"
+	"github.com/lemongoff/hexas/tools/goctl/rpc/parser"
+	"github.com/lemongoff/hexas/tools/goctl/util/console"
+	"github.com/lemongoff/hexas/tools/goctl/util/ctx"
+	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 )
 
 type ZRpcContext struct {

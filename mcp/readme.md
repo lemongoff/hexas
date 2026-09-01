@@ -22,7 +22,7 @@ This package provides a go-zero integration for the [Model Context Protocol (MCP
 ### 1. Installation
 
 ```bash
-go get github.com/JellyGoFF/FF-Hexas
+go get github.com/lemongoff/hexas
 ```
 
 **Note**: The official MCP SDK is a transitive dependency and will be installed automatically. You don't need to import it directly in your code.
@@ -56,8 +56,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/JellyGoFF/FF-Hexas/core/conf"
-	"github.com/JellyGoFF/FF-Hexas/mcp"
+	"github.com/lemongoff/hexas/core/conf"
+	"github.com/lemongoff/hexas/mcp"
 )
 
 type GreetArgs struct {

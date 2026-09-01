@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"strings"
 
-	"github.com/JellyGoFF/FF-Hexas/core/stores/sqlx"
+	"github.com/lemongoff/hexas/core/stores/sqlx"
 )
 
 var p2m = map[string]string{

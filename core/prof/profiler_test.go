@@ -3,7 +3,7 @@ package prof
 import (
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/utils"
+	"github.com/lemongoff/hexas/core/utils"
 )
 
 func TestProfiler(t *testing.T) {

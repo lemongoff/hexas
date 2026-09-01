@@ -12,10 +12,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/conf"
-	"github.com/JellyGoFF/FF-Hexas/core/fs"
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
-	"github.com/JellyGoFF/FF-Hexas/rest/router"
+	"github.com/lemongoff/hexas/core/conf"
+	"github.com/lemongoff/hexas/core/fs"
+	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/rest/router"
 	"github.com/stretchr/testify/assert"
 )
 

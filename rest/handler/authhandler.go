@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"net/http/httputil"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logc"
-	"github.com/JellyGoFF/FF-Hexas/rest/internal/response"
-	"github.com/JellyGoFF/FF-Hexas/rest/token"
+	"github.com/lemongoff/hexas/core/logc"
+	"github.com/lemongoff/hexas/rest/internal/response"
+	"github.com/lemongoff/hexas/rest/token"
 	"github.com/golang-jwt/jwt/v4"
 )
 

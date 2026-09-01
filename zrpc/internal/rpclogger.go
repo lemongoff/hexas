@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"github.com/JellyGoFF/FF-Hexas/core/logx"
+	"github.com/lemongoff/hexas/core/logx"
 	"google.golang.org/grpc/grpclog"
 )
 

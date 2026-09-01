@@ -4,9 +4,9 @@ import (
 	"context"
 	"sync"
 
-	"github.com/JellyGoFF/FF-Hexas/core/syncx"
-	"github.com/JellyGoFF/FF-Hexas/zrpc/internal"
-	"github.com/JellyGoFF/FF-Hexas/zrpc/internal/auth"
+	"github.com/lemongoff/hexas/core/syncx"
+	"github.com/lemongoff/hexas/zrpc/internal"
+	"github.com/lemongoff/hexas/zrpc/internal/auth"
 	"google.golang.org/grpc"
 )
 

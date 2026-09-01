@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/JellyGoFF/FF-Hexas/core/metric"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/metric"
+	"github.com/lemongoff/hexas/core/timex"
 )
 
 const clientNamespace = "httpc_client"

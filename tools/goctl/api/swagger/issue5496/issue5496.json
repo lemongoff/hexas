@@ -75,7 +75,7 @@
   },
   "x-date": "2026-03-19 22:52:34",
   "x-description": "This is a goctl generated swagger file.",
-  "x-github": "https://github.com/JellyGoFF/FF-Hexas",
+  "x-github": "https://github.com/lemongoff/hexas",
   "x-go-zero-doc": "https://go-zero.dev/",
   "x-goctl-version": "1.10.0"
 }

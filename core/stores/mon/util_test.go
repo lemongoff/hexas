@@ -5,8 +5,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/core/logx/logtest"
-	"github.com/JellyGoFF/FF-Hexas/core/timex"
+	"github.com/lemongoff/hexas/core/logx/logtest"
+	"github.com/lemongoff/hexas/core/timex"
 	"github.com/stretchr/testify/assert"
 )
 

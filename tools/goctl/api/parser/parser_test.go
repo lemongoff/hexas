@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"testing"
 
-	"github.com/JellyGoFF/FF-Hexas/tools/goctl/api/spec"
+	"github.com/lemongoff/hexas/tools/goctl/api/spec"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -3,8 +3,8 @@ package redis
 import (
 	"context"
 
-	"github.com/JellyGoFF/FF-Hexas/core/breaker"
-	"github.com/JellyGoFF/FF-Hexas/core/lang"
+	"github.com/lemongoff/hexas/core/breaker"
+	"github.com/lemongoff/hexas/core/lang"
 	red "github.com/redis/go-redis/v9"
 )
 
