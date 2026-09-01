@@ -3,7 +3,7 @@ package sqlx
 import (
 	"testing"
 
-	"github.com/lemongoff/hexas/core/conf"
+	"github.com/lemongoff/hexas/internal/configtest"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -11,8 +11,8 @@ func TestValidate(t *testing.T) {
 	text := []byte(`DataSource: primary:password@tcp(127.0.0.1:3306)/primary_db
 `)
 
-	var sc SqlConf
-	err := conf.LoadFromYamlBytes(text, &sc)
+	sc := DefaultSqlConf()
+	err := configtest.LoadYAML(text, &sc)
 	assert.Nil(t, err)
 	assert.Equal(t, "mysql", sc.DriverName)
 	assert.Equal(t, policyRoundRobin, sc.Policy)

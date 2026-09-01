@@ -16,27 +16,27 @@ type McpConf struct {
 		Name string `json:",optional"`
 
 		// Version is the server version reported in initialize responses
-		Version string `json:",default=1.0.0"`
+		Version string
 
 		// UseStreamable when true uses Streamable HTTP transport (2025-03-26 spec),
 		// otherwise uses SSE transport (2024-11-05 spec)
-		UseStreamable bool `json:",default=false"`
+		UseStreamable bool
 
 		// SseEndpoint is the path for Server-Sent Events connections
 		// Used for SSE transport mode
-		SseEndpoint string `json:",default=/sse"`
+		SseEndpoint string
 
 		// MessageEndpoint is the path for JSON-RPC requests
 		// Used for Streamable HTTP transport mode
-		MessageEndpoint string `json:",default=/message"`
+		MessageEndpoint string
 
 		// Cors contains allowed CORS origins
 		Cors []string `json:",optional"`
 
 		// SseTimeout is the maximum time allowed for SSE connections
-		SseTimeout time.Duration `json:",default=24h"`
+		SseTimeout time.Duration
 
 		// MessageTimeout is the maximum time allowed for request execution
-		MessageTimeout time.Duration `json:",default=30s"`
+		MessageTimeout time.Duration
 	}
 }

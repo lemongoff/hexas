@@ -1,48 +1,28 @@
-<img align="right" width="150px" src="https://raw.githubusercontent.com/zeromicro/zero-doc/main/doc/images/go-zero.png">
-
 # logx
 
-## logx configurations
+## Configuration
+
+`LogConf` uses explicit defaults and validation. Defaults are defined in `DefaultLogConf`; configuration tags no longer encode defaults, ranges, or enumerations. Load service configuration by layering sources with `github.com/lemongoff/hexas-config`:
 
 ```go
-type LogConf struct {
-	ServiceName         string              `json:",optional"`
-	Mode                string              `json:",default=console,options=[console,file,volume]"`
-	Encoding            string              `json:",default=json,options=[json,plain]"`
-	TimeFormat          string              `json:",optional"`
-	Path                string              `json:",default=logs"`
-	Level               string              `json:",default=info,options=[info,error,severe]"`
-	Compress            bool                `json:",optional"`
-	KeepDays            int                 `json:",optional"`
-	StackCooldownMillis int                 `json:",default=100"`
-	MaxBackups          int                 `json:",default=0"`
-	MaxSize             int                 `json:",default=0"`
-	Rotation            string              `json:",default=daily,options=[daily,size]"`
+defaults := logx.DefaultLogConf()
+manager, err := hexasconfig.NewManager(
+    defaults,
+    hexasconfig.YAMLFile("config/base.yaml"),
+    hexasconfig.Environment("HEXAS"),
+)
+if err != nil {
+    return err
 }
+
+snapshot, err := manager.Load(context.Background())
+if err != nil {
+    return err
+}
+conf := snapshot.Value()
 ```
 
-- `ServiceName`: set the service name, optional. on `volume` mode, the name is used to generate the log files. Within `rest/zrpc` services, the name will be set to the name of `rest` or `zrpc` automatically.
-- `Mode`: the mode to output the logs, default is `console`.
-  -  `console` mode writes the logs to `stdout/stderr`.
-  - `file` mode writes the logs to the files specified by `Path`.
-  - `volume` mode is used in docker, to write logs into mounted volumes.
-- `Encoding`: indicates how to encode the logs, default is `json`.
-  - `json` mode writes the logs in json format.
-  - `plain` mode writes the logs with plain text, with terminal color enabled.
-- `TimeFormat`: customize the time format, optional. Default is `2006-01-02T15:04:05.000Z07:00`.
-- `Path`: set the log path, default to `logs`.
-- `Level`: the logging level to filter logs. Default is `info`.
-  - `info`, all logs are written.
-  - `error`, `info` logs are suppressed.
-  - `severe`, `info` and `error` logs are suppressed, only `severe` logs are written.
-- `Compress`: whether or not to compress log files, only works with `file` mode.
-- `KeepDays`: how many days that the log files are kept, after the given days, the outdated files will be deleted automatically. It has no effect on `console` mode.
-- `StackCooldownMillis`: how many milliseconds to rewrite stacktrace again. It’s used to avoid stacktrace flooding.
-- `MaxBackups`: represents how many backup log files will be kept. 0 means all files will be kept forever. Only take effect when `Rotation` is `size`. NOTE: the level of option `KeepDays` will be higher. Even though `MaxBackups` sets 0, log files will still be removed if the `KeepDays` limitation is reached.
-- `MaxSize`: represents how much space the writing log file takes up. 0 means no limit. The unit is `MB`. Only take effect when `Rotation` is `size`.
-- `Rotation`: represents the type of log rotation rule. Default is `daily`.
-  - `daily` rotate the logs by day.
-  - `size` rotate the logs by size of logs.
+The default mode is `console`, encoding is `json`, path is `logs`, level is `info`, statistics are enabled, stack cooldown is 100ms, and rotation is `daily`. Non-empty enum values and non-negative limits are checked by `LogConf.Validate`. See [`../../docs/configuration.md`](../../docs/configuration.md) for the complete bootstrap and runtime configuration contract.
 
 ## Logging methods
 

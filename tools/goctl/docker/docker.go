@@ -9,17 +9,17 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/gookit/color"
 	"github.com/lemongoff/hexas/tools/goctl/util"
 	"github.com/lemongoff/hexas/tools/goctl/util/env"
 	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
-	"github.com/gookit/color"
 	"github.com/spf13/cobra"
 )
 
 const (
 	dockerfileName = "Dockerfile"
-	etcDir         = "etc"
-	yamlEtx        = ".yaml"
+	configDirName  = "config"
+	yamlExt        = ".yaml"
 )
 
 // Docker describes a dockerfile
@@ -73,17 +73,17 @@ func dockerCommand(_ *cobra.Command, _ []string) (err error) {
 
 	base := varStringBase
 	port := varIntPort
-	etcDir := filepath.Join(filepath.Dir(goFile), etcDir)
-	if _, err := os.Stat(etcDir); os.IsNotExist(err) {
+	configDir := filepath.Join(filepath.Dir(goFile), configDirName)
+	if _, err := os.Stat(configDir); os.IsNotExist(err) {
 		return generateDockerfile(goFile, base, port, version, timezone)
 	}
 
-	cfg, err := findConfig(goFile, etcDir)
+	cfg, err := findConfig(goFile, configDir)
 	if err != nil {
 		return err
 	}
 
-	if err := generateDockerfile(goFile, base, port, version, timezone, "-f", "etc/"+cfg); err != nil {
+	if err := generateDockerfile(goFile, base, port, version, timezone, "-f", path.Join(configDirName, cfg)); err != nil {
 		return err
 	}
 
@@ -99,7 +99,7 @@ func findConfig(file, dir string) (string, error) {
 	var files []string
 	err := filepath.Walk(dir, func(path string, f os.FileInfo, _ error) error {
 		if !f.IsDir() {
-			if filepath.Ext(f.Name()) == yamlEtx {
+			if filepath.Ext(f.Name()) == yamlExt {
 				files = append(files, f.Name())
 			}
 		}

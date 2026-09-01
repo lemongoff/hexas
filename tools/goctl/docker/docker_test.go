@@ -12,24 +12,24 @@ import (
 func TestDockerCommand_EtcDirResolution(t *testing.T) {
 	// Create a temporary project structure
 	tempDir := t.TempDir()
-	
+
 	// Create project structure: project/service/api/
 	serviceDir := filepath.Join(tempDir, "service", "api")
-	etcDir := filepath.Join(serviceDir, "etc")
-	require.NoError(t, os.MkdirAll(etcDir, 0755))
-	
+	configDir := filepath.Join(serviceDir, "config")
+	require.NoError(t, os.MkdirAll(configDir, 0755))
+
 	// Create a Go file
 	goFile := filepath.Join(serviceDir, "api.go")
 	require.NoError(t, os.WriteFile(goFile, []byte("package main\n\nfunc main() {}"), 0644))
-	
+
 	// Create a config file
-	configFile := filepath.Join(etcDir, "config.yaml")
+	configFile := filepath.Join(configDir, "config.yaml")
 	require.NoError(t, os.WriteFile(configFile, []byte("Name: test\n"), 0644))
-	
+
 	// Create go.mod at the root
 	goModFile := filepath.Join(tempDir, "go.mod")
 	require.NoError(t, os.WriteFile(goModFile, []byte("module test\n\ngo 1.21\n"), 0644))
-	
+
 	// Test: etc directory should be found relative to Go file, not CWD
 	t.Run("etc directory resolved relative to go file", func(t *testing.T) {
 		// Save and restore original working directory
@@ -38,44 +38,44 @@ func TestDockerCommand_EtcDirResolution(t *testing.T) {
 		defer func() {
 			require.NoError(t, os.Chdir(originalWd))
 		}()
-		
+
 		// Change to temp directory (not service/api directory)
 		require.NoError(t, os.Chdir(tempDir))
-		
+
 		// The relative path from tempDir to the go file
 		relGoFile := filepath.Join("service", "api", "api.go")
-		
+
 		// Test the etc directory resolution logic
-		resolvedEtcDir := filepath.Join(filepath.Dir(relGoFile), "etc")
-		
+		resolvedEtcDir := filepath.Join(filepath.Dir(relGoFile), "config")
+
 		// Verify the resolved path exists
 		_, err = os.Stat(resolvedEtcDir)
 		assert.NoError(t, err, "etc directory should be found at service/api/etc")
-		
+
 		// Verify it's the correct path (use EvalSymlinks to handle /private on macOS)
 		absResolvedEtc, err := filepath.Abs(resolvedEtcDir)
 		require.NoError(t, err)
 		absResolvedEtc, err = filepath.EvalSymlinks(absResolvedEtc)
 		require.NoError(t, err)
-		expectedEtc, err := filepath.EvalSymlinks(etcDir)
+		expectedConfig, err := filepath.EvalSymlinks(configDir)
 		require.NoError(t, err)
-		assert.Equal(t, expectedEtc, absResolvedEtc)
+		assert.Equal(t, expectedConfig, absResolvedEtc)
 	})
-	
+
 	t.Run("etc directory with empty goFile", func(t *testing.T) {
 		// When goFile is empty, should default to "./etc"
 		goFile := ""
-		resolvedEtcDir := filepath.Join(filepath.Dir(goFile), "etc")
-		
-		// Should resolve to just "etc"
-		assert.Equal(t, "etc", resolvedEtcDir)
+		resolvedEtcDir := filepath.Join(filepath.Dir(goFile), "config")
+
+		// Should resolve to just "config"
+		assert.Equal(t, "config", resolvedEtcDir)
 	})
-	
+
 	t.Run("etc directory with absolute path", func(t *testing.T) {
 		// When goFile is absolute path
 		absGoFile := filepath.Join(tempDir, "service", "api", "api.go")
-		resolvedEtcDir := filepath.Join(filepath.Dir(absGoFile), "etc")
-		
+		resolvedEtcDir := filepath.Join(filepath.Dir(absGoFile), "config")
+
 		// Should resolve correctly
 		_, err := os.Stat(resolvedEtcDir)
 		assert.NoError(t, err)
@@ -114,15 +114,15 @@ func TestGenerateDockerfile_GoMainFromPath(t *testing.T) {
 			expectedPath: "cmd/api/internal/handler/handler.go",
 		},
 	}
-	
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			// Simulate the fix: using filepath.Base instead of full path
 			goMainFrom := filepath.Join(tt.projPath, filepath.Base(tt.goFile))
-			
+
 			assert.Equal(t, tt.expectedPath, goMainFrom,
 				"GoMainFrom should not duplicate path segments")
-			
+
 			// Verify the old buggy behavior would have been wrong
 			if tt.goFile != filepath.Base(tt.goFile) {
 				buggyPath := filepath.Join(tt.projPath, tt.goFile)
@@ -137,12 +137,12 @@ func TestGenerateDockerfile_PathJoinBehavior(t *testing.T) {
 	t.Run("demonstrates the bug and fix", func(t *testing.T) {
 		projPath := "service/api"
 		goFile := "service/api/api.go"
-		
+
 		// OLD (buggy) behavior: path duplication
 		buggyPath := filepath.Join(projPath, goFile)
 		assert.Equal(t, "service/api/service/api/api.go", buggyPath,
 			"Bug: path segments are duplicated")
-		
+
 		// NEW (fixed) behavior: correct path
 		fixedPath := filepath.Join(projPath, filepath.Base(goFile))
 		assert.Equal(t, "service/api/api.go", fixedPath,
@@ -152,44 +152,44 @@ func TestGenerateDockerfile_PathJoinBehavior(t *testing.T) {
 
 func TestFindConfig(t *testing.T) {
 	tempDir := t.TempDir()
-	etcDir := filepath.Join(tempDir, "etc")
-	require.NoError(t, os.MkdirAll(etcDir, 0755))
-	
+	configDir := filepath.Join(tempDir, "config")
+	require.NoError(t, os.MkdirAll(configDir, 0755))
+
 	t.Run("finds config matching go file name", func(t *testing.T) {
 		// Create config files
 		require.NoError(t, os.WriteFile(
-			filepath.Join(etcDir, "api.yaml"), []byte("test"), 0644))
+			filepath.Join(configDir, "api.yaml"), []byte("test"), 0644))
 		require.NoError(t, os.WriteFile(
-			filepath.Join(etcDir, "other.yaml"), []byte("test"), 0644))
-		
-		cfg, err := findConfig("api.go", etcDir)
+			filepath.Join(configDir, "other.yaml"), []byte("test"), 0644))
+
+		cfg, err := findConfig("api.go", configDir)
 		assert.NoError(t, err)
 		assert.Equal(t, "api.yaml", cfg)
 	})
-	
+
 	t.Run("returns first config when no match", func(t *testing.T) {
-		etcDir2 := filepath.Join(tempDir, "etc2")
-		require.NoError(t, os.MkdirAll(etcDir2, 0755))
+		configDir2 := filepath.Join(tempDir, "config2")
+		require.NoError(t, os.MkdirAll(configDir2, 0755))
 		require.NoError(t, os.WriteFile(
-			filepath.Join(etcDir2, "config.yaml"), []byte("test"), 0644))
-		
-		cfg, err := findConfig("main.go", etcDir2)
+			filepath.Join(configDir2, "config.yaml"), []byte("test"), 0644))
+
+		cfg, err := findConfig("main.go", configDir2)
 		assert.NoError(t, err)
 		assert.Equal(t, "config.yaml", cfg)
 	})
-	
+
 	t.Run("returns error when no yaml files", func(t *testing.T) {
 		emptyDir := filepath.Join(tempDir, "empty")
 		require.NoError(t, os.MkdirAll(emptyDir, 0755))
-		
+
 		_, err := findConfig("api.go", emptyDir)
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "no yaml file")
 	})
-	
+
 	t.Run("handles path in go file name", func(t *testing.T) {
 		// Test with service/api/api.go - should extract just "api"
-		cfg, err := findConfig("service/api/api.go", etcDir)
+		cfg, err := findConfig("service/api/api.go", configDir)
 		assert.NoError(t, err)
 		assert.Equal(t, "api.yaml", cfg)
 	})
@@ -203,28 +203,28 @@ func TestGetFilePath(t *testing.T) {
 		[]byte("module testproject\n\ngo 1.21\n"),
 		0644,
 	))
-	
+
 	// Create subdirectories
 	serviceDir := filepath.Join(tempDir, "service", "api")
 	require.NoError(t, os.MkdirAll(serviceDir, 0755))
-	
+
 	originalWd, err := os.Getwd()
 	require.NoError(t, err)
 	defer func() {
 		require.NoError(t, os.Chdir(originalWd))
 	}()
-	
+
 	t.Run("returns relative path from go.mod", func(t *testing.T) {
 		require.NoError(t, os.Chdir(tempDir))
-		
+
 		path, err := getFilePath("service/api")
 		assert.NoError(t, err)
 		assert.Equal(t, "service/api", path)
 	})
-	
+
 	t.Run("handles current directory", func(t *testing.T) {
 		require.NoError(t, os.Chdir(tempDir))
-		
+
 		path, err := getFilePath(".")
 		assert.NoError(t, err)
 		// Current directory returns empty string when at go.mod root
@@ -236,62 +236,62 @@ func TestGetFilePath(t *testing.T) {
 func TestDockerCommandIntegration(t *testing.T) {
 	// Create a complete project structure
 	tempDir := t.TempDir()
-	
+
 	// Setup: project/service/api/
 	serviceDir := filepath.Join(tempDir, "service", "api")
-	etcDir := filepath.Join(serviceDir, "etc")
-	require.NoError(t, os.MkdirAll(etcDir, 0755))
-	
+	configDir := filepath.Join(serviceDir, "config")
+	require.NoError(t, os.MkdirAll(configDir, 0755))
+
 	// Create files
 	goFile := filepath.Join(serviceDir, "api.go")
 	require.NoError(t, os.WriteFile(goFile, []byte("package main\n\nfunc main() {}"), 0644))
-	configFile := filepath.Join(etcDir, "api.yaml")
+	configFile := filepath.Join(configDir, "api.yaml")
 	require.NoError(t, os.WriteFile(configFile, []byte("Name: test-api\n"), 0644))
 	goModFile := filepath.Join(tempDir, "go.mod")
 	require.NoError(t, os.WriteFile(goModFile, []byte("module testproject\n\ngo 1.21\n"), 0644))
 	goSumFile := filepath.Join(tempDir, "go.sum")
 	require.NoError(t, os.WriteFile(goSumFile, []byte(""), 0644))
-	
+
 	originalWd, err := os.Getwd()
 	require.NoError(t, err)
 	defer func() {
 		require.NoError(t, os.Chdir(originalWd))
 	}()
-	
+
 	t.Run("etc directory detected from different working directory", func(t *testing.T) {
 		// Change to project root (not service/api)
 		require.NoError(t, os.Chdir(tempDir))
-		
+
 		// Relative path to Go file
 		relGoFile := filepath.Join("service", "api", "api.go")
-		
+
 		// Apply the fix: resolve etc directory relative to go file
-		resolvedEtcDir := filepath.Join(filepath.Dir(relGoFile), "etc")
-		
+		resolvedEtcDir := filepath.Join(filepath.Dir(relGoFile), "config")
+
 		// Verify etc directory is found
 		stat, err := os.Stat(resolvedEtcDir)
 		assert.NoError(t, err)
 		assert.True(t, stat.IsDir())
-		
+
 		// Verify config can be found
 		cfg, err := findConfig(relGoFile, resolvedEtcDir)
 		assert.NoError(t, err)
 		assert.Equal(t, "api.yaml", cfg)
 	})
-	
+
 	t.Run("GoMainFrom path is correct", func(t *testing.T) {
 		require.NoError(t, os.Chdir(tempDir))
-		
+
 		goFileRel := filepath.Join("service", "api", "api.go")
-		
+
 		// Simulate getFilePath return value
 		projPath := "service/api"
-		
+
 		// Apply the fix: use filepath.Base
 		goMainFrom := filepath.Join(projPath, filepath.Base(goFileRel))
-		
+
 		assert.Equal(t, "service/api/api.go", goMainFrom)
-		
+
 		// Verify no path duplication
 		assert.NotContains(t, goMainFrom, "service/api/service/api")
 	})
@@ -303,58 +303,58 @@ func TestPR4343_BugFixes(t *testing.T) {
 		// Setup: Create a project structure where etc is NOT in CWD but IS relative to Go file
 		tempDir := t.TempDir()
 		serviceDir := filepath.Join(tempDir, "service", "api")
-		etcDir := filepath.Join(serviceDir, "etc")
-		require.NoError(t, os.MkdirAll(etcDir, 0755))
-		
+		configDir := filepath.Join(serviceDir, "config")
+		require.NoError(t, os.MkdirAll(configDir, 0755))
+
 		// Create a config file
 		require.NoError(t, os.WriteFile(
-			filepath.Join(etcDir, "config.yaml"),
+			filepath.Join(configDir, "config.yaml"),
 			[]byte("Name: test\n"),
 			0644,
 		))
-		
+
 		originalWd, err := os.Getwd()
 		require.NoError(t, err)
 		defer func() {
 			require.NoError(t, os.Chdir(originalWd))
 		}()
-		
+
 		// Change to project root (CWD = tempDir)
 		require.NoError(t, os.Chdir(tempDir))
-		
+
 		goFile := filepath.Join("service", "api", "api.go")
-		
-		// OLD (buggy) behavior: checks for "etc" in CWD
-		_, errOld := os.Stat("etc")
+
+		// OLD (buggy) behavior: checks for "config" in CWD
+		_, errOld := os.Stat("config")
 		assert.Error(t, errOld, "Bug: etc not found in CWD")
-		
-		// NEW (fixed) behavior: checks for "etc" relative to go file
-		etcDirResolved := filepath.Join(filepath.Dir(goFile), "etc")
-		stat, errNew := os.Stat(etcDirResolved)
+
+		// NEW (fixed) behavior: checks for "config" relative to go file
+		configDirResolved := filepath.Join(filepath.Dir(goFile), "config")
+		stat, errNew := os.Stat(configDirResolved)
 		assert.NoError(t, errNew, "Fix: etc found relative to go file")
 		assert.True(t, stat.IsDir())
-		
+
 		// Verify config is accessible
-		cfg, err := findConfig(goFile, etcDirResolved)
+		cfg, err := findConfig(goFile, configDirResolved)
 		assert.NoError(t, err)
 		assert.Equal(t, "config.yaml", cfg)
 	})
-	
+
 	t.Run("Bug 2: GoMainFrom path not duplicated", func(t *testing.T) {
 		// Test case from PR description
 		projPath := "service/api"
 		goFile := "service/api/api.go"
-		
+
 		// OLD (buggy) behavior: duplicates path
 		buggyPath := filepath.Join(projPath, goFile)
 		assert.Equal(t, "service/api/service/api/api.go", buggyPath,
 			"Bug: path duplication occurs with old implementation")
-		
+
 		// NEW (fixed) behavior: correct path using filepath.Base
 		fixedPath := filepath.Join(projPath, filepath.Base(goFile))
 		assert.Equal(t, "service/api/api.go", fixedPath,
 			"Fix: using filepath.Base() prevents path duplication")
-		
+
 		// Verify the fix works for various scenarios
 		testCases := []struct {
 			projPath string
@@ -366,7 +366,7 @@ func TestPR4343_BugFixes(t *testing.T) {
 			{"internal/handler", "internal/handler/handler.go", "internal/handler/handler.go"},
 			{".", "main.go", "main.go"},
 		}
-		
+
 		for _, tc := range testCases {
 			result := filepath.Join(tc.projPath, filepath.Base(tc.goFile))
 			assert.Equal(t, tc.expected, result,

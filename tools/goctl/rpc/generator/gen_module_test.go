@@ -153,11 +153,11 @@ type ` + strings.Title(tt.serviceName) + `Server interface {
 			}
 
 			// Check basic directory structure
-			etcDir := filepath.Join(serviceDir, "etc")
+			configDir := filepath.Join(serviceDir, "config")
 			internalDir := filepath.Join(serviceDir, "internal")
 
-			if _, err := os.Stat(etcDir); err == nil {
-				assert.DirExists(t, etcDir)
+			if _, err := os.Stat(configDir); err == nil {
+				assert.DirExists(t, configDir)
 			}
 			if _, err := os.Stat(internalDir); err == nil {
 				assert.DirExists(t, internalDir)

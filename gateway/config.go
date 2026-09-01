@@ -16,7 +16,7 @@ type (
 	HttpClientConf struct {
 		Target  string
 		Prefix  string `json:",optional"`
-		Timeout int64  `json:",default=3000"`
+		Timeout int64
 	}
 
 	// RouteMapping is a mapping between a gateway route and an upstream rpc method.

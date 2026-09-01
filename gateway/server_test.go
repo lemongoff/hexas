@@ -11,7 +11,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lemongoff/hexas/core/conf"
 	"github.com/lemongoff/hexas/core/discov"
 	"github.com/lemongoff/hexas/core/logx"
 	"github.com/lemongoff/hexas/core/logx/logtest"
@@ -47,8 +46,7 @@ func dialer() func(context.Context, string) (net.Conn, error) {
 }
 
 func TestMustNewServer(t *testing.T) {
-	var c GatewayConf
-	assert.NoError(t, conf.FillDefault(&c))
+	c := DefaultGatewayConf()
 	// avoid popup alert on MacOS for asking permissions
 	c.DevServer.Host = "localhost"
 	c.Host = "localhost"
@@ -133,8 +131,7 @@ func TestHttpToHttp(t *testing.T) {
 	server := startTestServer(t)
 	defer server.Close()
 
-	var c GatewayConf
-	assert.NoError(t, conf.FillDefault(&c))
+	c := DefaultGatewayConf()
 	c.DevServer.Host = "localhost"
 	c.Host = "localhost"
 	c.Port = 18882
@@ -211,8 +208,7 @@ func TestHttpToHttp(t *testing.T) {
 }
 
 func TestHttpToHttpBadUpstream(t *testing.T) {
-	var c GatewayConf
-	assert.NoError(t, conf.FillDefault(&c))
+	c := DefaultGatewayConf()
 	c.DevServer.Host = "localhost"
 	c.Host = "localhost"
 	c.Port = 18883
@@ -259,8 +255,7 @@ func TestHttpToHttpBadWriter(t *testing.T) {
 	})
 
 	t.Run("bad url", func(t *testing.T) {
-		var c GatewayConf
-		assert.NoError(t, conf.FillDefault(&c))
+		c := DefaultGatewayConf()
 		c.DevServer.Host = "localhost"
 		c.Host = "localhost"
 		c.Port = 18884
@@ -347,9 +342,7 @@ func TestWithMiddleware(t *testing.T) {
 		}
 	}
 
-	var c GatewayConf
-	err := conf.FillDefault(&c)
-	assert.Nil(t, err)
+	c := DefaultGatewayConf()
 	// Test multiple middlewares in one call
 	server1 := MustNewServer(c, WithMiddleware(firstMiddleware, secondMiddleware))
 	assert.Len(t, server1.middlewares, 2, "Should have 2 middlewares from one call")

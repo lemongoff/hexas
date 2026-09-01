@@ -46,11 +46,11 @@ func generateGateway(*cobra.Command, []string) error {
 		return err
 	}
 
-	etcDir := filepath.Join(varStringDir, "etc")
-	if err := pathx.MkdirIfNotExist(etcDir); err != nil {
+	configDir := filepath.Join(varStringDir, "config")
+	if err := pathx.MkdirIfNotExist(configDir); err != nil {
 		return err
 	}
-	etcFile := filepath.Join(etcDir, "gateway.yaml")
+	etcFile := filepath.Join(configDir, "base.yaml")
 	if err := os.WriteFile(etcFile, []byte(etcContent), 0644); err != nil {
 		return err
 	}

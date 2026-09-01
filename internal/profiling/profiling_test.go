@@ -5,16 +5,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lemongoff/hexas/core/conf"
-	"github.com/lemongoff/hexas/core/syncx"
 	"github.com/grafana/pyroscope-go"
+	"github.com/lemongoff/hexas/core/syncx"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestStart(t *testing.T) {
 	t.Run("profiling", func(t *testing.T) {
-		var c Config
-		assert.NoError(t, conf.FillDefault(&c))
+		c := DefaultConfig()
 		c.Name = "test"
 		p := newProfiler(c)
 		assert.NotNil(t, p)

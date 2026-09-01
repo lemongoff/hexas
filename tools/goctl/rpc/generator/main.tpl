@@ -1,25 +1,38 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
+	"log"
 
 	{{.imports}}
 
-	"github.com/lemongoff/hexas/core/conf"
+	hexasconfig "github.com/lemongoff/hexas-config"
 	"github.com/lemongoff/hexas/core/service"
 	"github.com/lemongoff/hexas/zrpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "etc/{{.serviceName}}.yaml", "the config file")
+var configFile = flag.String("f", "config/base.yaml", "the base YAML configuration file")
 
 func main() {
 	flag.Parse()
 
-	var c config.Config
-	conf.MustLoad(*configFile, &c)
+	manager, err := hexasconfig.NewManager(config.DefaultConfig(),
+		hexasconfig.YAMLFile(*configFile), hexasconfig.Environment("HEXAS_"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := manager.Load(context.Background()); err != nil {
+		log.Fatal(err)
+	}
+	snapshot, ok := manager.Current()
+	if !ok {
+		log.Fatal("configuration was not published")
+	}
+	c := snapshot.Value()
 	ctx := svc.NewServiceContext(c)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {

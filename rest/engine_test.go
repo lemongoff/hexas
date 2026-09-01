@@ -12,9 +12,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lemongoff/hexas/core/conf"
 	"github.com/lemongoff/hexas/core/fs"
 	"github.com/lemongoff/hexas/core/logx"
+	"github.com/lemongoff/hexas/internal/configtest"
 	"github.com/lemongoff/hexas/rest/router"
 	"github.com/stretchr/testify/assert"
 )
@@ -218,8 +218,8 @@ Verbose: true
 		for _, route := range routes {
 			route := route
 			t.Run(fmt.Sprintf("%s-%v", yaml, route.routes), func(t *testing.T) {
-				var cnf RestConf
-				assert.Nil(t, conf.LoadFromYamlBytes([]byte(yaml), &cnf))
+				cnf := DefaultRestConf()
+				assert.Nil(t, configtest.LoadYAML([]byte(yaml), &cnf))
 				ng := newEngine(cnf)
 				if atomic.AddInt32(&index, 1)%2 == 0 {
 					ng.setUnsignedCallback(func(w http.ResponseWriter, r *http.Request,
@@ -287,8 +287,8 @@ Middlewares:
 
 	var index int32
 	t.Run(fmt.Sprintf("%s-%v", yaml, route.routes), func(t *testing.T) {
-		var cnf RestConf
-		assert.Nil(t, conf.LoadFromYamlBytes([]byte(yaml), &cnf))
+		cnf := DefaultRestConf()
+		assert.Nil(t, configtest.LoadYAML([]byte(yaml), &cnf))
 		ng := newEngine(cnf)
 		if atomic.AddInt32(&index, 1)%2 == 0 {
 			ng.setUnsignedCallback(func(w http.ResponseWriter, r *http.Request,

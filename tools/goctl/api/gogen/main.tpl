@@ -4,19 +4,32 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
+	"log"
 
 	{{.importPackages}}
 )
 
-var configFile = flag.String("f", "etc/{{.serviceName}}.yaml", "the config file")
+var configFile = flag.String("f", "config/base.yaml", "the base YAML configuration file")
 
 func main() {
 	flag.Parse()
 
-	var c config.Config
-	conf.MustLoad(*configFile, &c)
+	manager, err := hexasconfig.NewManager(config.DefaultConfig(),
+		hexasconfig.YAMLFile(*configFile), hexasconfig.Environment("HEXAS_"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := manager.Load(context.Background()); err != nil {
+		log.Fatal(err)
+	}
+	snapshot, ok := manager.Current()
+	if !ok {
+		log.Fatal("configuration was not published")
+	}
+	c := snapshot.Value()
 
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()

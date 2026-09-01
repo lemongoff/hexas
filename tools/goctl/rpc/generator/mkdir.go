@@ -13,23 +13,23 @@ import (
 )
 
 const (
-	wd       = "wd"
-	etc      = "etc"
-	internal = "internal"
-	config   = "config"
-	logic    = "logic"
-	server   = "server"
-	svc      = "svc"
-	pb       = "pb"
-	protoGo  = "proto-go"
-	call     = "call"
+	wd              = "wd"
+	bootstrapConfig = "bootstrap-config"
+	internal        = "internal"
+	config          = "config"
+	logic           = "logic"
+	server          = "server"
+	svc             = "svc"
+	pb              = "pb"
+	protoGo         = "proto-go"
+	call            = "call"
 )
 
 type (
 	// DirContext defines a rpc service directories context
 	DirContext interface {
 		GetCall() Dir
-		GetEtc() Dir
+		GetBootstrapConfig() Dir
 		GetInternal() Dir
 		GetConfig() Dir
 		GetLogic() Dir
@@ -60,7 +60,7 @@ type (
 func mkdir(ctx *ctx.ProjectContext, proto parser.Proto, conf *conf.Config, c *ZRpcContext) (DirContext,
 	error) {
 	inner := make(map[string]Dir)
-	etcDir := filepath.Join(ctx.WorkDir, "etc")
+	bootstrapConfigDir := filepath.Join(ctx.WorkDir, "config")
 	clientDir := filepath.Join(ctx.WorkDir, "client")
 	internalDir := filepath.Join(ctx.WorkDir, "internal")
 	configDir := filepath.Join(internalDir, "config")
@@ -124,12 +124,12 @@ func mkdir(ctx *ctx.ProjectContext, proto parser.Proto, conf *conf.Config, c *ZR
 			return getChildPackage(ctx.WorkDir, childPath)
 		},
 	}
-	inner[etc] = Dir{
-		Filename: etcDir,
-		Package:  filepath.ToSlash(filepath.Join(ctx.Path, strings.TrimPrefix(etcDir, ctx.Dir))),
-		Base:     filepath.Base(etcDir),
+	inner[bootstrapConfig] = Dir{
+		Filename: bootstrapConfigDir,
+		Package:  filepath.ToSlash(filepath.Join(ctx.Path, strings.TrimPrefix(bootstrapConfigDir, ctx.Dir))),
+		Base:     filepath.Base(bootstrapConfigDir),
 		GetChildPackage: func(childPath string) (string, error) {
-			return getChildPackage(etcDir, childPath)
+			return getChildPackage(bootstrapConfigDir, childPath)
 		},
 	}
 	inner[internal] = Dir{
@@ -228,8 +228,8 @@ func (d *defaultDirContext) GetCall() Dir {
 	return d.inner[call]
 }
 
-func (d *defaultDirContext) GetEtc() Dir {
-	return d.inner[etc]
+func (d *defaultDirContext) GetBootstrapConfig() Dir {
+	return d.inner[bootstrapConfig]
 }
 
 func (d *defaultDirContext) GetInternal() Dir {

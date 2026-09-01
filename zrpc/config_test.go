@@ -3,7 +3,6 @@ package zrpc
 import (
 	"testing"
 
-	zconf "github.com/lemongoff/hexas/core/conf"
 	"github.com/lemongoff/hexas/core/discov"
 	"github.com/lemongoff/hexas/core/service"
 	"github.com/lemongoff/hexas/core/stores/redis"
@@ -43,9 +42,7 @@ func TestRpcClientConf(t *testing.T) {
 	})
 
 	t.Run("default balancer name", func(t *testing.T) {
-		var conf RpcClientConf
-		err := zconf.FillDefault(&conf)
-		assert.NoError(t, err)
+		conf := DefaultRpcClientConf()
 		assert.Equal(t, p2c.Name, conf.BalancerName)
 	})
 }

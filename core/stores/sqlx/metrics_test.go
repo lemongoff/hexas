@@ -8,7 +8,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lemongoff/hexas/core/conf"
 	"github.com/lemongoff/hexas/internal/devserver"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/testutil"
@@ -16,8 +15,7 @@ import (
 )
 
 func TestSqlxMetric(t *testing.T) {
-	cfg := devserver.Config{}
-	_ = conf.FillDefault(&cfg)
+	cfg := devserver.DefaultConfig()
 	cfg.Port = 6480
 	server := devserver.NewServer(cfg)
 	server.StartAsync(cfg)

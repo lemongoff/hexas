@@ -18,11 +18,11 @@ type (
 	// A RedisConf is a redis config.
 	RedisConf struct {
 		Host     string
-		Type     string `json:",default=node,options=node|cluster"`
+		Type     string
 		User     string `json:",optional"`
 		Pass     string `json:",optional"`
 		Tls      bool   `json:",optional"`
-		NonBlock bool   `json:",default=true"`
+		NonBlock bool
 		// DisableIdentity is used to disable CLIENT SETINFO command on connect.
 		//
 		// Some redis versions/proxies do not support CLIENT SETINFO and return an
@@ -33,11 +33,11 @@ type (
 		// breaker on incompatible servers, without forcing RESP2.
 		//
 		// default: false
-		DisableIdentity bool `json:",default=false"`
+		DisableIdentity bool
 		// Protocol 2 or 3. Use the version to negotiate RESP version with redis-server.
 		//
 		// default: 3.
-		Protocol int `json:",default=3"`
+		Protocol int
 		// MaintNotifications controls the CLIENT MAINT_NOTIFICATIONS handshake mode
 		// (go-redis MaintNotificationsConfig.Mode):
 		//   - disabled: never send the command (avoids tripping the breaker on servers
@@ -46,10 +46,10 @@ type (
 		//   - enabled: force, fail the connection on error
 		//
 		// default: disabled
-		MaintNotifications string `json:",default=disabled,options=disabled|enabled|auto"`
+		MaintNotifications string
 		Prefix             string `json:",optional"`
 		// PingTimeout is the timeout for ping redis.
-		PingTimeout time.Duration `json:",default=1s"`
+		PingTimeout time.Duration
 	}
 
 	// A RedisKeyConf is a redis config with key.
@@ -87,6 +87,20 @@ func (rc RedisConf) Validate() error {
 
 	if len(rc.Type) == 0 {
 		return ErrEmptyType
+	}
+	if rc.Type != NodeType && rc.Type != ClusterType {
+		return errors.New("redis type must be node or cluster")
+	}
+	if rc.Protocol != 0 && rc.Protocol != 2 && rc.Protocol != 3 {
+		return errors.New("redis protocol must be 2 or 3")
+	}
+	switch rc.MaintNotifications {
+	case "", "disabled", "enabled", "auto":
+	default:
+		return errors.New("invalid redis maintenance notification mode")
+	}
+	if rc.PingTimeout < 0 {
+		return errors.New("redis ping timeout must be positive")
 	}
 
 	return nil

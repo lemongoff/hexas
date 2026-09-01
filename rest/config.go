@@ -9,17 +9,17 @@ import (
 type (
 	// MiddlewaresConf is the config of middlewares.
 	MiddlewaresConf struct {
-		Trace      bool `json:",default=true"`
-		Log        bool `json:",default=true"`
-		Prometheus bool `json:",default=true"`
-		MaxConns   bool `json:",default=true"`
-		Breaker    bool `json:",default=true"`
-		Shedding   bool `json:",default=true"`
-		Timeout    bool `json:",default=true"`
-		Recover    bool `json:",default=true"`
-		Metrics    bool `json:",default=true"`
-		MaxBytes   bool `json:",default=true"`
-		Gunzip     bool `json:",default=true"`
+		Trace      bool
+		Log        bool
+		Prometheus bool
+		MaxConns   bool
+		Breaker    bool
+		Shedding   bool
+		Timeout    bool
+		Recover    bool
+		Metrics    bool
+		MaxBytes   bool
+		Gunzip     bool
 	}
 
 	// A PrivateKeyConf is a private key config.
@@ -30,8 +30,8 @@ type (
 
 	// A SignatureConf is a signature config.
 	SignatureConf struct {
-		Strict      bool          `json:",default=false"`
-		Expiry      time.Duration `json:",default=1h"`
+		Strict      bool
+		Expiry      time.Duration
 		PrivateKeys []PrivateKeyConf
 	}
 
@@ -44,16 +44,16 @@ type (
 	// if with the name Conf, there will be two Conf inside Config.
 	RestConf struct {
 		service.ServiceConf
-		Host     string `json:",default=0.0.0.0"`
+		Host     string
 		Port     int
 		CertFile string `json:",optional"`
 		KeyFile  string `json:",optional"`
 		Verbose  bool   `json:",optional"`
-		MaxConns int    `json:",default=10000"`
-		MaxBytes int64  `json:",default=1048576"`
+		MaxConns int
+		MaxBytes int64
 		// milliseconds
-		Timeout      int64         `json:",default=3000"`
-		CpuThreshold int64         `json:",default=900,range=[0:1000)"`
+		Timeout      int64
+		CpuThreshold int64
 		Signature    SignatureConf `json:",optional"`
 		// There are default values for all the items in Middlewares.
 		Middlewares MiddlewaresConf

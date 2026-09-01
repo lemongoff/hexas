@@ -5,11 +5,11 @@ import (
 	"sync"
 	"time"
 
+	"github.com/grafana/pyroscope-go"
 	"github.com/lemongoff/hexas/core/logx"
 	"github.com/lemongoff/hexas/core/proc"
 	"github.com/lemongoff/hexas/core/stat"
 	"github.com/lemongoff/hexas/core/threading"
-	"github.com/grafana/pyroscope-go"
 )
 
 const (
@@ -29,13 +29,13 @@ type (
 		// AuthPassword is the password for basic authentication.
 		AuthPassword string `json:",optional"`
 		// UploadRate is the duration for which profiling data is uploaded.
-		UploadRate time.Duration `json:",default=15s"`
+		UploadRate time.Duration
 		// CheckInterval is the interval to check if profiling should start.
-		CheckInterval time.Duration `json:",default=10s"`
+		CheckInterval time.Duration
 		// ProfilingDuration is the duration for which profiling data is collected.
-		ProfilingDuration time.Duration `json:",default=2m"`
+		ProfilingDuration time.Duration
 		// CpuThreshold the collection is allowed only when the current service cpu > CpuThreshold
-		CpuThreshold int64 `json:",default=700,range=[0:1000)"`
+		CpuThreshold int64
 
 		// ProfileType is the type of profiling to be performed.
 		ProfileType ProfileType
@@ -43,17 +43,17 @@ type (
 
 	ProfileType struct {
 		// Logger is a flag to enable or disable logging.
-		Logger bool `json:",default=false"`
+		Logger bool
 		// CPU is a flag to disable CPU profiling.
-		CPU bool `json:",default=true"`
+		CPU bool
 		// Goroutines is a flag to disable goroutine profiling.
-		Goroutines bool `json:",default=true"`
+		Goroutines bool
 		// Memory is a flag to disable memory profiling.
-		Memory bool `json:",default=true"`
+		Memory bool
 		// Mutex is a flag to disable mutex profiling.
-		Mutex bool `json:",default=false"`
+		Mutex bool
 		// Block is a flag to disable block profiling.
-		Block bool `json:",default=false"`
+		Block bool
 	}
 
 	profiler interface {

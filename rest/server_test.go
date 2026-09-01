@@ -14,8 +14,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lemongoff/hexas/core/conf"
 	"github.com/lemongoff/hexas/core/logx/logtest"
+	"github.com/lemongoff/hexas/internal/configtest"
 	"github.com/lemongoff/hexas/rest/chain"
 	"github.com/lemongoff/hexas/rest/httpx"
 	"github.com/lemongoff/hexas/rest/internal/cors"
@@ -37,8 +37,8 @@ Name: foo
 Host: localhost
 Port: 0
 `
-	var cnf RestConf
-	assert.Nil(t, conf.LoadFromYamlBytes([]byte(configYaml), &cnf))
+	cnf := DefaultRestConf()
+	assert.Nil(t, configtest.LoadYAML([]byte(configYaml), &cnf))
 
 	tests := []struct {
 		c    RestConf
@@ -376,8 +376,8 @@ func TestWithTLSConfig(t *testing.T) {
 Name: foo
 Port: 54321
 `
-	var cnf RestConf
-	assert.Nil(t, conf.LoadFromYamlBytes([]byte(configYaml), &cnf))
+	cnf := DefaultRestConf()
+	assert.Nil(t, configtest.LoadYAML([]byte(configYaml), &cnf))
 
 	testConfig := &tls.Config{
 		CipherSuites: []uint16{
@@ -414,8 +414,8 @@ func TestWithCors(t *testing.T) {
 Name: foo
 Port: 54321
 `
-	var cnf RestConf
-	assert.Nil(t, conf.LoadFromYamlBytes([]byte(configYaml), &cnf))
+	cnf := DefaultRestConf()
+	assert.Nil(t, configtest.LoadYAML([]byte(configYaml), &cnf))
 	rt := router.NewRouter()
 	svr, err := NewServer(cnf, WithRouter(rt))
 	assert.Nil(t, err)
@@ -430,8 +430,8 @@ func TestWithCustomCors(t *testing.T) {
 Name: foo
 Port: 54321
 `
-	var cnf RestConf
-	assert.Nil(t, conf.LoadFromYamlBytes([]byte(configYaml), &cnf))
+	cnf := DefaultRestConf()
+	assert.Nil(t, configtest.LoadYAML([]byte(configYaml), &cnf))
 	rt := router.NewRouter()
 	svr, err := NewServer(cnf, WithRouter(rt))
 	assert.Nil(t, err)
@@ -469,8 +469,8 @@ func TestWithCorsHeaders(t *testing.T) {
 Name: foo
 Port: 54321
 `
-			var cnf RestConf
-			assert.Nil(t, conf.LoadFromYamlBytes([]byte(configYaml), &cnf))
+			cnf := DefaultRestConf()
+			assert.Nil(t, configtest.LoadYAML([]byte(configYaml), &cnf))
 			rt := router.NewRouter()
 			svr, err := NewServer(cnf, WithRouter(rt))
 			assert.Nil(t, err)
@@ -516,8 +516,8 @@ Port: 54321
 `
 	)
 
-	var cnf RestConf
-	assert.Nil(t, conf.LoadFromYamlBytes([]byte(configYaml), &cnf))
+	cnf := DefaultRestConf()
+	assert.Nil(t, configtest.LoadYAML([]byte(configYaml), &cnf))
 
 	svr, err := NewServer(cnf)
 	assert.Nil(t, err)
@@ -576,8 +576,8 @@ Port: 54321
 		expect = `GET /foo GET /bar GET /foo/:bar GET /foo/:bar/baz`
 	)
 
-	var cnf RestConf
-	assert.Nil(t, conf.LoadFromYamlBytes([]byte(configYaml), &cnf))
+	cnf := DefaultRestConf()
+	assert.Nil(t, configtest.LoadYAML([]byte(configYaml), &cnf))
 
 	svr, err := NewServer(cnf)
 	assert.Nil(t, err)
@@ -697,8 +697,8 @@ Name: foo
 Port: 54321
 `
 
-	var cnf RestConf
-	assert.Nil(t, conf.LoadFromYamlBytes([]byte(configYaml), &cnf))
+	cnf := DefaultRestConf()
+	assert.Nil(t, configtest.LoadYAML([]byte(configYaml), &cnf))
 
 	svr, err := NewServer(cnf)
 	assert.Nil(t, err)

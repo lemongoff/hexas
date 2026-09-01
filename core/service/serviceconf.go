@@ -32,7 +32,7 @@ type (
 	ServiceConf struct {
 		Name       string
 		Log        logx.LogConf
-		Mode       string `json:",default=pro,options=dev|test|rt|pre|pro"`
+		Mode       string
 		MetricsUrl string `json:",optional"`
 		// Deprecated: please use DevServer
 		Prometheus prometheus.Config `json:",optional"`

@@ -44,7 +44,7 @@
 | A-07 | 中 | REST protobuf | 已关闭：补齐 protobuf error/write API、8 MiB 限制、content-type 和错误链 |
 | A-08 | 中 | logx | 已关闭：BI 改为可选 writer 能力并进入标准日志字段、脱敏和截断路径 |
 | A-09 | 中 | goctl | 已关闭：根 `go.work` 绑定本地 module，版本更新为 `1.10.3-hexas`，module path 随项目迁移 |
-| A-10 | 中 | 默认行为 | 已关闭：新增 Hexas 默认行为契约文档并保留对应测试 |
+| A-10 | 中 | 默认行为 | 已关闭：配置改为显式默认构造与 Validate，并由独立 hexas-config 管理加载和快照 |
 | A-11 | 中 | 测试覆盖 | 已关闭：新增关键失败、元数据、前缀、Cluster、并发与 BI 回归测试 |
 | A-12 | 高 | GitHub workflow | 已关闭：CI 对齐 `main` 和双 module，删除上游 goctl 发布/版本任务及 gomod 自动升级 |
 | A-13 | 低 | 基线格式 | 已接受：CI 只检查本次变更行，不批量改写导入快照 |
@@ -60,6 +60,7 @@
 - 根 module 已迁移为 `github.com/lemongoff/hexas`，goctl module 已迁移为 `github.com/lemongoff/hexas/tools/goctl`；旧路径只保留在官方基线、历史发现和第三方来源记录中，不提供 import 兼容层。
 - goctl 通过根 `go.work` 和自身的相对 `replace` 使用当前框架源码，显示版本为 `1.10.3-hexas`。其根 module 依赖在正式版本发布前使用 `v0.0.0` 本地占位；发布前必须替换为真实版本并删除相对 `replace`。本仓库不发布上游 goctl tag，也不自动跟随 go-zero 后续版本。
 - RPC、缓存和成功日志的默认值见 [`../framework-defaults.md`](../framework-defaults.md)。
+- 配置加载已整体迁移到 `github.com/lemongoff/hexas-config`；删除 `core/conf`、`core/configcenter`、旧反射默认标签和兼容入口。Bootstrap 与 Runtime Config 分离，goctl 新项目使用 `config/base.yaml`。完整契约见 [`../configuration.md`](../configuration.md)。
 
 回滚时应按条目独立回退代码和测试；不要恢复已删除的异步脏写链路。若必须重新引入异步持久化，应作为新设计完成 outbox/ack、幂等、崩溃恢复和真实故障注入验证。
 
@@ -198,20 +199,18 @@ RPC server 不再发布纯 `host:port`，而是发布 `{"Addr":...,"ServerName":
 
 后续建议：把 BI schema、必填字段、脱敏责任、写入失败和 Writer 扩展方式定义成显式契约。由于本项目不承诺官方兼容，不需要为官方 Writer API 增加兼容层，但需要管理 Hexas 自身调用方迁移。
 
-### A-09：goctl 与根框架不在同一依赖轨道
+### A-09：goctl 与根框架不在同一依赖轨道（已解决）
 
-等级：中
+原等级：中
 
-证据：
+处理结果：
 
-- `tools/goctl/go.mod:1-23` 直接依赖官方 `github.com/zeromicro/go-zero v1.10.3`
-- `tools/goctl/internal/version/version.go:8-9` 的 `BuildVersion` 为 `1.10.2`
+- `tools/goctl` 已改为依赖 `github.com/lemongoff/hexas` 和 `github.com/lemongoff/hexas-config`，开发期分别指向本地仓库。
+- `BuildVersion` 已统一为 `1.10.3-hexas`。
+- API、RPC 与 Gateway 模板统一通过 `hexas-config` 加载 `config/base.yaml`，并从显式 `DefaultConfig` 开始合并。
+- API 与 RPC 生成项目均已执行独立编译冒烟测试。
 
-`tools/goctl` 是独立 module。根目录 `go test ./...` 不包含它；在 goctl 目录构建时，默认下载官方 v1.10.3，而不是使用本地 Hexas 根 module。
-
-影响：生成器测试通过不能证明其模板与 Hexas 定制一致；版本显示也不能代表当前导入基线。
-
-后续建议：在需要游戏化生成能力时单独设计本地 workspace/replace、模板来源和 Hexas 版本命名。本轮保持原样。
+发布约束：两个本地 `replace` 只服务于联合开发；正式发布前必须先发布 `hexas-config`，再移除 replace 并固定真实版本。Hexas 不恢复官方 go-zero 依赖或兼容入口。
 
 ### A-10：已有默认行为变更缺少迁移契约
 

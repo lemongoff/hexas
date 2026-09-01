@@ -6,10 +6,10 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/emicklei/proto"
 	conf "github.com/lemongoff/hexas/tools/goctl/config"
 	"github.com/lemongoff/hexas/tools/goctl/rpc/parser"
 	"github.com/lemongoff/hexas/tools/goctl/util/stringx"
-	"github.com/emicklei/proto"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -22,7 +22,7 @@ type mockDirContext struct {
 }
 
 func (m *mockDirContext) GetCall() Dir                   { return m.callDir }
-func (m *mockDirContext) GetEtc() Dir                    { return Dir{} }
+func (m *mockDirContext) GetBootstrapConfig() Dir        { return Dir{} }
 func (m *mockDirContext) GetInternal() Dir               { return Dir{} }
 func (m *mockDirContext) GetConfig() Dir                 { return Dir{} }
 func (m *mockDirContext) GetLogic() Dir                  { return Dir{} }

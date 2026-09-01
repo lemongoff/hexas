@@ -2,6 +2,8 @@
 
 本文件记录 Hexas 基于 `zeromicro/go-zero v1.10.3` 固定分支形成的运行时默认契约。项目不跟随 go-zero 后续版本，也不以官方默认值推断本分支行为。
 
+配置默认值不再来自 `json:",default=..."` 反射标签，而由各领域的 `Default...` 构造函数显式提供。配置加载和动态快照由 `github.com/lemongoff/hexas-config` 管理，详见 [配置体系](configuration.md)。
+
 ## RPC
 
 - RPC 客户端与服务端默认超时均为 5000 毫秒；服务端显式配置 `Timeout: 0` 才表示不设超时。

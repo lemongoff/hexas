@@ -4,6 +4,8 @@
 
 Hexas 是以 go-zero `v1.10.3` 为代码基线的游戏服务框架。当前阶段的重点是固定一份可审计的初始状态，保留已有定制，再按明确任务逐步完成游戏化改造。
 
+配置基础设施：`github.com/lemongoff/hexas-config`；本仓库不保留 `core/conf` 或 `core/configcenter`。详见 [`../docs/configuration.md`](../docs/configuration.md)。
+
 根 module：
 
 ```text
@@ -18,7 +20,7 @@ Go 版本：`1.24.0`。
 
 | 目录 | 职责 | 常见高风险 |
 | --- | --- | --- |
-| `core/` | 配置、日志、服务发现、弹性治理、存储、并发、生命周期 | 数据一致性、并发、默认值、全局状态 |
+| `core/` | 日志、服务发现、弹性治理、存储、并发、生命周期 | 数据一致性、并发、默认值、全局状态 |
 | `rest/` | HTTP 服务、路由、中间件、客户端和编解码 | 权限元数据、中间件顺序、body 限制、响应契约 |
 | `zrpc/` | gRPC 服务和客户端、etcd resolver、负载均衡 | 注册格式、混合部署、超时和连接方式 |
 | `gateway/` | HTTP/gRPC 网关 | 协议适配、路由和流量保护 |

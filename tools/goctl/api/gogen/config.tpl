@@ -10,3 +10,7 @@ type Config struct {
 	{{.auth}}
 	{{.jwtTrans}}
 }
+
+func DefaultConfig() Config {
+	return Config{RestConf: rest.DefaultRestConf()}
+}

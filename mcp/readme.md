@@ -56,7 +56,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/lemongoff/hexas/core/conf"
+	hexasconfig "github.com/lemongoff/hexas-config"
 	"github.com/lemongoff/hexas/mcp"
 )
 
@@ -65,9 +65,19 @@ type GreetArgs struct {
 }
 
 func main() {
-	// Load configuration
-	var c mcp.McpConf
-	conf.MustLoad("config.yaml", &c)
+	manager, err := hexasconfig.NewManager(mcp.DefaultMcpConf(),
+		hexasconfig.YAMLFile("config/base.yaml"), hexasconfig.Environment("HEXAS_"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := manager.Load(context.Background()); err != nil {
+		log.Fatal(err)
+	}
+	snapshot, ok := manager.Current()
+	if !ok {
+		log.Fatal("configuration was not published")
+	}
+	c := snapshot.Value()
 
 	// Create MCP server
 	server := mcp.NewMcpServer(c)

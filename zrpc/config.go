@@ -1,6 +1,7 @@
 package zrpc
 
 import (
+	"errors"
 	"time"
 
 	"github.com/lemongoff/hexas/core/discov"
@@ -28,12 +29,12 @@ type (
 		App       string          `json:",optional"`
 		Token     string          `json:",optional"`
 		// Balancer is kept for backward compatibility. BalancerName takes effect when Balancer is empty.
-		Balancer      string        `json:",optional"`
-		NonBlock      bool          `json:",optional"`
-		Timeout       int64         `json:",default=5000"`
+		Balancer      string `json:",optional"`
+		NonBlock      bool   `json:",optional"`
+		Timeout       int64
 		KeepaliveTime time.Duration `json:",optional"`
 		Middlewares   ClientMiddlewaresConf
-		BalancerName  string `json:",default=p2c_ewma"`
+		BalancerName  string
 	}
 
 	// A RpcServerConf is a rpc server config.
@@ -45,10 +46,10 @@ type (
 		Redis         redis.RedisKeyConf `json:",optional"`
 		StrictControl bool               `json:",optional"`
 		// setting 0 means no timeout
-		Timeout      int64 `json:",default=5000"`
-		CpuThreshold int64 `json:",default=900,range=[0:1000)"`
+		Timeout      int64
+		CpuThreshold int64
 		// grpc health check switch
-		Health      bool `json:",default=true"`
+		Health      bool
 		Middlewares ServerMiddlewaresConf
 		// setting specified timeout for gRPC method
 		MethodTimeouts []MethodTimeoutConf `json:",optional"`
@@ -57,23 +58,20 @@ type (
 
 // NewDirectClientConf returns a RpcClientConf.
 func NewDirectClientConf(endpoints []string, app, token string) RpcClientConf {
-	return RpcClientConf{
-		Endpoints: endpoints,
-		App:       app,
-		Token:     token,
-	}
+	configuration := DefaultRpcClientConf()
+	configuration.Endpoints = endpoints
+	configuration.App = app
+	configuration.Token = token
+	return configuration
 }
 
 // NewEtcdClientConf returns a RpcClientConf.
 func NewEtcdClientConf(hosts []string, key, app, token string) RpcClientConf {
-	return RpcClientConf{
-		Etcd: discov.EtcdConf{
-			Hosts: hosts,
-			Key:   key,
-		},
-		App:   app,
-		Token: token,
-	}
+	configuration := DefaultRpcClientConf()
+	configuration.Etcd = discov.EtcdConf{Hosts: hosts, Key: key}
+	configuration.App = app
+	configuration.Token = token
+	return configuration
 }
 
 // HasEtcd checks if there is etcd settings in config.
@@ -83,11 +81,19 @@ func (sc RpcServerConf) HasEtcd() bool {
 
 // Validate validates the config.
 func (sc RpcServerConf) Validate() error {
-	if !sc.Auth {
-		return nil
+	if err := sc.ServiceConf.Validate(); err != nil {
+		return err
 	}
-
-	return sc.Redis.Validate()
+	if sc.Timeout < 0 {
+		return errors.New("rpc timeout must not be negative")
+	}
+	if sc.CpuThreshold < 0 || sc.CpuThreshold >= 1000 {
+		return errors.New("rpc cpu threshold must be in [0, 1000)")
+	}
+	if sc.Auth {
+		return sc.Redis.Validate()
+	}
+	return nil
 }
 
 // BuildTarget builds the rpc target from the given config.

@@ -84,7 +84,7 @@ service ` + tt.serviceName + `-api {
 			assert.Contains(t, string(content), "module "+tt.expectedMod)
 
 			// Check basic directory structure was created
-			assert.DirExists(t, filepath.Join(serviceDir, "etc"))
+			assert.DirExists(t, filepath.Join(serviceDir, "config"))
 			assert.DirExists(t, filepath.Join(serviceDir, "internal"))
 			assert.DirExists(t, filepath.Join(serviceDir, "internal", "handler"))
 			assert.DirExists(t, filepath.Join(serviceDir, "internal", "logic"))

@@ -2,36 +2,29 @@ package gogen
 
 import (
 	_ "embed"
-	"fmt"
 	"strconv"
 
 	"github.com/lemongoff/hexas/tools/goctl/api/spec"
 	"github.com/lemongoff/hexas/tools/goctl/config"
-	"github.com/lemongoff/hexas/tools/goctl/util/format"
 )
 
 const (
-	defaultPort = 8888
-	etcDir      = "etc"
+	defaultPort        = 8888
+	bootstrapConfigDir = "config"
 )
 
 //go:embed etc.tpl
 var etcTemplate string
 
-func genEtc(dir string, cfg *config.Config, api *spec.ApiSpec) error {
-	filename, err := format.FileNamingFormat(cfg.NamingFormat, api.Service.Name)
-	if err != nil {
-		return err
-	}
-
+func genEtc(dir string, _ *config.Config, api *spec.ApiSpec) error {
 	service := api.Service
 	host := "0.0.0.0"
 	port := strconv.Itoa(defaultPort)
 
 	return genFile(fileGenConfig{
 		dir:             dir,
-		subdir:          etcDir,
-		filename:        fmt.Sprintf("%s.yaml", filename),
+		subdir:          bootstrapConfigDir,
+		filename:        "base.yaml",
 		templateName:    "etcTemplate",
 		category:        category,
 		templateFile:    etcTemplateFile,

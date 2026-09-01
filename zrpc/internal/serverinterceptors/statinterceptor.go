@@ -25,8 +25,8 @@ var (
 
 // StatConf defines the static configuration for stat interceptor.
 type StatConf struct {
-	SlowThreshold        time.Duration `json:",default=500ms"`
-	IgnoreContentMethods []string      `json:",optional"`
+	SlowThreshold        time.Duration
+	IgnoreContentMethods []string `json:",optional"`
 }
 
 // DontLogContentForMethod disable logging content for given method.

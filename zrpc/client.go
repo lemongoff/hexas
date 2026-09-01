@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/lemongoff/hexas/core/conf"
 	"github.com/lemongoff/hexas/core/logx"
 	"github.com/lemongoff/hexas/zrpc/internal"
 	"github.com/lemongoff/hexas/zrpc/internal/auth"
@@ -106,10 +105,7 @@ func NewClient(c RpcClientConf, options ...ClientOption) (Client, error) {
 
 // NewClientWithTarget returns a Client with connecting to given target.
 func NewClientWithTarget(target string, opts ...ClientOption) (Client, error) {
-	var config RpcClientConf
-	if err := conf.FillDefault(&config); err != nil {
-		return nil, err
-	}
+	config := DefaultRpcClientConf()
 
 	config.Target = target
 

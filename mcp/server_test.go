@@ -10,7 +10,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lemongoff/hexas/core/conf"
 	sdkmcp "github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/stretchr/testify/assert"
 )
@@ -368,9 +367,7 @@ func TestStreamableEndpointAccess(t *testing.T) {
 }
 
 func TestConfig(t *testing.T) {
-	var c McpConf
-	err := conf.FillDefault(&c)
-	assert.NoError(t, err)
+	c := DefaultMcpConf()
 	assert.Equal(t, "1.0.0", c.Mcp.Version)
 	assert.Equal(t, "/sse", c.Mcp.SseEndpoint)
 	assert.Equal(t, "/message", c.Mcp.MessageEndpoint)

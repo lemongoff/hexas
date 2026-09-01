@@ -5,8 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/lemongoff/hexas/core/conf"
 	"github.com/lemongoff/hexas/core/logx/logtest"
+	"github.com/lemongoff/hexas/internal/configtest"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -18,8 +18,8 @@ Name: foo
 Host: localhost
 Port: 0
 `
-	var cnf RestConf
-	assert.Nil(t, conf.LoadFromYamlBytes([]byte(configYaml), &cnf))
+	cnf := DefaultRestConf()
+	assert.Nil(t, configtest.LoadYAML([]byte(configYaml), &cnf))
 
 	svr, err := NewServer(cnf)
 	assert.NoError(t, err)
@@ -50,8 +50,8 @@ Name: foo
 Host: localhost
 Port: 0
 `
-	var cnf RestConf
-	assert.Nil(t, conf.LoadFromYamlBytes([]byte(configYaml), &cnf))
+	cnf := DefaultRestConf()
+	assert.Nil(t, configtest.LoadYAML([]byte(configYaml), &cnf))
 
 	svr, err := NewServer(cnf)
 	assert.NoError(t, err)

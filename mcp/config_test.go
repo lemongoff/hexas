@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lemongoff/hexas/core/conf"
+	"github.com/lemongoff/hexas/internal/configtest"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -17,8 +17,8 @@ mcp:
   version: 1.0.0
 `
 
-	var c McpConf
-	err := conf.LoadFromYamlBytes([]byte(jsonConfig), &c)
+	c := DefaultMcpConf()
+	err := configtest.LoadYAML([]byte(jsonConfig), &c)
 	assert.NoError(t, err)
 
 	// Check default values
