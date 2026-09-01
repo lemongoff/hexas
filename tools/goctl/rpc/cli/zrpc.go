@@ -106,6 +106,7 @@ func ZRPC(_ *cobra.Command, args []string) error {
 	ctx.Module = VarStringModule
 	ctx.NameFromFilename = VarBoolNameFromFilename
 	ctx.ProtoPaths = VarStringSliceProtoPath
+	ctx.SkipScaffold = VarBoolSkipScaffold
 	g := generator.NewGenerator(style, verbose)
 	return g.Generate(&ctx)
 }

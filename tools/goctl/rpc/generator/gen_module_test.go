@@ -188,11 +188,12 @@ func testRpcGenerateCore(g *Generator, zctx *ZRpcContext) error {
 func TestZRpcContext_ModuleField(t *testing.T) {
 	// Test that ZRpcContext properly holds the Module field
 	zctx := &ZRpcContext{
-		Src:         "/path/to/test.proto",
-		Output:      "/path/to/output",
-		Multiple:    false,
-		IsGenClient: false,
-		Module:      "github.com/test/module",
+		Src:          "/path/to/test.proto",
+		Output:       "/path/to/output",
+		Multiple:     false,
+		IsGenClient:  false,
+		Module:       "github.com/test/module",
+		SkipScaffold: true,
 	}
 
 	assert.Equal(t, "github.com/test/module", zctx.Module)
@@ -200,6 +201,7 @@ func TestZRpcContext_ModuleField(t *testing.T) {
 	assert.Equal(t, "/path/to/output", zctx.Output)
 	assert.False(t, zctx.Multiple)
 	assert.False(t, zctx.IsGenClient)
+	assert.True(t, zctx.SkipScaffold)
 }
 
 func TestRpcModuleIntegration_BasicFunctionality(t *testing.T) {

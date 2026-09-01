@@ -107,6 +107,11 @@ goctl rpc protoc service.proto \
   --go_out=output --go-grpc_out=output --zrpc_out=output \
   --go_opt=module=example.com/demo --go-grpc_opt=module=example.com/demo \
   --module=example.com/demo -I .
+
+# Update adapters inside an existing service without creating an entrypoint or bootstrap YAML
+goctl rpc protoc service.proto \
+  --go_out=output --go-grpc_out=output --zrpc_out=existing-service \
+  --skip-scaffold -I .
 ```
 
 **Flags:**
@@ -124,6 +129,7 @@ goctl rpc protoc service.proto \
 | `--style` | | string | `gozero` | File naming style |
 | `--module` | | string | | Custom Go module name |
 | `--name-from-filename` | | bool | `false` | Use filename instead of package name for service naming |
+| `--skip-scaffold` | | bool | `false` | Omit the service entrypoint and bootstrap YAML while generating RPC adapters and clients |
 | `--verbose` | `-v` | bool | `false` | Enable verbose logging |
 | `--home` | | string | | goctl template directory |
 | `--remote` | | string | | Remote template Git repository URL |

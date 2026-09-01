@@ -2,8 +2,6 @@ module github.com/lemongoff/hexas/tools/goctl
 
 go 1.24.0
 
-replace github.com/lemongoff/hexas => ../..
-
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.2
 	github.com/emicklei/proto v1.14.3
@@ -12,7 +10,7 @@ require (
 	github.com/go-sql-driver/mysql v1.10.0
 	github.com/gookit/color v1.6.1
 	github.com/iancoleman/strcase v0.3.0
-	github.com/lemongoff/hexas v0.0.0
+	github.com/lemongoff/hexas v0.1.0
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/pflag v1.0.10
 	github.com/stretchr/testify v1.11.1

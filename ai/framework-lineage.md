@@ -51,10 +51,10 @@ Hexas 从本次导入起独立演进：
 `tools/goctl` 有独立 `go.mod`：
 
 - module：`github.com/lemongoff/hexas/tools/goctl`
-- 直接依赖：`github.com/lemongoff/hexas v0.0.0`，并以 `replace => ../..` 绑定本地根 module
-- 当前 `BuildVersion`：`1.10.3-hexas`
+- 发布依赖：`github.com/lemongoff/hexas v0.1.0`、`github.com/lemongoff/hexas-config v1.0.0`
+- 当前 `BuildVersion`：`1.10.4-hexas`
 
-根目录测试不会覆盖 goctl；根 `go.work` 同时纳入根 module 与 `tools/goctl`，goctl 自身的相对 `replace` 则保证从其目录独立执行时仍使用本地 Hexas 源码。`v0.0.0` 和相对 `replace` 都不是发布配置，独立分发 goctl 前必须先建立 Hexas 版本/tag、更新依赖版本、删除本地 `replace`，并验证脱离 `go.work` 的构建。
+根目录测试不会覆盖 goctl；根 `go.work` 同时纳入根 module 与 `tools/goctl`，因此仓库内开发仍使用当前 Hexas 源码。goctl 自身不再声明相对 `replace`，使用 `GOWORK=off` 时必须能够仅依赖正式版本独立构建。修改生成器依赖时必须同步验证 workspace 和独立 module 两种模式。
 
 ## 6. 维护本文件
 

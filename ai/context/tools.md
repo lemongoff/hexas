@@ -18,6 +18,7 @@ cd tools/goctl
 go run . --version
 go test ./...
 go vet ./...
+GOWORK=off go build .
 ```
 
 需要在临时示例中调用可执行文件时，先把当前源码构建到任务专用临时目录。不要执行：
@@ -27,6 +28,8 @@ go install github.com/lemongoff/hexas/tools/goctl@latest
 ```
 
 `@latest` 可能引入与 Hexas 基线不同的模板、命令和运行时假设。
+
+在已有服务中只更新 RPC 适配器和客户端时使用 `rpc protoc --skip-scaffold`，避免生成新的服务入口和 bootstrap YAML。新建完整服务时不使用该开关。
 
 ## 生成前检查
 

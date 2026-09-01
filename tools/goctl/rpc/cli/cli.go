@@ -51,6 +51,8 @@ var (
 	// VarBoolNameFromFilename describes whether to derive service name from proto filename
 	// instead of the proto package name. Default is false (uses package name).
 	VarBoolNameFromFilename bool
+	// VarBoolSkipScaffold describes whether to omit the service entrypoint and bootstrap config.
+	VarBoolSkipScaffold bool
 )
 
 // RPCNew is to generate rpc greet service, this greet service can speed

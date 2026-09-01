@@ -39,6 +39,9 @@ type ZRpcContext struct {
 	// ProtoPaths are the directories to search for imported proto files,
 	// equivalent to protoc -I flags. When empty the directory of Src is used.
 	ProtoPaths []string
+	// SkipScaffold omits the bootstrap config and service entrypoint while still
+	// generating protobuf adapters, service context, logic, server, and clients.
+	SkipScaffold bool
 }
 
 // Generate generates a rpc service, through the proto file,
@@ -87,9 +90,11 @@ func (g *Generator) Generate(zctx *ZRpcContext) error {
 		return err
 	}
 
-	err = g.GenEtc(dirCtx, proto, g.cfg)
-	if err != nil {
-		return err
+	if !zctx.SkipScaffold {
+		err = g.GenEtc(dirCtx, proto, g.cfg)
+		if err != nil {
+			return err
+		}
 	}
 
 	err = g.GenPb(dirCtx, zctx)
@@ -117,9 +122,11 @@ func (g *Generator) Generate(zctx *ZRpcContext) error {
 		return err
 	}
 
-	err = g.GenMain(dirCtx, proto, g.cfg, zctx)
-	if err != nil {
-		return err
+	if !zctx.SkipScaffold {
+		err = g.GenMain(dirCtx, proto, g.cfg, zctx)
+		if err != nil {
+			return err
+		}
 	}
 
 	if zctx.IsGenClient {

@@ -43,7 +43,7 @@
 | A-06 | 高 | REST 权限 | 已关闭：Route helper 复制完整结构并保留 `Permissions` |
 | A-07 | 中 | REST protobuf | 已关闭：补齐 protobuf error/write API、8 MiB 限制、content-type 和错误链 |
 | A-08 | 中 | logx | 已关闭：BI 改为可选 writer 能力并进入标准日志字段、脱敏和截断路径 |
-| A-09 | 中 | goctl | 已关闭：根 `go.work` 绑定本地 module，版本更新为 `1.10.3-hexas`，module path 随项目迁移 |
+| A-09 | 中 | goctl | 已关闭：根 `go.work` 绑定本地 module，版本更新为 `1.10.4-hexas`，module path 随项目迁移 |
 | A-10 | 中 | 默认行为 | 已关闭：配置改为显式默认构造与 Validate，并由独立 hexas-config 管理加载和快照 |
 | A-11 | 中 | 测试覆盖 | 已关闭：新增关键失败、元数据、前缀、Cluster、并发与 BI 回归测试 |
 | A-12 | 高 | GitHub workflow | 已关闭：CI 对齐 `main` 和双 module，删除上游 goctl 发布/版本任务及 gomod 自动升级 |
@@ -58,7 +58,7 @@
 - REST Route 的元数据在 helper 组合中完整保留。Protobuf HTTP 使用 `application/pb`、8 MiB 请求上限和独立 success/error 写入入口。
 - `logx.Writer` 不再强制实现 BI；实现 `BIWriter` 可选择独立路由，否则落到 Info。两条路径都使用 caller、全局字段、`channel=bi`、敏感值遮罩和内容截断。
 - 根 module 已迁移为 `github.com/lemongoff/hexas`，goctl module 已迁移为 `github.com/lemongoff/hexas/tools/goctl`；旧路径只保留在官方基线、历史发现和第三方来源记录中，不提供 import 兼容层。
-- goctl 通过根 `go.work` 和自身的相对 `replace` 使用当前框架源码，显示版本为 `1.10.3-hexas`。其根 module 依赖在正式版本发布前使用 `v0.0.0` 本地占位；发布前必须替换为真实版本并删除相对 `replace`。本仓库不发布上游 goctl tag，也不自动跟随 go-zero 后续版本。
+- goctl 通过根 `go.work` 使用当前框架源码，显示版本为 `1.10.4-hexas`；独立 module 固定依赖 Hexas `v0.1.0` 和 hexas-config `v1.0.0`，不再提交相对 `replace`。本仓库不发布上游 goctl tag，也不自动跟随 go-zero 后续版本。
 - RPC、缓存和成功日志的默认值见 [`../framework-defaults.md`](../framework-defaults.md)。
 - 配置加载已整体迁移到 `github.com/lemongoff/hexas-config`；删除 `core/conf`、`core/configcenter`、旧反射默认标签和兼容入口。Bootstrap 与 Runtime Config 分离，goctl 新项目使用 `config/base.yaml`。完整契约见 [`../configuration.md`](../configuration.md)。
 
@@ -205,12 +205,12 @@ RPC server 不再发布纯 `host:port`，而是发布 `{"Addr":...,"ServerName":
 
 处理结果：
 
-- `tools/goctl` 已改为依赖 `github.com/lemongoff/hexas` 和 `github.com/lemongoff/hexas-config`，开发期分别指向本地仓库。
-- `BuildVersion` 已统一为 `1.10.3-hexas`。
+- `tools/goctl` 已固定依赖 `github.com/lemongoff/hexas v0.1.0` 和 `github.com/lemongoff/hexas-config v1.0.0`；仓库内开发由根 `go.work` 使用当前 Hexas 源码。
+- `BuildVersion` 已统一为 `1.10.4-hexas`。
 - API、RPC 与 Gateway 模板统一通过 `hexas-config` 加载 `config/base.yaml`，并从显式 `DefaultConfig` 开始合并。
 - API 与 RPC 生成项目均已执行独立编译冒烟测试。
 
-发布约束：两个本地 `replace` 只服务于联合开发；正式发布前必须先发布 `hexas-config`，再移除 replace 并固定真实版本。Hexas 不恢复官方 go-zero 依赖或兼容入口。
+发布约束：goctl module 不提交相对 `replace`；版本升级必须在 `GOWORK=off` 下重新整理依赖并完成独立构建。Hexas 不恢复官方 go-zero 依赖或兼容入口。
 
 ### A-10：已有默认行为变更缺少迁移契约
 

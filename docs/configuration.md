@@ -89,9 +89,11 @@ etcd 值统一为 YAML。Snapshot metadata 记录来源 revision 和 checksum；
 
 ## 本地协同与发布
 
-两仓尚未创建正式发布 tag 时，Hexas 使用明确的本地 `replace` 联调。发布前必须：
+Hexas 当前依赖正式发布的 `github.com/lemongoff/hexas-config v1.0.0`。仓库内通过 `go.work` 联调根 module 与 goctl；发布依赖中不得提交指向相邻目录的 `replace`。
 
-1. 为 `hexas-config` 创建正式版本；
-2. 把 Hexas 和 goctl 的依赖更新为该版本；
-3. 删除指向相邻目录的本地 `replace`；
-4. 在不使用本地 workspace 的环境重新构建和测试生成项目。
+发布或升级配置模块时必须：
+
+1. 先发布并验证 hexas-config 版本；
+2. 把 Hexas 和 goctl 更新到同一正式版本；
+3. 在 `GOWORK=off` 环境重新整理依赖并构建两个 module；
+4. 使用生成快照验证新项目的配置目录、默认值和校验入口。

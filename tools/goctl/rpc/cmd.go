@@ -62,6 +62,7 @@ func init() {
 	protocCmdFlags.StringVar(&cli.VarStringModule, "module")
 	protocCmdFlags.BoolVarP(&cli.VarBoolVerbose, "verbose", "v")
 	protocCmdFlags.BoolVar(&cli.VarBoolNameFromFilename, "name-from-filename")
+	protocCmdFlags.BoolVar(&cli.VarBoolSkipScaffold, "skip-scaffold")
 	protocCmdFlags.MarkHidden("go_out")
 	protocCmdFlags.MarkHidden("go-grpc_out")
 	protocCmdFlags.MarkHidden("go_opt")
