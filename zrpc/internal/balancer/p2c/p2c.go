@@ -13,9 +13,12 @@ import (
 	"github.com/lemongoff/hexas/core/syncx"
 	"github.com/lemongoff/hexas/core/timex"
 	"github.com/lemongoff/hexas/zrpc/internal/codes"
+	"github.com/lemongoff/hexas/zrpc/route"
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/balancer/base"
+	grpcCodes "google.golang.org/grpc/codes"
 	"google.golang.org/grpc/resolver"
+	"google.golang.org/grpc/status"
 )
 
 const (
@@ -53,18 +56,35 @@ func (b *p2cPickerBuilder) Build(info base.PickerBuildInfo) balancer.Picker {
 	}
 
 	conns := make([]*subConn, 0, len(readySCs))
+	connByInstanceID := make(map[string]*subConn)
+	duplicateInstanceIDs := make(map[string]struct{})
 	for conn, connInfo := range readySCs {
-		conns = append(conns, &subConn{
+		connection := &subConn{
 			addr:    connInfo.Address,
 			conn:    conn,
 			success: initSuccess,
-		})
+		}
+		conns = append(conns, connection)
+		instanceID := route.InstanceID(connInfo.Address)
+		if instanceID == "" {
+			continue
+		}
+		if _, duplicate := duplicateInstanceIDs[instanceID]; duplicate {
+			continue
+		}
+		if _, exists := connByInstanceID[instanceID]; exists {
+			delete(connByInstanceID, instanceID)
+			duplicateInstanceIDs[instanceID] = struct{}{}
+			continue
+		}
+		connByInstanceID[instanceID] = connection
 	}
 
 	return &p2cPicker{
-		conns: conns,
-		r:     rand.New(rand.NewSource(time.Now().UnixNano())),
-		stamp: syncx.NewAtomicDuration(),
+		conns:            conns,
+		connByInstanceID: connByInstanceID,
+		r:                rand.New(rand.NewSource(time.Now().UnixNano())),
+		stamp:            syncx.NewAtomicDuration(),
 	}
 }
 
@@ -73,15 +93,33 @@ func newBuilder() balancer.Builder {
 }
 
 type p2cPicker struct {
-	conns []*subConn
-	r     *rand.Rand
-	stamp *syncx.AtomicDuration
-	lock  sync.Mutex
+	conns            []*subConn
+	connByInstanceID map[string]*subConn
+	r                *rand.Rand
+	stamp            *syncx.AtomicDuration
+	lock             sync.Mutex
 }
 
-func (p *p2cPicker) Pick(_ balancer.PickInfo) (balancer.PickResult, error) {
+func (p *p2cPicker) Pick(info balancer.PickInfo) (balancer.PickResult, error) {
 	p.lock.Lock()
 	defer p.lock.Unlock()
+	if target, routed := route.TargetFromContext(info.Ctx); routed {
+		if target.Mode != route.Prefer && target.Mode != route.Require {
+			return emptyPickResult, status.Errorf(grpcCodes.InvalidArgument,
+				"[p2c] invalid route mode %d", target.Mode)
+		}
+		if target.InstanceID == "" {
+			if target.Mode == route.Require {
+				return emptyPickResult, status.Error(grpcCodes.InvalidArgument,
+					"[p2c] required route target has an empty instance id")
+			}
+		} else if chosen, found := p.connByInstanceID[target.InstanceID]; found {
+			return p.pick(chosen), nil
+		} else if target.Mode == route.Require {
+			return emptyPickResult, status.Errorf(grpcCodes.Unavailable,
+				"[p2c] required route target %q is not ready", target.InstanceID)
+		}
+	}
 
 	var chosen *subConn
 	switch len(p.conns) {
@@ -109,13 +147,13 @@ func (p *p2cPicker) Pick(_ balancer.PickInfo) (balancer.PickResult, error) {
 		chosen = p.choose(node1, node2)
 	}
 
+	return p.pick(chosen), nil
+}
+
+func (p *p2cPicker) pick(chosen *subConn) balancer.PickResult {
 	atomic.AddInt64(&chosen.inflight, 1)
 	atomic.AddInt64(&chosen.requests, 1)
-
-	return balancer.PickResult{
-		SubConn: chosen.conn,
-		Done:    p.buildDoneFunc(chosen),
-	}, nil
+	return balancer.PickResult{SubConn: chosen.conn, Done: p.buildDoneFunc(chosen)}
 }
 
 func (p *p2cPicker) buildDoneFunc(c *subConn) func(info balancer.DoneInfo) {

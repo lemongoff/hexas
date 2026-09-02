@@ -6,6 +6,7 @@ import (
 	"github.com/lemongoff/hexas/core/discov"
 	"github.com/lemongoff/hexas/core/logx"
 	"github.com/lemongoff/hexas/zrpc/resolver/internal/targets"
+	"github.com/lemongoff/hexas/zrpc/route"
 	"google.golang.org/grpc/resolver"
 )
 
@@ -22,7 +23,7 @@ func (b *discovBuilder) Build(target resolver.Target, cc resolver.ClientConn, _ 
 	}
 
 	update := func() {
-		vals := subset(sub.Values(), subsetSize)
+		vals := sub.Values()
 		addrs := resolveAddresses(vals)
 		if err := cc.UpdateState(resolver.State{
 			Addresses: addrs,
@@ -52,11 +53,8 @@ func resolveAddresses(vals []string) []resolver.Address {
 			continue
 		}
 
-		logx.Infof("discovBuilder.Build serverName: %s, Addr: %s", publishInfo.ServerName, publishInfo.Addr)
-		addrs = append(addrs, resolver.Address{
-			Addr:       publishInfo.Addr,
-			ServerName: publishInfo.ServerName,
-		})
+		logx.Infof("discovBuilder.Build instanceID: %s, Addr: %s", publishInfo.InstanceID, publishInfo.Addr)
+		addrs = append(addrs, route.SetInstanceID(resolver.Address{Addr: publishInfo.Addr}, publishInfo.InstanceID))
 	}
 
 	return addrs

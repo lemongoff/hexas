@@ -18,9 +18,9 @@ func TestDirectBuilder_Build(t *testing.T) {
 		0,
 		1,
 		2,
-		subsetSize / 2,
-		subsetSize,
-		subsetSize * 2,
+		16,
+		32,
+		64,
 	}
 
 	for _, test := range tests {
@@ -46,7 +46,7 @@ func TestDirectBuilder_Build(t *testing.T) {
 			}, cc, resolver.BuildOptions{})
 			assert.NoError(t, err)
 
-			size := min(test, subsetSize)
+			size := test
 			assert.Equal(t, size, len(cc.state.Addresses))
 			m := make(map[string]lang.PlaceholderType)
 			for _, each := range cc.state.Addresses {

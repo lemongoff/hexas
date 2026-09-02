@@ -10,6 +10,7 @@ import (
 	"github.com/lemongoff/hexas/core/logx"
 	"github.com/lemongoff/hexas/core/threading"
 	"github.com/lemongoff/hexas/zrpc/resolver/internal/kube"
+	"github.com/lemongoff/hexas/zrpc/route"
 	"google.golang.org/grpc/resolver"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/informers"
@@ -90,12 +91,10 @@ func (b *kubeBuilder) Build(target resolver.Target, cc resolver.ClientConn,
 	}
 
 	handler := kube.NewEventHandler(func(endpoints []string) {
-		endpoints = subset(endpoints, subsetSize)
 		addrs := make([]resolver.Address, 0, len(endpoints))
 		for _, val := range endpoints {
-			addrs = append(addrs, resolver.Address{
-				Addr: fmt.Sprintf("%s:%d", val, svc.Port),
-			})
+			endpoint := fmt.Sprintf("%s:%d", val, svc.Port)
+			addrs = append(addrs, route.SetInstanceID(resolver.Address{Addr: endpoint}, endpoint))
 		}
 
 		if err := cc.UpdateState(resolver.State{

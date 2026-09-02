@@ -11,6 +11,7 @@ import (
 	"github.com/lemongoff/hexas/core/logx"
 	"github.com/lemongoff/hexas/core/mathx"
 	"github.com/lemongoff/hexas/core/stringx"
+	"github.com/lemongoff/hexas/zrpc/route"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/balancer/base"
@@ -130,6 +131,56 @@ func TestPickerWithEmptyConns(t *testing.T) {
 		Ctx:            context.Background(),
 	})
 	assert.ErrorIs(t, err, balancer.ErrNoSubConnAvailable)
+}
+
+func TestP2cPickerRoutesToRequiredInstance(t *testing.T) {
+	first := mockClientConn{id: "first"}
+	second := mockClientConn{id: "second"}
+	picker := new(p2cPickerBuilder).Build(base.PickerBuildInfo{ReadySCs: map[balancer.SubConn]base.SubConnInfo{
+		first:  {Address: route.SetInstanceID(resolver.Address{Addr: "127.0.0.1:8001"}, "hall-1")},
+		second: {Address: route.SetInstanceID(resolver.Address{Addr: "127.0.0.1:8002"}, "hall-2")},
+	}})
+
+	ctx := route.WithTarget(context.Background(), "hall-2", route.Require)
+	result, err := picker.Pick(balancer.PickInfo{FullMethodName: "/", Ctx: ctx})
+	assert.NoError(t, err)
+	assert.Equal(t, second, result.SubConn)
+	result.Done(balancer.DoneInfo{})
+}
+
+func TestP2cPickerRequiredInstanceDoesNotFallback(t *testing.T) {
+	conn := mockClientConn{id: "first"}
+	picker := new(p2cPickerBuilder).Build(base.PickerBuildInfo{ReadySCs: map[balancer.SubConn]base.SubConnInfo{
+		conn: {Address: route.SetInstanceID(resolver.Address{Addr: "127.0.0.1:8001"}, "hall-1")},
+	}})
+
+	ctx := route.WithTarget(context.Background(), "hall-missing", route.Require)
+	_, err := picker.Pick(balancer.PickInfo{FullMethodName: "/", Ctx: ctx})
+	assert.Equal(t, codes.Unavailable, status.Code(err))
+}
+
+func TestP2cPickerPreferInstanceFallsBack(t *testing.T) {
+	conn := mockClientConn{id: "first"}
+	picker := new(p2cPickerBuilder).Build(base.PickerBuildInfo{ReadySCs: map[balancer.SubConn]base.SubConnInfo{
+		conn: {Address: route.SetInstanceID(resolver.Address{Addr: "127.0.0.1:8001"}, "hall-1")},
+	}})
+
+	ctx := route.WithTarget(context.Background(), "hall-missing", route.Prefer)
+	result, err := picker.Pick(balancer.PickInfo{FullMethodName: "/", Ctx: ctx})
+	assert.NoError(t, err)
+	assert.Equal(t, conn, result.SubConn)
+	result.Done(balancer.DoneInfo{})
+}
+
+func TestP2cPickerRejectsUnknownRouteMode(t *testing.T) {
+	conn := mockClientConn{id: "first"}
+	picker := new(p2cPickerBuilder).Build(base.PickerBuildInfo{ReadySCs: map[balancer.SubConn]base.SubConnInfo{
+		conn: {Address: route.SetInstanceID(resolver.Address{Addr: "127.0.0.1:8001"}, "hall-1")},
+	}})
+
+	ctx := route.WithTarget(context.Background(), "hall-1", route.Mode(99))
+	_, err := picker.Pick(balancer.PickInfo{FullMethodName: "/", Ctx: ctx})
+	assert.Equal(t, codes.InvalidArgument, status.Code(err))
 }
 
 type mockClientConn struct {

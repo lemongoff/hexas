@@ -12,6 +12,7 @@ import (
 	"github.com/lemongoff/hexas/zrpc/internal/balancer/p2c"
 	"github.com/lemongoff/hexas/zrpc/internal/clientinterceptors"
 	"github.com/lemongoff/hexas/zrpc/internal/codes"
+	"github.com/lemongoff/hexas/zrpc/route"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 )
@@ -40,6 +41,8 @@ type (
 	// ClientOption is an alias of internal.ClientOption.
 	ClientOption  = internal.ClientOption
 	ClientOptions = internal.ClientOptions
+	// RouteMode controls per-call endpoint routing fallback behavior.
+	RouteMode = route.Mode
 
 	// A RpcClient is a rpc client.
 	RpcClient struct {
@@ -47,7 +50,19 @@ type (
 	}
 )
 
+const (
+	// RoutePrefer falls back to normal load balancing when the target is unavailable.
+	RoutePrefer = route.Prefer
+	// RouteRequire fails the call when the target is unavailable.
+	RouteRequire = route.Require
+)
+
 var Acceptable = codes.Acceptable
+
+// WithRouteTarget routes a call to a stable service instance identity.
+func WithRouteTarget(ctx context.Context, instanceID string, mode RouteMode) context.Context {
+	return route.WithTarget(ctx, instanceID, mode)
+}
 
 // MustNewClient returns a Client, exits on any error.
 func MustNewClient(c RpcClientConf, options ...ClientOption) Client {

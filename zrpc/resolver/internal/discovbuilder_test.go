@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/lemongoff/hexas/core/discov"
+	"github.com/lemongoff/hexas/zrpc/route"
 	"github.com/stretchr/testify/assert"
 	"go.etcd.io/etcd/client/v3/mock/mockserver"
 	"google.golang.org/grpc/resolver"
@@ -19,16 +20,17 @@ func TestDiscovBuilder_Scheme(t *testing.T) {
 }
 
 func TestResolveAddressesSkipsInvalidValues(t *testing.T) {
-	first, err := discov.EncodePublishInfo(&discov.PublishInfo{Addr: "127.0.0.1:8001", ServerName: "first"})
+	first, err := discov.EncodePublishInfo(&discov.PublishInfo{Addr: "127.0.0.1:8001", InstanceID: "first"})
 	assert.NoError(t, err)
-	second, err := discov.EncodePublishInfo(&discov.PublishInfo{Addr: "127.0.0.1:8002", ServerName: "second"})
+	second, err := discov.EncodePublishInfo(&discov.PublishInfo{Addr: "127.0.0.1:8002", InstanceID: "second"})
 	assert.NoError(t, err)
 
 	addrs := resolveAddresses([]string{first, "not-json", `{}`, second})
-	assert.Equal(t, []resolver.Address{
-		{Addr: "127.0.0.1:8001", ServerName: "first"},
-		{Addr: "127.0.0.1:8002", ServerName: "second"},
-	}, addrs)
+	assert.Len(t, addrs, 2)
+	assert.Equal(t, "127.0.0.1:8001", addrs[0].Addr)
+	assert.Equal(t, "first", route.InstanceID(addrs[0]))
+	assert.Equal(t, "127.0.0.1:8002", addrs[1].Addr)
+	assert.Equal(t, "second", route.InstanceID(addrs[1]))
 }
 
 func TestDiscovBuilder_Build(t *testing.T) {

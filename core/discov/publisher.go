@@ -20,7 +20,7 @@ type (
 
 	PublishInfo struct {
 		Addr       string
-		ServerName string
+		InstanceID string
 	}
 
 	// A Publisher can be used to publish the value to an etcd cluster on the given key.

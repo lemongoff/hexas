@@ -19,7 +19,7 @@ func NewRpcPubServer(etcd discov.EtcdConf, listenOn string,
 	pubListenOn := figureOutListenOn(listenOn)
 	pubInfo, err := discov.EncodePublishInfo(&discov.PublishInfo{
 		Addr:       pubListenOn,
-		ServerName: etcd.ServerName,
+		InstanceID: etcd.InstanceID,
 	})
 
 	if err != nil {

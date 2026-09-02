@@ -9,6 +9,7 @@
 - RPC 客户端与服务端默认超时均为 5000 毫秒；服务端显式配置 `Timeout: 0` 才表示不设超时。
 - RPC 客户端 `NonBlock` 默认 `false`，因此创建连接时默认等待连接结果；需要异步建连时必须显式配置 `NonBlock: true`。
 - 方法级超时仍可通过 `MethodTimeouts` 或调用选项覆盖全局值。
+- 默认 `p2c_ewma` 识别 `zrpc.WithRouteTarget`。`RouteRequire` 找不到指定实例时明确失败，`RoutePrefer` 才允许回退到普通 P2C；详见 [RPC instance routing](rpc-instance-routing.md)。
 
 ## 缓存
 

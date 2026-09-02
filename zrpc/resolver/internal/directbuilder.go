@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/lemongoff/hexas/zrpc/resolver/internal/targets"
+	"github.com/lemongoff/hexas/zrpc/route"
 	"google.golang.org/grpc/resolver"
 )
 
@@ -14,13 +15,10 @@ func (d *directBuilder) Build(target resolver.Target, cc resolver.ClientConn, _ 
 	endpoints := strings.FieldsFunc(targets.GetEndpoints(target), func(r rune) bool {
 		return r == EndpointSepChar
 	})
-	endpoints = subset(endpoints, subsetSize)
 	addrs := make([]resolver.Address, 0, len(endpoints))
 
 	for _, val := range endpoints {
-		addrs = append(addrs, resolver.Address{
-			Addr: val,
-		})
+		addrs = append(addrs, route.SetInstanceID(resolver.Address{Addr: val}, val))
 	}
 	if err := cc.UpdateState(resolver.State{
 		Addresses: addrs,

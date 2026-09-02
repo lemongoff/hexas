@@ -17,8 +17,6 @@ const (
 	KubernetesScheme = "k8s"
 	// EndpointSepChar is the separator cha in endpoints.
 	EndpointSepChar = ','
-
-	subsetSize = 32
 )
 
 var (
