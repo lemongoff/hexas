@@ -10,9 +10,10 @@ import (
 
 func TestNewRpcPubServer(t *testing.T) {
 	s, err := NewRpcPubServer(discov.EtcdConf{
-		User: "user",
-		Pass: "pass",
-		ID:   10,
+		User:       "user",
+		Pass:       "pass",
+		ID:         10,
+		InstanceID: "test-1",
 	}, "")
 	assert.NoError(t, err)
 	assert.NotPanics(t, func() {

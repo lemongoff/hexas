@@ -17,49 +17,43 @@ const (
 func NewRpcPubServer(etcd discov.EtcdConf, listenOn string,
 	opts ...ServerOption) (Server, error) {
 	pubListenOn := figureOutListenOn(listenOn)
-	pubInfo, err := discov.EncodePublishInfo(&discov.PublishInfo{
+	readyInfo, err := discov.EncodePublishInfo(&discov.PublishInfo{
 		Addr:       pubListenOn,
 		InstanceID: etcd.InstanceID,
+		State:      discov.InstanceReady,
 	})
 
 	if err != nil {
 		return nil, err
 	}
 
-	registerEtcd := func() error {
-		var pubOpts []discov.PubOption
-		if etcd.HasAccount() {
-			pubOpts = append(pubOpts, discov.WithPubEtcdAccount(etcd.User, etcd.Pass))
-		}
-		if etcd.HasTLS() {
-			pubOpts = append(pubOpts, discov.WithPubEtcdTLS(etcd.CertFile, etcd.CertKeyFile,
-				etcd.CACertFile, etcd.InsecureSkipVerify))
-		}
-		if etcd.HasID() {
-			pubOpts = append(pubOpts, discov.WithId(etcd.ID))
-		}
-		pubClient := discov.NewPublisher(etcd.Hosts, etcd.Key, pubInfo, pubOpts...)
-		return pubClient.KeepAlive()
+	drainingInfo, err := discov.EncodePublishInfo(&discov.PublishInfo{
+		Addr:       pubListenOn,
+		InstanceID: etcd.InstanceID,
+		State:      discov.InstanceDraining,
+	})
+	if err != nil {
+		return nil, err
 	}
-	server := keepAliveServer{
-		registerEtcd: registerEtcd,
-		Server:       NewRpcServer(listenOn, opts...),
+	var pubOpts []discov.PubOption
+	if etcd.HasAccount() {
+		pubOpts = append(pubOpts, discov.WithPubEtcdAccount(etcd.User, etcd.Pass))
 	}
-
+	if etcd.HasTLS() {
+		pubOpts = append(pubOpts, discov.WithPubEtcdTLS(etcd.CertFile, etcd.CertKeyFile,
+			etcd.CACertFile, etcd.InsecureSkipVerify))
+	}
+	if etcd.HasID() {
+		pubOpts = append(pubOpts, discov.WithId(etcd.ID))
+	}
+	publisher := discov.NewPublisher(etcd.Hosts, etcd.Key, readyInfo, pubOpts...)
+	server := NewRpcServer(listenOn, opts...)
+	server.SetLifecycle(
+		publisher.KeepAlive,
+		func() error { return publisher.Update(drainingInfo) },
+		publisher.Close,
+	)
 	return server, nil
-}
-
-type keepAliveServer struct {
-	registerEtcd func() error
-	Server
-}
-
-func (s keepAliveServer) Start(fn RegisterFn) error {
-	if err := s.registerEtcd(); err != nil {
-		return err
-	}
-
-	return s.Server.Start(fn)
 }
 
 func figureOutListenOn(listenOn string) string {

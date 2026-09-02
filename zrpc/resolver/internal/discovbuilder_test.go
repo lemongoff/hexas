@@ -20,9 +20,9 @@ func TestDiscovBuilder_Scheme(t *testing.T) {
 }
 
 func TestResolveAddressesSkipsInvalidValues(t *testing.T) {
-	first, err := discov.EncodePublishInfo(&discov.PublishInfo{Addr: "127.0.0.1:8001", InstanceID: "first"})
+	first, err := discov.EncodePublishInfo(&discov.PublishInfo{Addr: "127.0.0.1:8001", InstanceID: "first", State: discov.InstanceReady})
 	assert.NoError(t, err)
-	second, err := discov.EncodePublishInfo(&discov.PublishInfo{Addr: "127.0.0.1:8002", InstanceID: "second"})
+	second, err := discov.EncodePublishInfo(&discov.PublishInfo{Addr: "127.0.0.1:8002", InstanceID: "second", State: discov.InstanceDraining})
 	assert.NoError(t, err)
 
 	addrs := resolveAddresses([]string{first, "not-json", `{}`, second})
@@ -31,6 +31,8 @@ func TestResolveAddressesSkipsInvalidValues(t *testing.T) {
 	assert.Equal(t, "first", route.InstanceID(addrs[0]))
 	assert.Equal(t, "127.0.0.1:8002", addrs[1].Addr)
 	assert.Equal(t, "second", route.InstanceID(addrs[1]))
+	assert.False(t, route.IsDraining(addrs[0]))
+	assert.True(t, route.IsDraining(addrs[1]))
 }
 
 func TestDiscovBuilder_Build(t *testing.T) {

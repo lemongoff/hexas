@@ -92,9 +92,17 @@ func (rs *RpcServer) Start() {
 	}
 }
 
+// BeginDrain removes the server from ordinary load balancing while keeping
+// explicit instance routes available for in-flight state transfer.
+func (rs *RpcServer) BeginDrain() error {
+	return rs.server.BeginDrain()
+}
+
 // Stop stops the RpcServer.
 func (rs *RpcServer) Stop() {
-	logx.Close()
+	if err := rs.server.Stop(); err != nil {
+		logx.Error(err)
+	}
 }
 
 // DontLogContentForMethod disable logging content for given method.

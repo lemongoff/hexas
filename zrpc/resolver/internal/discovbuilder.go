@@ -54,7 +54,9 @@ func resolveAddresses(vals []string) []resolver.Address {
 		}
 
 		logx.Infof("discovBuilder.Build instanceID: %s, Addr: %s", publishInfo.InstanceID, publishInfo.Addr)
-		addrs = append(addrs, route.SetInstanceID(resolver.Address{Addr: publishInfo.Addr}, publishInfo.InstanceID))
+		address := route.SetInstanceID(resolver.Address{Addr: publishInfo.Addr}, publishInfo.InstanceID)
+		address = route.SetDraining(address, publishInfo.State == discov.InstanceDraining)
+		addrs = append(addrs, address)
 	}
 
 	return addrs

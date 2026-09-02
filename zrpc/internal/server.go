@@ -20,7 +20,10 @@ type (
 		AddStreamInterceptors(interceptors ...grpc.StreamServerInterceptor)
 		AddUnaryInterceptors(interceptors ...grpc.UnaryServerInterceptor)
 		SetName(string)
+		SetLifecycle(onReady func() error, onDrain func() error, onStop func() error)
 		Start(register RegisterFn) error
+		BeginDrain() error
+		Stop() error
 	}
 
 	baseRpcServer struct {

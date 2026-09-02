@@ -10,6 +10,8 @@
 - RPC 客户端 `NonBlock` 默认 `false`，因此创建连接时默认等待连接结果；需要异步建连时必须显式配置 `NonBlock: true`。
 - 方法级超时仍可通过 `MethodTimeouts` 或调用选项覆盖全局值。
 - 默认 `p2c_ewma` 识别 `zrpc.WithRouteTarget`。`RouteRequire` 找不到指定实例时明确失败，`RoutePrefer` 才允许回退到普通 P2C；详见 [RPC instance routing](rpc-instance-routing.md)。
+- Etcd RPC 实例必须发布 `ready` 或 `draining`。普通 P2C 排除 `draining`，显式实例路由仍可用于完成受 fencing 保护的状态迁移。
+- RPC Server 先监听再发布 `ready`，`BeginDrain` 原租约更新为 `draining`，`Stop` 优雅停止并同步撤销租约。RPC Client 由调用方长期持有并显式 `Close`。
 
 ## 缓存
 

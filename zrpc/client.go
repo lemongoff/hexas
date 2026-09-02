@@ -132,6 +132,11 @@ func (rc *RpcClient) Conn() *grpc.ClientConn {
 	return rc.client.Conn()
 }
 
+// Close releases the underlying gRPC connection and discovery subscription.
+func (rc *RpcClient) Close() error {
+	return rc.client.Close()
+}
+
 // DontLogClientContentForMethod disable logging content for given method.
 func DontLogClientContentForMethod(method string) {
 	clientinterceptors.DontLogContentForMethod(method)

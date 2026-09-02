@@ -328,3 +328,24 @@ func TestSubscriberClose(t *testing.T) {
 		sub.Close()
 	})
 }
+
+func TestSubscriberInstancesSkipsMalformedEntries(t *testing.T) {
+	ready, err := EncodePublishInfo(&PublishInfo{Addr: "127.0.0.1:8001", InstanceID: "hall-1", State: InstanceReady})
+	assert.NoError(t, err)
+	draining, err := EncodePublishInfo(&PublishInfo{Addr: "127.0.0.1:8002", InstanceID: "hall-2", State: InstanceDraining})
+	assert.NoError(t, err)
+	items := newContainer(false)
+	items.OnAdd(KV{Key: "one", Val: ready})
+	items.OnAdd(KV{Key: "bad", Val: "not-json"})
+	items.OnAdd(KV{Key: "two", Val: draining})
+	sub := &Subscriber{items: items}
+
+	instances := sub.Instances()
+	assert.Len(t, instances, 2)
+	states := map[string]InstanceState{}
+	for _, instance := range instances {
+		states[instance.InstanceID] = instance.State
+	}
+	assert.Equal(t, InstanceReady, states["hall-1"])
+	assert.Equal(t, InstanceDraining, states["hall-2"])
+}

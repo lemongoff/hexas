@@ -109,6 +109,7 @@ func TestClientDial(t *testing.T) {
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, c.Conn())
+	assert.NoError(t, c.Close())
 	server.Stop()
 }
 

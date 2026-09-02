@@ -62,6 +62,23 @@ func (s *Subscriber) Values() []string {
 	return s.items.GetValues()
 }
 
+// Instances returns the valid service instances in the current snapshot.
+// Malformed entries are isolated so that one bad registration cannot hide
+// healthy instances published under the same discovery key.
+func (s *Subscriber) Instances() []PublishInfo {
+	values := s.Values()
+	instances := make([]PublishInfo, 0, len(values))
+	for _, value := range values {
+		info, err := DecodePublishInfo(value)
+		if err != nil {
+			logx.Errorf("decode discovery instance: %v", err)
+			continue
+		}
+		instances = append(instances, *info)
+	}
+	return instances
+}
+
 // Exclusive means that key value can only be 1:1,
 // which means later added value will remove the keys associated with the same value previously.
 func Exclusive() SubOption {

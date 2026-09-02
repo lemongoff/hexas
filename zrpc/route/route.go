@@ -27,6 +27,7 @@ type Target struct {
 
 type targetContextKey struct{}
 type instanceIDAttributeKey struct{}
+type drainingAttributeKey struct{}
 
 // WithTarget returns a context that routes the RPC to instanceID.
 func WithTarget(ctx context.Context, instanceID string, mode Mode) context.Context {
@@ -59,4 +60,24 @@ func InstanceID(address resolver.Address) string {
 	}
 	instanceID, _ := address.Attributes.Value(instanceIDAttributeKey{}).(string)
 	return instanceID
+}
+
+// SetDraining marks whether an address is excluded from ordinary load balancing.
+// Explicit instance routes may still select a draining address to finish state transfer.
+func SetDraining(address resolver.Address, draining bool) resolver.Address {
+	if address.Attributes == nil {
+		address.Attributes = attributes.New(drainingAttributeKey{}, draining)
+	} else {
+		address.Attributes = address.Attributes.WithValue(drainingAttributeKey{}, draining)
+	}
+	return address
+}
+
+// IsDraining reports whether an address only accepts explicit instance routes.
+func IsDraining(address resolver.Address) bool {
+	if address.Attributes == nil {
+		return false
+	}
+	draining, _ := address.Attributes.Value(drainingAttributeKey{}).(bool)
+	return draining
 }

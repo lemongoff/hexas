@@ -148,6 +148,63 @@ func TestP2cPickerRoutesToRequiredInstance(t *testing.T) {
 	result.Done(balancer.DoneInfo{})
 }
 
+func TestP2cPickerExcludesDrainingFromOrdinaryTraffic(t *testing.T) {
+	ready := mockClientConn{id: "ready"}
+	draining := mockClientConn{id: "draining"}
+	drainingAddress := route.SetInstanceID(resolver.Address{Addr: "127.0.0.1:8002"}, "hall-2")
+	drainingAddress = route.SetDraining(drainingAddress, true)
+	picker := new(p2cPickerBuilder).Build(base.PickerBuildInfo{ReadySCs: map[balancer.SubConn]base.SubConnInfo{
+		ready:    {Address: route.SetInstanceID(resolver.Address{Addr: "127.0.0.1:8001"}, "hall-1")},
+		draining: {Address: drainingAddress},
+	}})
+
+	result, err := picker.Pick(balancer.PickInfo{FullMethodName: "/", Ctx: context.Background()})
+	assert.NoError(t, err)
+	assert.Equal(t, ready, result.SubConn)
+	result.Done(balancer.DoneInfo{})
+
+	ctx := route.WithTarget(context.Background(), "hall-2", route.Require)
+	result, err = picker.Pick(balancer.PickInfo{FullMethodName: "/", Ctx: ctx})
+	assert.NoError(t, err)
+	assert.Equal(t, draining, result.SubConn)
+	result.Done(balancer.DoneInfo{})
+}
+
+func TestP2cPickerPreferDoesNotSelectDrainingInstance(t *testing.T) {
+	ready := mockClientConn{id: "ready"}
+	draining := mockClientConn{id: "draining"}
+	drainingAddress := route.SetInstanceID(resolver.Address{Addr: "127.0.0.1:8002"}, "hall-2")
+	drainingAddress = route.SetDraining(drainingAddress, true)
+	picker := new(p2cPickerBuilder).Build(base.PickerBuildInfo{ReadySCs: map[balancer.SubConn]base.SubConnInfo{
+		ready:    {Address: route.SetInstanceID(resolver.Address{Addr: "127.0.0.1:8001"}, "hall-1")},
+		draining: {Address: drainingAddress},
+	}})
+
+	ctx := route.WithTarget(context.Background(), "hall-2", route.Prefer)
+	result, err := picker.Pick(balancer.PickInfo{FullMethodName: "/", Ctx: ctx})
+	assert.NoError(t, err)
+	assert.Equal(t, ready, result.SubConn)
+	result.Done(balancer.DoneInfo{})
+}
+
+func TestP2cPickerOnlyDrainingRequiresExplicitTarget(t *testing.T) {
+	draining := mockClientConn{id: "draining"}
+	address := route.SetInstanceID(resolver.Address{Addr: "127.0.0.1:8002"}, "hall-2")
+	address = route.SetDraining(address, true)
+	picker := new(p2cPickerBuilder).Build(base.PickerBuildInfo{ReadySCs: map[balancer.SubConn]base.SubConnInfo{
+		draining: {Address: address},
+	}})
+
+	_, err := picker.Pick(balancer.PickInfo{FullMethodName: "/", Ctx: context.Background()})
+	assert.ErrorIs(t, err, balancer.ErrNoSubConnAvailable)
+
+	ctx := route.WithTarget(context.Background(), "hall-2", route.Require)
+	result, err := picker.Pick(balancer.PickInfo{FullMethodName: "/", Ctx: ctx})
+	assert.NoError(t, err)
+	assert.Equal(t, draining, result.SubConn)
+	result.Done(balancer.DoneInfo{})
+}
+
 func TestP2cPickerRequiredInstanceDoesNotFallback(t *testing.T) {
 	conn := mockClientConn{id: "first"}
 	picker := new(p2cPickerBuilder).Build(base.PickerBuildInfo{ReadySCs: map[balancer.SubConn]base.SubConnInfo{

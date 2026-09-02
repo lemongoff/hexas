@@ -2,6 +2,9 @@ package discov
 
 import (
 	"encoding/json"
+	"errors"
+	"strings"
+	"sync"
 	"time"
 
 	"github.com/lemongoff/hexas/core/discov/internal"
@@ -15,12 +18,16 @@ import (
 )
 
 type (
+	// InstanceState describes whether a discovered instance accepts ordinary traffic.
+	InstanceState string
+
 	// PubOption defines the method to customize a Publisher.
 	PubOption func(client *Publisher)
 
 	PublishInfo struct {
 		Addr       string
 		InstanceID string
+		State      InstanceState
 	}
 
 	// A Publisher can be used to publish the value to an etcd cluster on the given key.
@@ -34,8 +41,19 @@ type (
 		quit       *syncx.DoneChan
 		pauseChan  chan lang.PlaceholderType
 		resumeChan chan lang.PlaceholderType
+		mu         sync.Mutex
+		client     internal.EtcdClient
 	}
 )
+
+const (
+	InstanceReady    InstanceState = "ready"
+	InstanceDraining InstanceState = "draining"
+)
+
+func (s InstanceState) Valid() bool {
+	return s == InstanceReady || s == InstanceDraining
+}
 
 // NewPublisher returns a Publisher.
 // endpoints is the hosts of the etcd cluster.
@@ -60,6 +78,11 @@ func NewPublisher(endpoints []string, key, value string, opts ...PubOption) *Pub
 
 // KeepAlive keeps key:value alive.
 func (p *Publisher) KeepAlive() error {
+	select {
+	case <-p.quit.Done():
+		return errors.New("etcd publisher is closed")
+	default:
+	}
 	cli, err := p.doRegister()
 	if err != nil {
 		return err
@@ -84,7 +107,33 @@ func (p *Publisher) Resume() {
 
 // Stop stops the renewing and revokes the registration.
 func (p *Publisher) Stop() {
+	_ = p.Close()
+}
+
+// Close stops renewing and synchronously revokes the active registration.
+func (p *Publisher) Close() error {
 	p.quit.Close()
+	p.mu.Lock()
+	client, lease := p.client, p.lease
+	p.mu.Unlock()
+	if client == nil || lease == clientv3.NoLease {
+		return nil
+	}
+	return p.revoke(client, lease)
+}
+
+// Update atomically changes the value attached to the current lease.
+func (p *Publisher) Update(value string) error {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	if p.client == nil || p.lease == clientv3.NoLease || p.fullKey == "" {
+		return errors.New("etcd publisher is not registered")
+	}
+	if _, err := p.client.Put(p.client.Ctx(), p.fullKey, value, clientv3.WithLease(p.lease)); err != nil {
+		return err
+	}
+	p.value = value
+	return nil
 }
 
 func (p *Publisher) doKeepAlive() error {
@@ -98,7 +147,7 @@ func (p *Publisher) doKeepAlive() error {
 		default:
 			cli, err := p.doRegister()
 			if err != nil {
-				logc.Errorf(cli.Ctx(), "etcd publisher doRegister: %v", err)
+				logx.Errorf("etcd publisher doRegister: %v", err)
 				break
 			}
 
@@ -120,33 +169,42 @@ func (p *Publisher) doRegister() (internal.EtcdClient, error) {
 		return nil, err
 	}
 
-	p.lease, err = p.register(cli)
+	_, err = p.register(cli)
 	return cli, err
 }
 
 func (p *Publisher) keepAliveAsync(cli internal.EtcdClient) error {
-	ch, err := cli.KeepAlive(cli.Ctx(), p.lease)
+	fullKey, value, lease := p.registration()
+	ch, err := cli.KeepAlive(cli.Ctx(), lease)
 	if err != nil {
 		return err
 	}
 
 	threading.GoSafe(func() {
-		wch := cli.Watch(cli.Ctx(), p.fullKey, clientv3.WithFilterPut())
+		wch := cli.Watch(cli.Ctx(), fullKey, clientv3.WithFilterPut())
 
 		for {
 			select {
 			case _, ok := <-ch:
 				if !ok {
-					p.revoke(cli)
+					_ = p.revoke(cli, lease)
 					if err := p.doKeepAlive(); err != nil {
 						logc.Errorf(cli.Ctx(), "etcd publisher KeepAlive: %v", err)
 					}
 					return
 				}
 
-			case c := <-wch:
+			case c, ok := <-wch:
+				if !ok {
+					_ = p.revoke(cli, lease)
+					if err := p.doKeepAlive(); err != nil {
+						logc.Errorf(cli.Ctx(), "etcd publisher KeepAlive: %v", err)
+					}
+					return
+				}
 				if c.Err() != nil {
 					logc.Errorf(cli.Ctx(), "etcd publisher watch: %v", c.Err())
+					_ = p.revoke(cli, lease)
 					if err := p.doKeepAlive(); err != nil {
 						logc.Errorf(cli.Ctx(), "etcd publisher KeepAlive: %v", err)
 					}
@@ -157,18 +215,22 @@ func (p *Publisher) keepAliveAsync(cli internal.EtcdClient) error {
 					if evt.Type == clientv3.EventTypeDelete {
 						logc.Infof(cli.Ctx(), "etcd publisher watch: %s, event: %v",
 							evt.Kv.Key, evt.Type)
-						_, err := cli.Put(cli.Ctx(), p.fullKey, p.value, clientv3.WithLease(p.lease))
+						_, currentValue, currentLease := p.registration()
+						if currentLease != lease {
+							continue
+						}
+						_, err := cli.Put(cli.Ctx(), fullKey, currentValue, clientv3.WithLease(lease))
 						if err != nil {
 							logc.Errorf(cli.Ctx(), "etcd publisher re-put key: %v", err)
 						} else {
 							logc.Infof(cli.Ctx(), "etcd publisher re-put key: %s, value: %s",
-								p.fullKey, p.value)
+								fullKey, currentValue)
 						}
 					}
 				}
 			case <-p.pauseChan:
-				logc.Infof(cli.Ctx(), "paused etcd renew, key: %s, value: %s", p.key, p.value)
-				p.revoke(cli)
+				logc.Infof(cli.Ctx(), "paused etcd renew, key: %s, value: %s", p.key, value)
+				_ = p.revoke(cli, lease)
 				select {
 				case <-p.resumeChan:
 					if err := p.doKeepAlive(); err != nil {
@@ -179,7 +241,7 @@ func (p *Publisher) keepAliveAsync(cli internal.EtcdClient) error {
 					return
 				}
 			case <-p.quit.Done():
-				p.revoke(cli)
+				_ = p.revoke(cli, lease)
 				return
 			}
 		}
@@ -195,23 +257,65 @@ func (p *Publisher) register(client internal.EtcdClient) (clientv3.LeaseID, erro
 	}
 
 	lease := resp.ID
+	p.mu.Lock()
+	value := p.value
+	p.mu.Unlock()
+	var fullKey string
 	if p.id > 0 {
-		p.fullKey = makeEtcdKey(p.key, p.id)
+		fullKey = makeEtcdKey(p.key, p.id)
 	} else {
-		p.fullKey = makeEtcdKey(p.key, int64(lease))
+		fullKey = makeEtcdKey(p.key, int64(lease))
 	}
-	_, err = client.Put(client.Ctx(), p.fullKey, p.value, clientv3.WithLease(lease))
+	_, err = client.Put(client.Ctx(), fullKey, value, clientv3.WithLease(lease))
+	if err == nil {
+		p.mu.Lock()
+		p.client = client
+		p.lease = lease
+		p.fullKey = fullKey
+		p.mu.Unlock()
+	}
 
 	return lease, err
 }
 
-func (p *Publisher) revoke(cli internal.EtcdClient) {
-	if _, err := cli.Revoke(cli.Ctx(), p.lease); err != nil {
+func (p *Publisher) registration() (string, string, clientv3.LeaseID) {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	return p.fullKey, p.value, p.lease
+}
+
+func (p *Publisher) revoke(cli internal.EtcdClient, lease clientv3.LeaseID) error {
+	if lease == clientv3.NoLease {
+		return nil
+	}
+	p.mu.Lock()
+	if p.lease != lease {
+		p.mu.Unlock()
+		return nil
+	}
+	p.lease = clientv3.NoLease
+	p.client = nil
+	p.mu.Unlock()
+	_, err := cli.Revoke(cli.Ctx(), lease)
+	if err != nil {
 		logc.Errorf(cli.Ctx(), "etcd publisher revoke: %v", err)
 	}
+	return err
 }
 
 func EncodePublishInfo(info *PublishInfo) (string, error) {
+	if info == nil {
+		return "", errors.New("publish info is required")
+	}
+	if strings.TrimSpace(info.Addr) == "" {
+		return "", errors.New("publish address is required")
+	}
+	if strings.TrimSpace(info.InstanceID) == "" {
+		return "", errors.New("publish instance id is required")
+	}
+	if !info.State.Valid() {
+		return "", errors.New("publish instance state is invalid")
+	}
 	buf, err := json.Marshal(info)
 	if err != nil {
 		return "", err
@@ -234,6 +338,15 @@ func DecodePublishInfo(data string) (*PublishInfo, error) {
 	info := &PublishInfo{}
 	if err := json.Unmarshal([]byte(data), info); err != nil {
 		return nil, err
+	}
+	if strings.TrimSpace(info.Addr) == "" {
+		return nil, errors.New("publish address is required")
+	}
+	if strings.TrimSpace(info.InstanceID) == "" {
+		return nil, errors.New("publish instance id is required")
+	}
+	if !info.State.Valid() {
+		return nil, errors.New("publish instance state is invalid")
 	}
 
 	return info, nil

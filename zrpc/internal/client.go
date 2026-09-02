@@ -27,6 +27,7 @@ type (
 	// Client interface wraps the Conn method.
 	Client interface {
 		Conn() *grpc.ClientConn
+		Close() error
 	}
 
 	// A ClientOptions is a client options.
@@ -61,6 +62,13 @@ func NewClient(target string, middlewares ClientMiddlewaresConf, opts ...ClientO
 
 func (c *client) Conn() *grpc.ClientConn {
 	return c.conn
+}
+
+func (c *client) Close() error {
+	if c.conn == nil {
+		return nil
+	}
+	return c.conn.Close()
 }
 
 func (c *client) buildDialOptions(opts ...ClientOption) []grpc.DialOption {

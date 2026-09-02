@@ -168,7 +168,7 @@ func TestPublisher_revoke(t *testing.T) {
 	cli.EXPECT().Revoke(gomock.Any(), id)
 	pub := NewPublisher(nil, "thekey", "thevalue")
 	pub.lease = id
-	pub.revoke(cli)
+	assert.NoError(t, pub.revoke(cli, id))
 }
 
 func TestPublisher_revokeError(t *testing.T) {
@@ -182,7 +182,47 @@ func TestPublisher_revokeError(t *testing.T) {
 	cli.EXPECT().Revoke(gomock.Any(), id).Return(nil, errors.New("error"))
 	pub := NewPublisher(nil, "thekey", "thevalue")
 	pub.lease = id
-	pub.revoke(cli)
+	assert.Error(t, pub.revoke(cli, id))
+}
+
+func TestPublisherUpdate(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	cli := internal.NewMockEtcdClient(ctrl)
+	const id clientv3.LeaseID = 1
+	cli.EXPECT().Ctx().AnyTimes()
+	cli.EXPECT().Put(gomock.Any(), "thekey", "draining", gomock.Any()).Return(nil, nil)
+	pub := NewPublisher(nil, "key", "ready")
+	pub.client = cli
+	pub.fullKey = "thekey"
+	pub.lease = id
+	assert.NoError(t, pub.Update("draining"))
+	_, value, lease := pub.registration()
+	assert.Equal(t, "draining", value)
+	assert.Equal(t, id, lease)
+}
+
+func TestPublisherUpdateRequiresRegistration(t *testing.T) {
+	pub := NewPublisher(nil, "key", "ready")
+	assert.Error(t, pub.Update("draining"))
+}
+
+func TestPublishInfoRequiresExplicitLifecycleState(t *testing.T) {
+	_, err := EncodePublishInfo(&PublishInfo{Addr: "127.0.0.1:8001", InstanceID: "hall-1"})
+	assert.Error(t, err)
+
+	value, err := EncodePublishInfo(&PublishInfo{
+		Addr: "127.0.0.1:8001", InstanceID: "hall-1", State: InstanceReady,
+	})
+	assert.NoError(t, err)
+	decoded, err := DecodePublishInfo(value)
+	assert.NoError(t, err)
+	assert.Equal(t, InstanceReady, decoded.State)
+}
+
+func TestPublisherCannotRestartAfterClose(t *testing.T) {
+	pub := NewPublisher(nil, "key", "ready")
+	assert.NoError(t, pub.Close())
+	assert.Error(t, pub.KeepAlive())
 }
 
 func TestPublisher_keepAliveAsyncError(t *testing.T) {

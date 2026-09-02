@@ -64,7 +64,9 @@ func (b *p2cPickerBuilder) Build(info base.PickerBuildInfo) balancer.Picker {
 			conn:    conn,
 			success: initSuccess,
 		}
-		conns = append(conns, connection)
+		if !route.IsDraining(connInfo.Address) {
+			conns = append(conns, connection)
+		}
 		instanceID := route.InstanceID(connInfo.Address)
 		if instanceID == "" {
 			continue
@@ -114,7 +116,9 @@ func (p *p2cPicker) Pick(info balancer.PickInfo) (balancer.PickResult, error) {
 					"[p2c] required route target has an empty instance id")
 			}
 		} else if chosen, found := p.connByInstanceID[target.InstanceID]; found {
-			return p.pick(chosen), nil
+			if target.Mode == route.Require || !route.IsDraining(chosen.addr) {
+				return p.pick(chosen), nil
+			}
 		} else if target.Mode == route.Require {
 			return emptyPickResult, status.Errorf(grpcCodes.Unavailable,
 				"[p2c] required route target %q is not ready", target.InstanceID)

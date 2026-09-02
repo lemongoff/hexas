@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/alicebob/miniredis/v2"
 	"github.com/lemongoff/hexas/core/discov"
 	"github.com/lemongoff/hexas/core/logx"
 	"github.com/lemongoff/hexas/core/service"
@@ -12,7 +13,6 @@ import (
 	"github.com/lemongoff/hexas/core/stores/redis"
 	"github.com/lemongoff/hexas/zrpc/internal"
 	"github.com/lemongoff/hexas/zrpc/internal/serverinterceptors"
-	"github.com/alicebob/miniredis/v2"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
 )
@@ -93,8 +93,9 @@ func TestServer_HasEtcd(t *testing.T) {
 		},
 		ListenOn: "localhost:0",
 		Etcd: discov.EtcdConf{
-			Hosts: []string{"notexist"},
-			Key:   "any",
+			Hosts:      []string{"notexist"},
+			Key:        "any",
+			InstanceID: "test-1",
 		},
 		Redis: redis.RedisKeyConf{},
 		Middlewares: ServerMiddlewaresConf{
@@ -155,9 +156,16 @@ func (m *mockedServer) AddUnaryInterceptors(interceptors ...grpc.UnaryServerInte
 func (m *mockedServer) SetName(_ string) {
 }
 
+func (m *mockedServer) SetLifecycle(func() error, func() error, func() error) {
+}
+
 func (m *mockedServer) Start(_ internal.RegisterFn) error {
 	return nil
 }
+
+func (m *mockedServer) BeginDrain() error { return nil }
+
+func (m *mockedServer) Stop() error { return nil }
 
 func Test_setupUnaryInterceptors(t *testing.T) {
 	tests := []struct {

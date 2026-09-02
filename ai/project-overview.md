@@ -40,7 +40,7 @@ Go 版本：`1.24.0`。
 
 相对官方 `v1.10.3`，Hexas 初始基线差异为 47 个文件，约 1278 行新增、169 行删除。定制主要包括：
 
-- etcd 发布值使用带稳定 `InstanceID` 的 JSON，默认 P2C 支持严格或可回退的按实例路由；完整契约见 [`../docs/rpc-instance-routing.md`](../docs/rpc-instance-routing.md)。
+- etcd 发布值使用带稳定 `InstanceID` 和 `ready`/`draining` 状态的 JSON；RPC Server 负责状态切换和同步注销，默认 P2C 排除 draining 节点但保留显式实例迁移路由；完整契约见 [`../docs/rpc-instance-routing.md`](../docs/rpc-instance-routing.md)。
 - 日志格式化 API 支持末尾 `LogFields`，增加 BI JSON 输出，并降低部分 HTTP/RPC 成功日志级别。
 - Redis 增加 key prefix、多种 Lua 原子命令和 `CmdResult`。
 - MongoDB 增加 Database 封装，Mongo cache 增加 Redis 脏队列异步落盘。

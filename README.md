@@ -15,6 +15,7 @@ Hexas 是面向游戏服务场景维护的 go-zero 内部分支。仓库以
 | Go module | `github.com/lemongoff/hexas` |
 | 配置 module | `github.com/lemongoff/hexas-config` |
 | Go 版本 | `1.24.0` |
+| 当前版本 | `v0.3.0` |
 
 项目 module 和 import path 已切换为 `github.com/lemongoff/hexas`。`github.com/zeromicro/go-zero` 仅表示固定的官方代码基线；Hexas 从当前基线起按独立硬分支维护，不承诺继续兼容官方后续版本、API、配置语义或运行时行为，也不默认继续合并上游。已有调用方需要同步更新 import path 和 `go.mod` 依赖，不能依赖自动兼容或 fallback。
 
@@ -29,6 +30,7 @@ Hexas 是面向游戏服务场景维护的 go-zero 内部分支。仓库以
 - [ai/project-overview.md](ai/project-overview.md)：目录职责、定制区域和验证命令。
 - [配置体系](docs/configuration.md)：类型化默认值、Bootstrap/Runtime 边界、goctl 目录和迁移要求。
 - [框架默认值](docs/framework-defaults.md)：RPC、缓存和日志默认契约。
+- [v0.3.0 发布说明](docs/releases/v0.3.0.md)：Etcd RPC 生命周期、draining 路由、客户端关闭和升级要求。
 - [初始基线审计](docs/audits/2026-08-31-initial-framework-audit.md)：已知遗留问题、重设计输入和处理优先级；基线导入阶段仅记录，未修改运行时代码。
 - [上游英文说明快照](docs/upstream-readme.md)：仅作原始框架参考。
 
