@@ -29,7 +29,7 @@ type Module struct {
 }
 
 func (m *Module) validate() error {
-	if m.Path == goModuleWithoutGoFiles || m.Dir == "" {
+	if m.Path == "" || m.Path == goModuleWithoutGoFiles || m.Dir == "" {
 		return errInvalidGoMod
 	}
 	return nil
@@ -77,6 +77,17 @@ func projectFromGoMod(workDir string) (*ProjectContext, error) {
 }
 
 func getRealModule(workDir string, execRun execx.RunFunc) (*Module, error) {
+	if workDir == "" {
+		return nil, errors.New("the work directory is not found")
+	}
+	workDir, err := filepath.Abs(workDir)
+	if err != nil {
+		return nil, err
+	}
+	workDir, err = pathx.ReadLink(workDir)
+	if err != nil {
+		return nil, err
+	}
 	data, err := execRun("go list -json -m", workDir)
 	if err != nil {
 		return nil, err
@@ -86,18 +97,32 @@ func getRealModule(workDir string, execRun execx.RunFunc) (*Module, error) {
 	if err != nil {
 		return nil, err
 	}
-	if workDir[len(workDir)-1] != os.PathSeparator {
-		workDir = workDir + string(os.PathSeparator)
-	}
-	for _, m := range modules {
-		realDir, err := pathx.ReadLink(m.Dir)
+	var matched *Module
+	var matchedDir string
+	for i := range modules {
+		m := &modules[i]
+		if err := m.validate(); err != nil {
+			return nil, err
+		}
+		realDir, err := filepath.Abs(m.Dir)
+		if err != nil {
+			return nil, err
+		}
+		realDir, err = pathx.ReadLink(realDir)
 		if err != nil {
 			return nil, fmt.Errorf("failed to read go.mod, dir: %s, error: %w", m.Dir, err)
 		}
-		realDir += string(os.PathSeparator)
-		if strings.HasPrefix(workDir, realDir) {
-			return &m, nil
+		rel, err := filepath.Rel(realDir, workDir)
+		if err != nil || rel == ".." || strings.HasPrefix(rel, ".."+string(os.PathSeparator)) {
+			continue
 		}
+		if matched == nil || len(realDir) > len(matchedDir) {
+			matched = m
+			matchedDir = realDir
+		}
+	}
+	if matched != nil {
+		return matched, nil
 	}
 
 	return nil, errors.New("no matched module")
@@ -118,7 +143,7 @@ func decodePackages(reader io.Reader) ([]Module, error) {
 	for decoder.More() {
 		var m Module
 		if err := decoder.Decode(&m); err != nil {
-			return nil, fmt.Errorf("invalid module: %v", err)
+			return nil, fmt.Errorf("invalid module: %w", err)
 		}
 
 		modules = append(modules, m)

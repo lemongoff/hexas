@@ -37,6 +37,12 @@ GOWORK=off go install github.com/lemongoff/hexas/tools/goctl@v1.10.4-hexas
 
 在已有服务中只更新 RPC 适配器和客户端时使用 `rpc protoc --skip-scaffold`，避免生成新的服务入口和 bootstrap YAML。新建完整服务时不使用该开关。
 
+### 项目模块识别
+
+goctl 会先规范化生成目录，再识别其所属 module；在包含嵌套 module 的工作区内，选择最近的所属 module。`GOWORK=off` 时不读取或改写 `go.work`；启用工作区时，仅在所属 module 尚未登记时添加其根目录，识别已登记的 module 不重写工作区文件。
+
+仅当目录不属于现有 module 或 GOPATH 项目时才执行 `go mod init`。已有 `go.mod`、`go.work` 或 Go 命令执行失败会直接返回错误，不通过创建子 module 掩盖问题。使用相对目录 `.` 创建新 module 时，默认名称取规范化后的目录名。
+
 ## 生成前检查
 
 - 确认输入源是 `.api`、`.proto`、DDL 还是模板。

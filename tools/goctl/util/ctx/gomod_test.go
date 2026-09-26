@@ -2,6 +2,8 @@ package ctx
 
 import (
 	"bytes"
+	"encoding/json"
+	"errors"
 	"go/build"
 	"io"
 	"os"
@@ -14,7 +16,41 @@ import (
 	"github.com/lemongoff/hexas/tools/goctl/rpc/execx"
 	"github.com/lemongoff/hexas/tools/goctl/util/pathx"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
+
+func TestGetRealModuleNested(t *testing.T) {
+	root := contextTestDir(t)
+	nested := filepath.Join(root, "nested")
+	workDir := filepath.Join(nested, "child")
+	require.NoError(t, os.MkdirAll(workDir, 0755))
+	parentModule := Module{Path: "example.com/parent", Dir: root}
+	nestedModule := Module{Path: "example.com/nested", Dir: nested}
+	for _, modules := range [][]Module{{parentModule, nestedModule}, {nestedModule, parentModule}} {
+		var output bytes.Buffer
+		for _, module := range modules {
+			require.NoError(t, json.NewEncoder(&output).Encode(module))
+		}
+		got, err := getRealModule(workDir, func(_ string, _ string, _ ...*bytes.Buffer) (string, error) {
+			return output.String(), nil
+		})
+		require.NoError(t, err)
+		assert.Equal(t, &nestedModule, got)
+	}
+}
+
+func TestGetRealModuleErrors(t *testing.T) {
+	wantErr := errors.New("module lookup failed")
+	_, err := getRealModule(contextTestDir(t), func(_ string, _ string, _ ...*bytes.Buffer) (string, error) {
+		return "", wantErr
+	})
+	require.ErrorIs(t, err, wantErr)
+	_, err = getRealModule("", func(_ string, _ string, _ ...*bytes.Buffer) (string, error) {
+		t.Fatal("empty directory must not run a command")
+		return "", nil
+	})
+	require.Error(t, err)
+}
 
 func TestProjectFromGoMod(t *testing.T) {
 	dft := build.Default

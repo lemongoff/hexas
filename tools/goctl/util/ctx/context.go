@@ -1,10 +1,13 @@
 package ctx
 
 import (
+	"bytes"
 	"errors"
+	"fmt"
+	"os"
+	"os/exec"
 	"path/filepath"
-
-	"github.com/lemongoff/hexas/tools/goctl/rpc/execx"
+	"strings"
 )
 
 var errModuleCheck = errors.New("the work directory must be found in the go mod or the $GOPATH")
@@ -34,10 +37,21 @@ func Prepare(workDir string) (*ProjectContext, error) {
 // workDir parameter is the directory of the source of generating code,
 // where can be found the project path and the project module,
 // moduleName parameter is the custom module name to use if creating a new go.mod
+// Existing module and workspace errors are returned without initializing a module.
 func PrepareWithModule(workDir string, moduleName string) (*ProjectContext, error) {
+	if workDir == "" {
+		return nil, errors.New("the work directory is not found")
+	}
+	workDir, err := filepath.Abs(workDir)
+	if err != nil {
+		return nil, err
+	}
 	ctx, err := background(workDir)
 	if err == nil {
 		return ctx, nil
+	}
+	if !errors.Is(err, errModuleCheck) {
+		return nil, err
 	}
 
 	var name string
@@ -47,12 +61,29 @@ func PrepareWithModule(workDir string, moduleName string) (*ProjectContext, erro
 		name = filepath.Base(workDir)
 	}
 
-	_, err = execx.Run("go mod init "+name, workDir)
+	_, err = runGo(workDir, nil, "mod", "init", name)
 	if err != nil {
 		return nil, err
 	}
 
 	return background(workDir)
+}
+
+// runGo preserves command failures and passes arguments without a shell.
+func runGo(workDir string, env []string, args ...string) (string, error) {
+	cmd := exec.Command("go", args...)
+	cmd.Dir = workDir
+	if len(env) > 0 {
+		cmd.Env = append(os.Environ(), env...)
+	}
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
+	output, err := cmd.Output()
+	if err != nil {
+		return "", fmt.Errorf("go %s: %w: %s", strings.Join(args, " "), err,
+			strings.TrimSpace(stderr.String()))
+	}
+	return strings.TrimSpace(string(output)), nil
 }
 
 func background(workDir string) (*ProjectContext, error) {

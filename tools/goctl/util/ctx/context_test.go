@@ -1,7 +1,9 @@
 package ctx
 
 import (
+	"errors"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"testing"
 
@@ -10,12 +12,126 @@ import (
 )
 
 func TestBackground(t *testing.T) {
-	workDir := "."
+	root := contextTestDir(t)
+	moduleDir := filepath.Join(root, "tools", "generator")
+	workDir := filepath.Join(moduleDir, "util", "ctx")
+	require.NoError(t, os.MkdirAll(workDir, 0755))
+	writeContextFile(t, filepath.Join(root, "go.mod"), "module example.com/framework\n\ngo 1.24.0\n")
+	writeContextFile(t, filepath.Join(moduleDir, "go.mod"), "module example.com/framework/tools/generator\n\ngo 1.24.0\n")
+	workFile := filepath.Join(root, "go.work")
+	workContent := "go 1.24.0\n\nuse (\n\t.\n\t./tools/generator\n)\n"
+	writeContextFile(t, workFile, workContent)
+	t.Setenv("GOWORK", workFile)
+	t.Chdir(workDir)
+
+	ctx, err := Prepare(".")
+	require.NoError(t, err)
+	require.NotNil(t, ctx)
+	assert.Equal(t, workDir, ctx.WorkDir)
+	assert.Equal(t, moduleDir, ctx.Dir)
+	assert.Equal(t, "example.com/framework/tools/generator", ctx.Path)
+	content, err := os.ReadFile(workFile)
+	require.NoError(t, err)
+	assert.Equal(t, workContent, string(content))
+}
+
+func TestPrepareRelativeDirectoryWithoutModule(t *testing.T) {
+	root := contextTestDir(t)
+	projectDir := filepath.Join(root, "newproject")
+	require.NoError(t, os.Mkdir(projectDir, 0755))
+	t.Setenv("GOWORK", "off")
+	t.Chdir(projectDir)
+
+	ctx, err := Prepare(".")
+	require.NoError(t, err)
+	require.NotNil(t, ctx)
+	assert.Equal(t, "newproject", ctx.Path)
+	assert.Equal(t, projectDir, ctx.Dir)
+}
+
+func TestPreparePreservesModuleError(t *testing.T) {
+	root := contextTestDir(t)
+	workDir := filepath.Join(root, "child")
+	require.NoError(t, os.Mkdir(workDir, 0755))
+	writeContextFile(t, filepath.Join(root, "go.mod"), "module example.com/broken\ninvalid-directive value\n")
+	t.Setenv("GOWORK", "off")
+
 	ctx, err := Prepare(workDir)
-	assert.Nil(t, err)
-	assert.True(t, true, func() bool {
-		return len(ctx.Dir) != 0 && len(ctx.Path) != 0
-	}())
+	require.Error(t, err)
+	assert.Nil(t, ctx)
+	assert.Contains(t, err.Error(), "invalid-directive")
+	assert.NoFileExists(t, filepath.Join(workDir, "go.mod"))
+}
+
+func TestPreparePreservesWorkspaceError(t *testing.T) {
+	root := contextTestDir(t)
+	workDir := filepath.Join(root, "child")
+	require.NoError(t, os.Mkdir(workDir, 0755))
+	writeContextFile(t, filepath.Join(root, "go.mod"), "module example.com/project\n\ngo 1.24.0\n")
+	workFile := filepath.Join(root, "go.work")
+	writeContextFile(t, workFile, "go 1.24.0\ninvalid-directive value\n")
+	t.Setenv("GOWORK", workFile)
+
+	ctx, err := Prepare(workDir)
+	require.Error(t, err)
+	assert.Nil(t, ctx)
+	assert.Contains(t, err.Error(), "go.work")
+	assert.Contains(t, err.Error(), "invalid-directive")
+	assert.NoFileExists(t, filepath.Join(workDir, "go.mod"))
+}
+
+func TestPrepareMissingGo(t *testing.T) {
+	root := contextTestDir(t)
+	t.Setenv("PATH", t.TempDir())
+	ctx, err := Prepare(root)
+	require.Error(t, err)
+	assert.Nil(t, ctx)
+	assert.True(t, errors.Is(err, exec.ErrNotFound))
+	assert.NoFileExists(t, filepath.Join(root, "go.mod"))
+}
+
+func TestPrepareExistingModuleWithWorkspaceDisabled(t *testing.T) {
+	root := contextTestDir(t)
+	moduleFile := filepath.Join(root, "go.mod")
+	moduleContent := "module example.com/project\n\ngo 1.24.0\n"
+	writeContextFile(t, moduleFile, moduleContent)
+	workFile := filepath.Join(root, "go.work")
+	writeContextFile(t, workFile, "invalid workspace\n")
+	t.Setenv("GOWORK", "off")
+
+	ctx, err := PrepareWithModule(root, "example.com/unused")
+	require.NoError(t, err)
+	require.NotNil(t, ctx)
+	assert.Equal(t, "example.com/project", ctx.Path)
+	content, err := os.ReadFile(moduleFile)
+	require.NoError(t, err)
+	assert.Equal(t, moduleContent, string(content))
+	content, err = os.ReadFile(workFile)
+	require.NoError(t, err)
+	assert.Equal(t, "invalid workspace\n", string(content))
+}
+
+func TestPrepareInvalidModuleName(t *testing.T) {
+	root := contextTestDir(t)
+	t.Setenv("GOWORK", "off")
+	ctx, err := PrepareWithModule(root, "invalid module name")
+	require.Error(t, err)
+	assert.Nil(t, ctx)
+	var exitErr *exec.ExitError
+	assert.ErrorAs(t, err, &exitErr)
+	assert.NoFileExists(t, filepath.Join(root, "go.mod"))
+}
+
+func contextTestDir(t *testing.T) string {
+	t.Helper()
+	dir, err := filepath.EvalSymlinks(t.TempDir())
+	require.NoError(t, err)
+	return dir
+}
+
+func writeContextFile(t *testing.T, name, content string) {
+	t.Helper()
+	require.NoError(t, os.WriteFile(name, []byte(content), 0644))
 }
 
 func TestBackgroundNilWorkDir(t *testing.T) {
@@ -59,8 +175,8 @@ func TestPrepareWithModule(t *testing.T) {
 			require.NoError(t, err)
 
 			ctx, err := PrepareWithModule(testDir, tt.moduleName)
-			assert.NoError(t, err)
-			assert.NotNil(t, ctx)
+			require.NoError(t, err)
+			require.NotNil(t, ctx)
 
 			// Check that the context has expected values
 			assert.NotEmpty(t, ctx.WorkDir)
@@ -108,8 +224,8 @@ go 1.21
 
 	// PrepareWithModule should use existing go.mod, not create new one
 	ctx, err := PrepareWithModule(testDir, "github.com/new/module")
-	assert.NoError(t, err)
-	assert.NotNil(t, ctx)
+	require.NoError(t, err)
+	require.NotNil(t, ctx)
 
 	// Should use existing module name, not the provided one
 	assert.Equal(t, "existing.com/project", ctx.Path)

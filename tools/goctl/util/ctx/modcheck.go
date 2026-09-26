@@ -2,24 +2,38 @@ package ctx
 
 import (
 	"errors"
+	"fmt"
 	"os"
-
-	"github.com/lemongoff/hexas/tools/goctl/rpc/execx"
+	"strings"
 )
 
-// IsGoMod is used to determine whether workDir is a go module project through command `go env GOMOD`
+// IsGoMod reports whether workDir belongs to a module, independently of workspace membership.
 func IsGoMod(workDir string) (bool, error) {
+	modFile, err := goModFile(workDir)
+	return modFile != "", err
+}
+
+func goModFile(workDir string) (string, error) {
 	if len(workDir) == 0 {
-		return false, errors.New("the work directory is not found")
+		return "", errors.New("the work directory is not found")
 	}
-	if _, err := os.Stat(workDir); err != nil {
-		return false, err
+	info, err := os.Stat(workDir)
+	if err != nil {
+		return "", err
+	}
+	if !info.IsDir() {
+		return "", fmt.Errorf("work directory %q is not a directory", workDir)
 	}
 
-	data, err := execx.Run("go env GOMOD", workDir)
-	if err != nil || data == "/dev/null" {
-		return false, nil
+	// GOMOD can be the null device in workspace mode on older Go versions.
+	// Disable the workspace only for this lookup; subsequent operations honor it.
+	data, err := runGo(workDir, []string{"GOWORK=off"}, "env", "GOMOD")
+	if err != nil {
+		return "", err
+	}
+	if data == "" || strings.EqualFold(data, os.DevNull) {
+		return "", nil
 	}
 
-	return true, nil
+	return data, nil
 }
