@@ -9,9 +9,6 @@ on:
 permissions:
   contents: read
 
-env:
-  GOPRIVATE: github.com/lemongoff/*
-
 jobs:
   changed-whitespace:
     name: Changed whitespace
@@ -37,25 +34,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-
-      # This read-only secret must cover both hexas and hexas-config.
-      # Environment-based Git config also applies inside Go's module cache.
-      - name: Configure private module access
-        shell: bash
-        env:
-          HEXAS_MODULES_TOKEN: ${{ secrets.HEXAS_MODULES_TOKEN }}
-        run: |
-          if [ -z "$HEXAS_MODULES_TOKEN" ]; then
-            echo "::error::HEXAS_MODULES_TOKEN is required to download private Go modules."
-            exit 1
-          fi
-          module_auth=$(printf 'x-access-token:%s' "$HEXAS_MODULES_TOKEN" | base64 | tr -d '\r\n')
-          echo "::add-mask::$module_auth"
-          {
-            echo 'GIT_CONFIG_COUNT=1'
-            echo 'GIT_CONFIG_KEY_0=http.https://github.com/lemongoff/.extraheader'
-            printf 'GIT_CONFIG_VALUE_0=AUTHORIZATION: basic %s\n' "$module_auth"
-          } >> "$GITHUB_ENV"
 
       - name: Set up Go
         uses: actions/setup-go@v7
@@ -90,23 +68,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Configure private module access
-        shell: bash
-        env:
-          HEXAS_MODULES_TOKEN: ${{ secrets.HEXAS_MODULES_TOKEN }}
-        run: |
-          if [ -z "$HEXAS_MODULES_TOKEN" ]; then
-            echo "::error::HEXAS_MODULES_TOKEN is required to download private Go modules."
-            exit 1
-          fi
-          module_auth=$(printf 'x-access-token:%s' "$HEXAS_MODULES_TOKEN" | base64 | tr -d '\r\n')
-          echo "::add-mask::$module_auth"
-          {
-            echo 'GIT_CONFIG_COUNT=1'
-            echo 'GIT_CONFIG_KEY_0=http.https://github.com/lemongoff/.extraheader'
-            printf 'GIT_CONFIG_VALUE_0=AUTHORIZATION: basic %s\n' "$module_auth"
-          } >> "$GITHUB_ENV"
-
       - name: Set up Go
         uses: actions/setup-go@v7
         with:
@@ -136,23 +97,6 @@ jobs:
     steps:
       - name: Checkout codebase
         uses: actions/checkout@v7
-
-      - name: Configure private module access
-        shell: bash
-        env:
-          HEXAS_MODULES_TOKEN: ${{ secrets.HEXAS_MODULES_TOKEN }}
-        run: |
-          if [ -z "$HEXAS_MODULES_TOKEN" ]; then
-            echo "::error::HEXAS_MODULES_TOKEN is required to download private Go modules."
-            exit 1
-          fi
-          module_auth=$(printf 'x-access-token:%s' "$HEXAS_MODULES_TOKEN" | base64 | tr -d '\r\n')
-          echo "::add-mask::$module_auth"
-          {
-            echo 'GIT_CONFIG_COUNT=1'
-            echo 'GIT_CONFIG_KEY_0=http.https://github.com/lemongoff/.extraheader'
-            printf 'GIT_CONFIG_VALUE_0=AUTHORIZATION: basic %s\n' "$module_auth"
-          } >> "$GITHUB_ENV"
 
       - name: Set up Go
         uses: actions/setup-go@v7

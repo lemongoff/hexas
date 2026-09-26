@@ -19,9 +19,6 @@ on:
   schedule:
     - cron: '18 19 * * 6'
 
-env:
-  GOPRIVATE: github.com/lemongoff/*
-
 jobs:
   analyze:
     name: Analyze
@@ -42,25 +39,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
-
-    # Pass private-module authentication to the CodeQL build subprocesses.
-    # HEXAS_MODULES_TOKEN needs Contents: read on hexas and hexas-config.
-    - name: Configure private module access
-      shell: bash
-      env:
-        HEXAS_MODULES_TOKEN: ${{ secrets.HEXAS_MODULES_TOKEN }}
-      run: |
-        if [ -z "$HEXAS_MODULES_TOKEN" ]; then
-          echo "::error::HEXAS_MODULES_TOKEN is required to download private Go modules."
-          exit 1
-        fi
-        module_auth=$(printf 'x-access-token:%s' "$HEXAS_MODULES_TOKEN" | base64 | tr -d '\r\n')
-        echo "::add-mask::$module_auth"
-        {
-          echo 'GIT_CONFIG_COUNT=1'
-          echo 'GIT_CONFIG_KEY_0=http.https://github.com/lemongoff/.extraheader'
-          printf 'GIT_CONFIG_VALUE_0=AUTHORIZATION: basic %s\n' "$module_auth"
-        } >> "$GITHUB_ENV"
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
