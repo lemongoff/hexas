@@ -37,7 +37,7 @@ func TestCircuitBreaker_Allow(t *testing.T) {
 		assert.True(t, len(b.Name()) > 0)
 		ctx, cancel := context.WithTimeout(context.Background(), time.Microsecond)
 		defer cancel()
-		time.Sleep(time.Millisecond)
+		<-ctx.Done()
 		_, err := b.AllowCtx(ctx)
 		assert.ErrorIs(t, err, context.DeadlineExceeded)
 	})
@@ -80,7 +80,7 @@ func TestCircuitBreaker_Do(t *testing.T) {
 		assert.True(t, len(b.Name()) > 0)
 		ctx, cancel := context.WithTimeout(context.Background(), time.Microsecond)
 		defer cancel()
-		time.Sleep(time.Millisecond)
+		<-ctx.Done()
 		err := b.DoCtx(ctx, func() error {
 			return nil
 		})
@@ -132,7 +132,7 @@ func TestCircuitBreaker_DoWithAcceptable(t *testing.T) {
 		assert.True(t, len(b.Name()) > 0)
 		ctx, cancel := context.WithTimeout(context.Background(), time.Microsecond)
 		defer cancel()
-		time.Sleep(time.Millisecond)
+		<-ctx.Done()
 		err := b.DoWithAcceptableCtx(ctx, func() error {
 			return nil
 		}, func(err error) bool {
@@ -190,7 +190,7 @@ func TestCircuitBreaker_DoWithFallback(t *testing.T) {
 		assert.True(t, len(b.Name()) > 0)
 		ctx, cancel := context.WithTimeout(context.Background(), time.Microsecond)
 		defer cancel()
-		time.Sleep(time.Millisecond)
+		<-ctx.Done()
 		err := b.DoWithFallbackCtx(ctx, func() error {
 			return nil
 		}, func(err error) error {
@@ -252,7 +252,7 @@ func TestCircuitBreaker_DoWithFallbackAcceptable(t *testing.T) {
 		assert.True(t, len(b.Name()) > 0)
 		ctx, cancel := context.WithTimeout(context.Background(), time.Microsecond)
 		defer cancel()
-		time.Sleep(time.Millisecond)
+		<-ctx.Done()
 		err := b.DoWithFallbackAcceptableCtx(ctx, func() error {
 			return nil
 		}, func(err error) error {

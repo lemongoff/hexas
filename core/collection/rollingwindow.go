@@ -29,7 +29,8 @@ type (
 		interval      time.Duration
 		offset        int
 		ignoreCurrent bool
-		lastTime      time.Duration // start time of the last bucket
+		lastTime      time.Duration        // start time of the last bucket
+		now           func() time.Duration // immutable after construction
 	}
 )
 
@@ -46,6 +47,7 @@ func NewRollingWindow[T Numerical, B BucketInterface[T]](newBucket func() B, siz
 		win:      newWindow[T, B](newBucket, size),
 		interval: interval,
 		lastTime: timex.Now(),
+		now:      timex.Now,
 	}
 	for _, opt := range opts {
 		opt(w)
@@ -81,7 +83,7 @@ func (rw *RollingWindow[T, B]) Reduce(fn func(b B)) {
 }
 
 func (rw *RollingWindow[T, B]) span() int {
-	offset := int(timex.Since(rw.lastTime) / rw.interval)
+	offset := int((rw.now() - rw.lastTime) / rw.interval)
 	if 0 <= offset && offset < rw.size {
 		return offset
 	}
@@ -102,7 +104,7 @@ func (rw *RollingWindow[T, B]) updateOffset() {
 	}
 
 	rw.offset = (offset + span) % rw.size
-	now := timex.Now()
+	now := rw.now()
 	// align to interval time boundary
 	rw.lastTime = now - (now-rw.lastTime)%rw.interval
 }
