@@ -1,9 +1,17 @@
 name: reviewdog
 on: [pull_request]
+
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   staticcheck:
     name: runner / staticcheck
     runs-on: ubuntu-latest
+    env:
+      # Check the current checkout with the repository's multi-module workspace.
+      GOWORK: ${{ github.workspace }}/go.work
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-go@v7
@@ -11,11 +19,20 @@ jobs:
           go-version-file: go.mod
           check-latest: true
           cache: true
+          cache-dependency-path: |
+            go.sum
+            tools/goctl/go.sum
+      - name: Verify dependency loading
+        run: |
+          go version
+          go env GOWORK GOMOD GOPROXY
+          go list -m github.com/lemongoff/hexas
+          go list -deps -test ./... > /dev/null
       - uses: reviewdog/action-staticcheck@v1
         with:
-          github_token: ${{ secrets.github_token }}
-          # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
-          reporter: github-pr-review
+          github_token: ${{ github.token }}
+          # Emit Actions annotations without writing PR reviews (including Dependabot PRs).
+          reporter: github-annotations
           # Report all results.
           filter_mode: nofilter
           # Exit with 1 when it find at least one finding.
