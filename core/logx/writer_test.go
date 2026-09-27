@@ -5,11 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"log"
+	"os"
+	"path/filepath"
 	"sync/atomic"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/require"
 )
 
 func TestNewWriter(t *testing.T) {
@@ -100,8 +103,11 @@ func TestConsoleWriter(t *testing.T) {
 
 func TestNewFileWriter(t *testing.T) {
 	t.Run("access", func(t *testing.T) {
+		// A regular file cannot be used as a log directory on any platform.
+		filename := filepath.Join(t.TempDir(), "not-a-directory")
+		require.NoError(t, os.WriteFile(filename, nil, 0o600))
 		_, err := newFileWriter(LogConf{
-			Path: "/not-exists",
+			Path: filename,
 		})
 		assert.Error(t, err)
 	})

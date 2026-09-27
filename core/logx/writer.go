@@ -6,15 +6,15 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"path"
+	"path/filepath"
 	"runtime/debug"
 	"sync"
 	"sync/atomic"
 	"time"
 
+	fatihcolor "github.com/fatih/color"
 	"github.com/lemongoff/hexas/core/color"
 	"github.com/lemongoff/hexas/core/errorx"
-	fatihcolor "github.com/fatih/color"
 )
 
 type (
@@ -220,11 +220,11 @@ func newFileWriter(c LogConf) (Writer, error) {
 
 	opts = append(opts, WithRotation(c.Rotation))
 
-	accessFile := path.Join(c.Path, accessFilename)
-	errorFile := path.Join(c.Path, errorFilename)
-	severeFile := path.Join(c.Path, severeFilename)
-	slowFile := path.Join(c.Path, slowFilename)
-	statFile := path.Join(c.Path, statFilename)
+	accessFile := filepath.Join(c.Path, accessFilename)
+	errorFile := filepath.Join(c.Path, errorFilename)
+	severeFile := filepath.Join(c.Path, severeFilename)
+	slowFile := filepath.Join(c.Path, slowFilename)
+	statFile := filepath.Join(c.Path, statFilename)
 
 	handleOptions(opts)
 

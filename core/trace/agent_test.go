@@ -3,26 +3,32 @@ package trace
 import (
 	"context"
 	"errors"
+	"os"
+	"path/filepath"
+	"sync"
 	"testing"
 
 	"github.com/lemongoff/hexas/core/logx"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"go.opentelemetry.io/otel"
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+	"go.opentelemetry.io/otel/sdk/trace/tracetest"
 )
 
 func TestStartAgent(t *testing.T) {
 	logx.Disable()
 
 	const (
-		endpoint1  = "localhost:1234"
-		endpoint2  = "remotehost:1234"
-		endpoint3  = "localhost:1235"
-		endpoint4  = "localhost:1236"
-		endpoint5  = "udp://localhost:6831"
-		endpoint6  = "localhost:1237"
-		endpoint71 = "/tmp/trace.log"
-		endpoint72 = "/not-exist-fs/trace.log"
+		endpoint1 = "localhost:1234"
+		endpoint2 = "remotehost:1234"
+		endpoint3 = "localhost:1235"
+		endpoint4 = "localhost:1236"
+		endpoint5 = "udp://localhost:6831"
+		endpoint6 = "localhost:1237"
 	)
+	endpoint71 := filepath.Join(t.TempDir(), "trace.log")
+	endpoint72 := filepath.Join(t.TempDir(), "missing", "trace.log")
 	c1 := Config{
 		Name: "foo",
 	}
@@ -85,12 +91,13 @@ func TestCreateExporter_InvalidFilePath(t *testing.T) {
 
 	c := Config{
 		Name:     "test-invalid-file",
-		Endpoint: "/non-existent-directory/trace.log",
+		Endpoint: filepath.Join(t.TempDir(), "missing", "trace.log"),
 		Batcher:  kindFile,
 	}
 
 	_, err := createExporter(c)
 	assert.Error(t, err)
+	assert.ErrorIs(t, err, os.ErrNotExist)
 	assert.Contains(t, err.Error(), "file exporter endpoint error")
 }
 
@@ -121,7 +128,7 @@ func TestCreateExporter_ValidExporters(t *testing.T) {
 			name: "valid file exporter",
 			config: Config{
 				Name:     "file-test",
-				Endpoint: "/tmp/trace-test.log",
+				Endpoint: filepath.Join(t.TempDir(), "trace-test.log"),
 				Batcher:  kindFile,
 			},
 			wantErr: false,
@@ -130,7 +137,7 @@ func TestCreateExporter_ValidExporters(t *testing.T) {
 			name: "invalid file path",
 			config: Config{
 				Name:     "file-test-invalid",
-				Endpoint: "/invalid-path/that/does/not/exist/trace.log",
+				Endpoint: filepath.Join(t.TempDir(), "missing", "trace.log"),
 				Batcher:  kindFile,
 			},
 			wantErr: true,
@@ -280,7 +287,7 @@ func TestStartAgent_WithEndpoint(t *testing.T) {
 			name: "valid endpoint with file exporter",
 			config: Config{
 				Name:     "test-with-endpoint",
-				Endpoint: "/tmp/test-trace.log",
+				Endpoint: filepath.Join(t.TempDir(), "test-trace.log"),
 				Batcher:  kindFile,
 				Sampler:  1.0,
 			},
@@ -300,7 +307,7 @@ func TestStartAgent_WithEndpoint(t *testing.T) {
 			name: "endpoint with invalid file path",
 			config: Config{
 				Name:     "test-invalid-path",
-				Endpoint: "/non/existent/path/trace.log",
+				Endpoint: filepath.Join(t.TempDir(), "missing", "trace.log"),
 				Batcher:  kindFile,
 				Sampler:  1.0,
 			},
@@ -357,4 +364,63 @@ func TestStartAgent_ErrorHandler(t *testing.T) {
 	assert.NotPanics(t, func() {
 		otel.Handle(testErr)
 	}, "Error handler should handle errors without panicking")
+}
+
+func TestFileExporterShutdown(t *testing.T) {
+	filename := filepath.Join(t.TempDir(), "trace.log")
+	exporter, err := createExporter(Config{Batcher: kindFile, Endpoint: filename})
+	require.NoError(t, err)
+	t.Cleanup(func() { assert.NoError(t, exporter.Shutdown(context.Background())) })
+	spans := []sdktrace.ReadOnlySpan{tracetest.SpanStub{Name: "file-span"}.Snapshot()}
+	require.NoError(t, exporter.ExportSpans(context.Background(), spans))
+	require.NoError(t, exporter.Shutdown(context.Background()))
+	require.NoError(t, exporter.Shutdown(context.Background()))
+	_, err = exporter.(*fileExporter).file.Stat()
+	require.ErrorIs(t, err, os.ErrClosed)
+	data, err := os.ReadFile(filename)
+	require.NoError(t, err)
+	assert.Contains(t, string(data), "file-span")
+	require.NoError(t, exporter.ExportSpans(context.Background(), spans))
+	after, err := os.ReadFile(filename)
+	require.NoError(t, err)
+	assert.Equal(t, data, after)
+	require.NoError(t, os.Remove(filename))
+}
+
+func TestFileExporterConcurrentShutdown(t *testing.T) {
+	exporter, err := createExporter(Config{
+		Batcher: kindFile, Endpoint: filepath.Join(t.TempDir(), "trace.log"),
+	})
+	require.NoError(t, err)
+	t.Cleanup(func() { assert.NoError(t, exporter.Shutdown(context.Background())) })
+	spans := []sdktrace.ReadOnlySpan{tracetest.SpanStub{Name: "concurrent-span"}.Snapshot()}
+	var wg sync.WaitGroup
+	for i := 0; i < 10; i++ {
+		wg.Add(2)
+		go func() {
+			defer wg.Done()
+			assert.NoError(t, exporter.ExportSpans(context.Background(), spans))
+		}()
+		go func() {
+			defer wg.Done()
+			assert.NoError(t, exporter.Shutdown(context.Background()))
+		}()
+	}
+	wg.Wait()
+}
+
+func TestFileExporterErrors(t *testing.T) {
+	exporter, err := createExporter(Config{
+		Batcher: kindFile, Endpoint: filepath.Join(t.TempDir(), "trace.log"),
+	})
+	require.NoError(t, err)
+	t.Cleanup(func() { _ = exporter.Shutdown(context.Background()) })
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	assert.ErrorIs(t, exporter.ExportSpans(ctx, nil), context.Canceled)
+	// Closing the owned file early simulates a failure during shutdown.
+	require.NoError(t, exporter.(*fileExporter).file.Close())
+	assert.ErrorIs(t, exporter.Shutdown(context.Background()), os.ErrClosed)
+	assert.ErrorIs(t, exporter.Shutdown(context.Background()), os.ErrClosed)
+	assert.ErrorIs(t, exporter.ExportSpans(ctx, nil), context.Canceled)
 }

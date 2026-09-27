@@ -7,6 +7,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/lemongoff/hexas/core/timex"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -50,7 +51,6 @@ func TestImmutableResourceError(t *testing.T) {
 	assert.Equal(t, 1, count)
 
 	r.refreshInterval = 0
-	time.Sleep(time.Millisecond)
 	res, err = r.Get()
 	assert.Nil(t, res)
 	assert.NotNil(t, err)
@@ -121,4 +121,27 @@ func TestImmutableResourceErrorRefreshAlways(t *testing.T) {
 	assert.NotNil(t, err)
 	assert.Equal(t, "any", err.Error())
 	assert.Equal(t, 2, count)
+}
+
+func TestImmutableResourceZeroIntervalIgnoresClock(t *testing.T) {
+	var calls int
+	fetchErr := errors.New("fetch failed")
+	r := NewImmutableResource(func() (any, error) {
+		calls++
+		if calls == 1 {
+			return nil, fetchErr
+		}
+		return "ready", nil
+	}, WithRefreshIntervalOnFailure(0))
+	_, err := r.Get()
+	assert.ErrorIs(t, err, fetchErr)
+	// Even an unelapsed timestamp must not throttle a zero-interval retry.
+	r.lastTime.Set(timex.Now() + time.Hour)
+	res, err := r.Get()
+	assert.NoError(t, err)
+	assert.Equal(t, "ready", res)
+	assert.Equal(t, 2, calls)
+	_, err = r.Get()
+	assert.NoError(t, err)
+	assert.Equal(t, 2, calls, "successful resources remain cached")
 }

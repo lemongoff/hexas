@@ -43,7 +43,8 @@ type (
 		// daily: daily rotation.
 		// size: size limited rotation.
 		Rotation string
-		// FileTimeFormat represents the time format for file name, default is `2006-01-02T15:04:05.000Z07:00`.
+		// FileTimeFormat is the size-rotation filename time layout, defaulting to RFC3339.
+		// On Windows the default replaces colons with hyphens. Custom layouts must be valid filenames.
 		FileTimeFormat string `json:",optional"`
 		// FieldKeys represents the field keys.
 		FieldKeys fieldKeyConf `json:",optional"`

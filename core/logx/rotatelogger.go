@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -30,7 +29,7 @@ var (
 	// ErrLogFileClosed is an error that indicates the log file is already closed.
 	ErrLogFileClosed = errors.New("error: log file closed")
 
-	fileTimeFormat = time.RFC3339
+	fileTimeFormat = defaultFileTimeFormat()
 )
 
 type (
@@ -122,7 +121,7 @@ func (r *DailyRotateRule) OutdatedFiles() []string {
 	if r.gzip {
 		buf.WriteString(gzipExt)
 	}
-	boundaryFile := buf.String()
+	boundaryFile := filepath.Clean(buf.String())
 
 	var outdates []string
 	for _, file := range files {
@@ -286,7 +285,7 @@ func (l *RotateLogger) initialize() error {
 	l.backup = l.rule.BackupFileName()
 
 	if fileInfo, err := os.Stat(l.filename); err != nil {
-		basePath := path.Dir(l.filename)
+		basePath := filepath.Dir(l.filename)
 		if _, err = os.Stat(basePath); err != nil {
 			if err = os.MkdirAll(basePath, defaultDirMode); err != nil {
 				return err

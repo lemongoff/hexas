@@ -2,6 +2,7 @@ package trace
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"sync"
@@ -33,6 +34,34 @@ var (
 		}
 	})
 )
+
+// fileExporter owns the file passed to stdouttrace, which does not close writers.
+type fileExporter struct {
+	sdktrace.SpanExporter
+	file        *os.File
+	mu          sync.Mutex
+	stopped     bool
+	shutdownErr error
+}
+
+func (e *fileExporter) ExportSpans(ctx context.Context, spans []sdktrace.ReadOnlySpan) error {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	if e.stopped {
+		return ctx.Err()
+	}
+	return e.SpanExporter.ExportSpans(ctx, spans)
+}
+
+func (e *fileExporter) Shutdown(ctx context.Context) error {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	if !e.stopped {
+		e.stopped = true
+		e.shutdownErr = errors.Join(e.SpanExporter.Shutdown(ctx), e.file.Close())
+	}
+	return e.shutdownErr
+}
 
 // StartAgent starts an opentelemetry agent.
 // It uses sync.Once to ensure the agent is initialized only once,
@@ -94,9 +123,13 @@ func createExporter(c Config) (sdktrace.SpanExporter, error) {
 	case kindFile:
 		f, err := os.OpenFile(c.Endpoint, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 		if err != nil {
-			return nil, fmt.Errorf("file exporter endpoint error: %s", err.Error())
+			return nil, fmt.Errorf("file exporter endpoint error: %w", err)
 		}
-		return stdouttrace.New(stdouttrace.WithWriter(f))
+		exporter, err := stdouttrace.New(stdouttrace.WithWriter(f))
+		if err != nil {
+			return nil, errors.Join(err, f.Close())
+		}
+		return &fileExporter{SpanExporter: exporter, file: f}, nil
 	default:
 		return nil, fmt.Errorf("unknown exporter: %s", c.Batcher)
 	}

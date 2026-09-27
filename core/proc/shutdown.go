@@ -13,14 +13,6 @@ import (
 	"github.com/lemongoff/hexas/core/threading"
 )
 
-const (
-	// defaultWrapUpTime is the default time to wait before calling wrap up listeners.
-	defaultWrapUpTime = time.Second
-	// defaultWaitTime is the default time to wait before force quitting.
-	// why we use 5500 milliseconds is because most of our queues are blocking mode with 5 seconds
-	defaultWaitTime = 5500 * time.Millisecond
-)
-
 var (
 	wrapUpListeners   = new(listenerManager)
 	shutdownListeners = new(listenerManager)
@@ -28,14 +20,6 @@ var (
 	waitTime          = defaultWaitTime
 	shutdownLock      sync.Mutex
 )
-
-// ShutdownConf defines the shutdown configuration for the process.
-type ShutdownConf struct {
-	// WrapUpTime is the time to wait before calling shutdown listeners.
-	WrapUpTime time.Duration
-	// WaitTime is the time to wait before force quitting.
-	WaitTime time.Duration
-}
 
 // AddShutdownListener adds fn as a shutdown listener.
 // The returned func can be used to wait for fn getting called.

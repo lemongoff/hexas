@@ -1,19 +1,19 @@
 package logx
 
 import (
+	"compress/gzip"
 	"errors"
 	"io"
 	"os"
-	"path"
 	"path/filepath"
 	"sync/atomic"
-	"syscall"
 	"testing"
 	"time"
 
 	"github.com/lemongoff/hexas/core/fs"
 	"github.com/lemongoff/hexas/core/stringx"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestDailyRotateRuleMarkRotated(t *testing.T) {
@@ -52,22 +52,22 @@ func TestDailyRotateRuleOutdatedFiles(t *testing.T) {
 	})
 
 	t.Run("temp files", func(t *testing.T) {
+		dir := t.TempDir()
 		boundary := time.Now().Add(-time.Hour * time.Duration(hoursPerDay) * 2).Format(time.DateOnly)
-		f1, err := os.CreateTemp(os.TempDir(), "go-zero-test-"+boundary)
-		assert.NoError(t, err)
-		_ = f1.Close()
-		f2, err := os.CreateTemp(os.TempDir(), "go-zero-test-"+boundary)
-		assert.NoError(t, err)
-		_ = f2.Close()
-		t.Cleanup(func() {
-			_ = os.Remove(f1.Name())
-			_ = os.Remove(f2.Name())
-		})
+		f1, err := os.CreateTemp(dir, "go-zero-test-"+boundary)
+		require.NoError(t, err)
+		require.NoError(t, f1.Close())
+		f2, err := os.CreateTemp(dir, "go-zero-test-"+boundary)
+		require.NoError(t, err)
+		require.NoError(t, f2.Close())
 		rule := DailyRotateRule{
-			filename: path.Join(os.TempDir(), "go-zero-test-"),
+			filename: filepath.Join(dir, "go-zero-test-"),
 			days:     1,
 		}
-		assert.NotEmpty(t, rule.OutdatedFiles())
+		assert.ElementsMatch(t, []string{f1.Name(), f2.Name()}, rule.OutdatedFiles())
+		// Forward slashes are accepted on Windows too; Glob returns native paths.
+		rule.filename = filepath.ToSlash(rule.filename)
+		assert.ElementsMatch(t, []string{f1.Name(), f2.Name()}, rule.OutdatedFiles())
 	})
 }
 
@@ -117,25 +117,21 @@ func TestSizeLimitRotateRuleOutdatedFiles(t *testing.T) {
 	})
 
 	t.Run("temp files", func(t *testing.T) {
+		dir := t.TempDir()
 		boundary := time.Now().Add(-time.Hour * time.Duration(hoursPerDay) * 2).Format(time.DateOnly)
-		f1, err := os.CreateTemp(os.TempDir(), "go-zero-test-"+boundary)
-		assert.NoError(t, err)
-		f2, err := os.CreateTemp(os.TempDir(), "go-zero-test-"+boundary)
-		assert.NoError(t, err)
+		f1, err := os.CreateTemp(dir, "go-zero-test-"+boundary)
+		require.NoError(t, err)
+		require.NoError(t, f1.Close())
+		f2, err := os.CreateTemp(dir, "go-zero-test-"+boundary)
+		require.NoError(t, err)
+		require.NoError(t, f2.Close())
 		boundary1 := time.Now().Add(time.Hour * time.Duration(hoursPerDay) * 2).Format(time.DateOnly)
-		f3, err := os.CreateTemp(os.TempDir(), "go-zero-test-"+boundary1)
-		assert.NoError(t, err)
-		t.Cleanup(func() {
-			_ = f1.Close()
-			_ = os.Remove(f1.Name())
-			_ = f2.Close()
-			_ = os.Remove(f2.Name())
-			_ = f3.Close()
-			_ = os.Remove(f3.Name())
-		})
+		f3, err := os.CreateTemp(dir, "go-zero-test-"+boundary1)
+		require.NoError(t, err)
+		require.NoError(t, f3.Close())
 		rule := SizeLimitRotateRule{
 			DailyRotateRule: DailyRotateRule{
-				filename: path.Join(os.TempDir(), "go-zero-test-"),
+				filename: filepath.Join(dir, "go-zero-test-"),
 				days:     1,
 			},
 			maxBackups: 3,
@@ -144,25 +140,21 @@ func TestSizeLimitRotateRuleOutdatedFiles(t *testing.T) {
 	})
 
 	t.Run("no backups", func(t *testing.T) {
+		dir := t.TempDir()
 		boundary := time.Now().Add(-time.Hour * time.Duration(hoursPerDay) * 2).Format(time.DateOnly)
-		f1, err := os.CreateTemp(os.TempDir(), "go-zero-test-"+boundary)
-		assert.NoError(t, err)
-		f2, err := os.CreateTemp(os.TempDir(), "go-zero-test-"+boundary)
-		assert.NoError(t, err)
+		f1, err := os.CreateTemp(dir, "go-zero-test-"+boundary)
+		require.NoError(t, err)
+		require.NoError(t, f1.Close())
+		f2, err := os.CreateTemp(dir, "go-zero-test-"+boundary)
+		require.NoError(t, err)
+		require.NoError(t, f2.Close())
 		boundary1 := time.Now().Add(time.Hour * time.Duration(hoursPerDay) * 2).Format(time.DateOnly)
-		f3, err := os.CreateTemp(os.TempDir(), "go-zero-test-"+boundary1)
-		assert.NoError(t, err)
-		t.Cleanup(func() {
-			_ = f1.Close()
-			_ = os.Remove(f1.Name())
-			_ = f2.Close()
-			_ = os.Remove(f2.Name())
-			_ = f3.Close()
-			_ = os.Remove(f3.Name())
-		})
+		f3, err := os.CreateTemp(dir, "go-zero-test-"+boundary1)
+		require.NoError(t, err)
+		require.NoError(t, f3.Close())
 		rule := SizeLimitRotateRule{
 			DailyRotateRule: DailyRotateRule{
-				filename: path.Join(os.TempDir(), "go-zero-test-"),
+				filename: filepath.Join(dir, "go-zero-test-"),
 				days:     1,
 			},
 		}
@@ -262,47 +254,15 @@ func TestRotateLoggerMayCompressFile(t *testing.T) {
 }
 
 func TestRotateLoggerMayCompressFileTrue(t *testing.T) {
-	old := os.Stdout
-	os.Stdout = os.NewFile(0, os.DevNull)
-	defer func() {
-		os.Stdout = old
-	}()
-
-	filename, err := fs.TempFilenameWithText("foo")
-	assert.Nil(t, err)
-	logger, err := NewLogger(filename, new(DailyRotateRule), true)
-	assert.Nil(t, err)
-	if len(filename) > 0 {
-		defer os.Remove(filepath.Base(logger.getBackupFilename()) + ".gz")
-	}
-	logger.maybeCompressFile(filename)
-	_, err = os.Stat(filename)
-	assert.NotNil(t, err)
+	logger := newTestRotateLogger(t, false)
+	require.NoError(t, logger.Close())
+	logger.maybeCompressFile(logger.filename)
+	require.NoFileExists(t, logger.filename)
+	assertCompressedLog(t, logger.filename+gzipExt, "foo")
 }
 
 func TestRotateLoggerRotate(t *testing.T) {
-	filename, err := fs.TempFilenameWithText("foo")
-	assert.Nil(t, err)
-	logger, err := NewLogger(filename, new(DailyRotateRule), true)
-	assert.Nil(t, err)
-	if len(filename) > 0 {
-		defer func() {
-			os.Remove(logger.getBackupFilename())
-			os.Remove(filepath.Base(logger.getBackupFilename()) + ".gz")
-		}()
-	}
-	err = logger.rotate()
-	switch v := err.(type) {
-	case *os.LinkError:
-		// avoid rename error on docker container
-		assert.Equal(t, syscall.EXDEV, v.Err)
-	case *os.PathError:
-		// ignore remove error for tests,
-		// files are cleaned in GitHub actions.
-		assert.Equal(t, "remove", v.Op)
-	default:
-		assert.Nil(t, err)
-	}
+	testRotateLoggerRotation(t, false)
 }
 
 func TestRotateLoggerWrite(t *testing.T) {
@@ -373,22 +333,11 @@ func TestRotateLoggerWithSizeLimitRotateRuleMayCompressFile(t *testing.T) {
 }
 
 func TestRotateLoggerWithSizeLimitRotateRuleMayCompressFileTrue(t *testing.T) {
-	old := os.Stdout
-	os.Stdout = os.NewFile(0, os.DevNull)
-	defer func() {
-		os.Stdout = old
-	}()
-
-	filename, err := fs.TempFilenameWithText("foo")
-	assert.Nil(t, err)
-	logger, err := NewLogger(filename, new(SizeLimitRotateRule), true)
-	assert.Nil(t, err)
-	if len(filename) > 0 {
-		defer os.Remove(filepath.Base(logger.getBackupFilename()) + ".gz")
-	}
-	logger.maybeCompressFile(filename)
-	_, err = os.Stat(filename)
-	assert.NotNil(t, err)
+	logger := newTestRotateLogger(t, true)
+	require.NoError(t, logger.Close())
+	logger.maybeCompressFile(logger.filename)
+	require.NoFileExists(t, logger.filename)
+	assertCompressedLog(t, logger.filename+gzipExt, "foo")
 }
 
 func TestRotateLoggerWithSizeLimitRotateRuleMayCompressFileFailed(t *testing.T) {
@@ -409,28 +358,56 @@ func TestRotateLoggerWithSizeLimitRotateRuleMayCompressFileFailed(t *testing.T) 
 }
 
 func TestRotateLoggerWithSizeLimitRotateRuleRotate(t *testing.T) {
-	filename, err := fs.TempFilenameWithText("foo")
-	assert.Nil(t, err)
-	logger, err := NewLogger(filename, new(SizeLimitRotateRule), true)
-	assert.Nil(t, err)
-	if len(filename) > 0 {
-		defer func() {
-			os.Remove(logger.getBackupFilename())
-			os.Remove(filepath.Base(logger.getBackupFilename()) + ".gz")
-		}()
+	testRotateLoggerRotation(t, true)
+}
+
+func newTestRotateLogger(t *testing.T, sizeLimit bool) *RotateLogger {
+	t.Helper()
+	previousFormat := fileTimeFormat
+	fileTimeFormat = defaultFileTimeFormat()
+	t.Cleanup(func() { fileTimeFormat = previousFormat })
+	filename := filepath.Join(t.TempDir(), "nested", "test.log")
+	rule := DefaultRotateRule(filename, "-", 0, true)
+	if sizeLimit {
+		rule = NewSizeLimitRotateRule(filename, "-", 0, 1, 0, true)
 	}
-	err = logger.rotate()
-	switch v := err.(type) {
-	case *os.LinkError:
-		// avoid rename error on docker container
-		assert.Equal(t, syscall.EXDEV, v.Err)
-	case *os.PathError:
-		// ignore remove error for tests,
-		// files are cleaned in GitHub actions.
-		assert.Equal(t, "remove", v.Op)
-	default:
-		assert.Nil(t, err)
-	}
+	logger, err := NewLogger(filename, rule, true)
+	require.NoError(t, err)
+	t.Cleanup(func() { assert.NoError(t, logger.Close()) })
+	logger.write([]byte("foo"))
+	return logger
+}
+
+func testRotateLoggerRotation(t *testing.T, sizeLimit bool) {
+	t.Helper()
+	logger := newTestRotateLogger(t, sizeLimit)
+	backup := logger.getBackupFilename()
+	require.Equal(t, filepath.Dir(logger.filename), filepath.Dir(backup))
+	require.NoError(t, logger.rotate())
+	// Wait for compression to close its files before checking contents or cleaning up.
+	require.Eventually(t, func() bool {
+		_, err := os.Stat(backup)
+		return errors.Is(err, os.ErrNotExist)
+	}, 5*time.Second, time.Millisecond)
+	assertCompressedLog(t, backup+gzipExt, "foo")
+	logger.write([]byte("bar"))
+	require.NoError(t, logger.Close())
+	data, err := os.ReadFile(logger.filename)
+	require.NoError(t, err)
+	assert.Equal(t, "bar", string(data))
+}
+
+func assertCompressedLog(t *testing.T, filename, want string) {
+	t.Helper()
+	f, err := os.Open(filename)
+	require.NoError(t, err)
+	defer f.Close()
+	r, err := gzip.NewReader(f)
+	require.NoError(t, err)
+	defer r.Close()
+	data, err := io.ReadAll(r)
+	require.NoError(t, err)
+	assert.Equal(t, want, string(data))
 }
 
 func TestRotateLoggerWithSizeLimitRotateRuleWrite(t *testing.T) {
