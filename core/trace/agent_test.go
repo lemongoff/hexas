@@ -375,8 +375,11 @@ func TestFileExporterShutdown(t *testing.T) {
 	require.NoError(t, exporter.ExportSpans(context.Background(), spans))
 	require.NoError(t, exporter.Shutdown(context.Background()))
 	require.NoError(t, exporter.Shutdown(context.Background()))
-	_, err = exporter.(*fileExporter).file.Stat()
+	// Stat on a closed Windows handle can return ERROR_INVALID_HANDLE instead.
+	// A write checks Go's closed-file state and must not modify the trace file.
+	n, err := exporter.(*fileExporter).file.Write([]byte("must not be written"))
 	require.ErrorIs(t, err, os.ErrClosed)
+	require.Zero(t, n)
 	data, err := os.ReadFile(filename)
 	require.NoError(t, err)
 	assert.Contains(t, string(data), "file-span")

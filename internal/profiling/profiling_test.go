@@ -1,6 +1,10 @@
 package profiling
 
 import (
+	"context"
+	"math"
+	"os"
+	"os/exec"
 	"sync"
 	"testing"
 	"time"
@@ -8,6 +12,7 @@ import (
 	"github.com/grafana/pyroscope-go"
 	"github.com/lemongoff/hexas/core/syncx"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestStart(t *testing.T) {
@@ -21,23 +26,15 @@ func TestStart(t *testing.T) {
 	})
 
 	t.Run("invalid config", func(t *testing.T) {
-		mp := &mockProfiler{}
-		newProfiler = func(c Config) profiler {
-			return mp
-		}
-
+		mp := newMockProfiler()
+		setTestProfiler(t, mp)
 		Start(Config{})
-
-		Start(Config{
-			ServerAddr: "localhost:4040",
-		})
+		assert.False(t, mp.started.True())
 	})
 
 	t.Run("test start profiler", func(t *testing.T) {
-		mp := &mockProfiler{}
-		newProfiler = func(c Config) profiler {
-			return mp
-		}
+		mp := newMockProfiler()
+		setTestProfiler(t, mp)
 
 		c := Config{
 			Name:              "test",
@@ -46,62 +43,125 @@ func TestStart(t *testing.T) {
 			ProfilingDuration: time.Millisecond * 10,
 			CpuThreshold:      0,
 		}
-		var done = make(chan struct{})
-		go startPyroscope(c, done)
-
-		time.Sleep(time.Millisecond * 50)
-		close(done)
+		stop := runTestProfiler(t, c)
+		waitProfilerSignal(t, mp.startCalled, "profiler start")
+		waitProfilerSignal(t, mp.stopCalled, "profiler stop")
+		stop()
 
 		assert.True(t, mp.started.True())
 		assert.True(t, mp.stopped.True())
 	})
 
-	t.Run("test start profiler with cpu overloaded", func(t *testing.T) {
-		mp := &mockProfiler{}
-		newProfiler = func(c Config) profiler {
-			return mp
-		}
+	t.Run("cpu below threshold", func(t *testing.T) {
+		mp := newMockProfiler()
+		setTestProfiler(t, mp)
 
 		c := Config{
 			Name:              "test",
 			ServerAddr:        "localhost:4040",
 			CheckInterval:     time.Millisecond,
 			ProfilingDuration: time.Millisecond * 10,
-			CpuThreshold:      900,
+			CpuThreshold:      math.MaxInt64,
 		}
-		var done = make(chan struct{})
-		go startPyroscope(c, done)
-
-		time.Sleep(time.Millisecond * 50)
-		close(done)
+		stop := runTestProfiler(t, c)
+		// This is an observation window for the absence of a start, not a
+		// deadline by which an asynchronous operation must have completed.
+		timer := time.NewTimer(50 * time.Millisecond)
+		defer timer.Stop()
+		select {
+		case <-mp.startCalled:
+			t.Fatal("profiler started below the CPU threshold")
+		case <-timer.C:
+		}
+		stop()
 
 		assert.False(t, mp.started.True())
 	})
 
-	t.Run("start/stop err", func(t *testing.T) {
-		mp := &mockProfiler{
-			err: assert.AnError,
+	for _, startFails := range []bool{true, false} {
+		name := "stop error"
+		if startFails {
+			name = "start error"
 		}
-		newProfiler = func(c Config) profiler {
-			return mp
-		}
+		t.Run(name, func(t *testing.T) {
+			mp := newMockProfiler()
+			mp.stopErr = assert.AnError
+			if startFails {
+				mp.startErr = assert.AnError
+			}
+			setTestProfiler(t, mp)
+			stop := runTestProfiler(t, Config{
+				Name: "test", CheckInterval: time.Millisecond,
+				ProfilingDuration: 10 * time.Millisecond,
+			})
+			waitProfilerSignal(t, mp.startCalled, "profiler start attempt")
+			if !startFails {
+				waitProfilerSignal(t, mp.stopCalled, "profiler stop attempt")
+			}
+			stop()
+			assert.Equal(t, !startFails, mp.started.True())
+			assert.False(t, mp.stopped.True())
+		})
+	}
+}
 
-		c := Config{
-			Name:              "test",
-			ServerAddr:        "localhost:4040",
-			CheckInterval:     time.Millisecond,
-			ProfilingDuration: time.Millisecond * 10,
-			CpuThreshold:      0,
-		}
-		var done = make(chan struct{})
-		go startPyroscope(c, done)
+func TestStartProcess(t *testing.T) {
+	const childEnv = "HEXAS_TEST_PROFILING_START_PROCESS"
+	if os.Getenv(childEnv) == "1" {
+		// Start has a process-lifetime worker and sync.Once. Keep both in a
+		// child process so they cannot leak into other tests or repeated runs.
+		mp := newMockProfiler()
+		newProfiler = func(Config) profiler { return mp }
+		Start(Config{
+			ServerAddr: "localhost:4040", CheckInterval: time.Millisecond,
+			ProfilingDuration: 10 * time.Millisecond,
+		})
+		waitProfilerSignal(t, mp.startCalled, "public Start")
+		waitProfilerSignal(t, mp.stopCalled, "public Start profiling cycle")
+		return
+	}
 
-		time.Sleep(time.Millisecond * 50)
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	cmd := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestStartProcess$", "-test.count=1")
+	cmd.Env = append(os.Environ(), childEnv+"=1")
+	output, err := cmd.CombinedOutput()
+	require.NoError(t, err, "%s", output)
+}
+
+func setTestProfiler(t *testing.T, mp *mockProfiler) {
+	t.Helper()
+	previous := newProfiler
+	newProfiler = func(Config) profiler { return mp }
+	t.Cleanup(func() { newProfiler = previous })
+}
+
+func runTestProfiler(t *testing.T, c Config) func() {
+	t.Helper()
+	done := make(chan struct{})
+	exited := make(chan struct{})
+	go func() {
+		defer close(exited)
+		startPyroscope(c, done)
+	}()
+	stop := sync.OnceFunc(func() {
 		close(done)
-
-		assert.False(t, mp.started.True())
-		assert.False(t, mp.stopped.True())
+		waitProfilerSignal(t, exited, "worker exit")
 	})
+	// Registered after setTestProfiler, so the worker exits before restoration.
+	t.Cleanup(stop)
+	return stop
+}
+
+func waitProfilerSignal(t *testing.T, signal <-chan struct{}, name string) {
+	t.Helper()
+	timer := time.NewTimer(5 * time.Second)
+	defer timer.Stop()
+	select {
+	case <-signal:
+	case <-timer.C:
+		t.Fatalf("timed out waiting for %s", name)
+	}
 }
 
 func TestGenPyroscopeConf(t *testing.T) {
@@ -150,26 +210,32 @@ func TestNewPyroscopeProfiler(t *testing.T) {
 }
 
 type mockProfiler struct {
-	mutex   sync.Mutex
-	started syncx.AtomicBool
-	stopped syncx.AtomicBool
-	err     error
+	started     syncx.AtomicBool
+	stopped     syncx.AtomicBool
+	startErr    error
+	stopErr     error
+	startCalled chan struct{}
+	stopCalled  chan struct{}
+	startOnce   sync.Once
+	stopOnce    sync.Once
+}
+
+func newMockProfiler() *mockProfiler {
+	return &mockProfiler{startCalled: make(chan struct{}), stopCalled: make(chan struct{})}
 }
 
 func (m *mockProfiler) Start() error {
-	m.mutex.Lock()
-	if m.err == nil {
+	if m.startErr == nil {
 		m.started.Set(true)
 	}
-	m.mutex.Unlock()
-	return m.err
+	m.startOnce.Do(func() { close(m.startCalled) })
+	return m.startErr
 }
 
 func (m *mockProfiler) Stop() error {
-	m.mutex.Lock()
-	if m.err == nil {
+	if m.stopErr == nil {
 		m.stopped.Set(true)
 	}
-	m.mutex.Unlock()
-	return m.err
+	m.stopOnce.Do(func() { close(m.stopCalled) })
+	return m.stopErr
 }
